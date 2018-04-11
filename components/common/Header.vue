@@ -56,8 +56,16 @@
 
     header {
         padding: 20px 0px;
-        a {
-            padding: 0px 20px 0px 0px;
+        nav {
+            ul {
+                list-style: none;
+                li {
+                    display: inline-block;
+                    a {
+                        padding: 0px 20px 0px 0px;
+                    }
+                }
+            }
         }
     }
 

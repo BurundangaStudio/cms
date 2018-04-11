@@ -9,9 +9,9 @@
     <section class="page login">
         <div class="grid">
             <div class="centered">
-                <h1 class="title">Login form</h1>
-                <input type="text" name="email" id="email" placeholder="Enter your email" value="_@burundanga.studio">
-                <input type="text" name="password" id="password" placeholder="Enter your password" value="Burundanga.1">
+                <h1 class="title">Login</h1>
+                <input type="text" name="email" id="email" placeholder="Enter your email">
+                <input type="password" name="password" id="password" placeholder="Enter your password">
                 <button class="button" @click="login">Login</button>
             </div>
         </div>
@@ -20,13 +20,12 @@
 
 <script>
 
-    import { TweenMax } from "gsap"
-    import { setTimeout } from 'timers';
+    import { TweenMax } from "gsap";
 
     export default {
         name: "index",
         head: {
-            title: "Test | Admin login"
+            title: "Burundanga Studio | Login"
         },
         transition: {
             enter(el, done) {
@@ -60,17 +59,40 @@
     .login {
         opacity: 0;
         will-change: opacity;
+        height: 100vh;
+
         .grid {
             display: grid;
 
             grid-template-columns: 1fr;
             grid-template-rows: 1fr;
 
+            height: 100%;
+
             .centered {
                 grid-column: 1;
                 grid-row: 1;
                 -ms-grid-column: 1;
                 -ms-grid-row: 1;
+
+                align-self: center;
+                margin: 0 auto;
+
+                text-align: center;
+
+                h1 {
+                    margin-bottom: 10px;
+                }
+
+                input, button {
+                    
+                    width: 100%;
+                    padding: 10px;
+                    margin: 5px 0px;
+                    background: none;
+                    border: 1px solid rgba(0,0,0,0.25);
+                    border-radius: 5px;
+                }
             }
         }
     }
