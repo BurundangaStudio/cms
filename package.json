@@ -1,0 +1,33 @@
+{
+    "name": "burundanga-studio-cms",
+    "version": "1.0.0",
+    "description": "Burundanga Studio CMS for websites.",
+    "author": "Christian MacMillan <_@burundanga.studio>",
+    "private": true,
+    "scripts": {
+        "dev": "nuxt",
+        "build": "nuxt build",
+        "start": "nuxt start",
+        "generate": "nuxt generate",
+        "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+        "precommit": "npm run lint"
+    },
+    "dependencies": {
+        "cookie-parser": "^1.4.3",
+        "firebase": "^4.12.1",
+        "firebase-admin": "^5.12.0",
+        "gsap": "^1.20.4",
+        "node-sass": "^4.8.3",
+        "nuxt": "^1.0.0",
+        "sass-loader": "^6.0.7",
+        "underscore": "^1.8.3",
+        "xmlhttprequest": "^1.8.0"
+    },
+    "devDependencies": {
+        "babel-eslint": "^8.2.1",
+        "eslint": "^4.15.0",
+        "eslint-friendly-formatter": "^3.0.0",
+        "eslint-loader": "^1.7.1",
+        "eslint-plugin-vue": "^4.0.0"
+    }
+}
