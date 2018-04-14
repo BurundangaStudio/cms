@@ -1,13 +1,13 @@
 <!--
-    pages/post.vue
+    pages/users.vue
 
     Coded by Christian MacMillan (_@burundanga.studio)
     April 2018 | http://burundanga.studio
 -->
 
 <template>
-    <section class="post">
-        <h1 class="title">post</h1>
+    <section class="users">
+        <h1 class="title">Users</h1>
     </section>
 </template>
 

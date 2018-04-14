@@ -20,10 +20,11 @@
 
 <script>
 
+    import config from "~/config/navigation"
     import { TweenMax } from "gsap";
 
     export default {
-        name: "index",
+        name: "login",
         head: {
             title: "Burundanga Studio | Login"
         },
@@ -48,7 +49,7 @@
                 const password = this.passwordInput.value;
 
                 await this.$store.dispatch('login', { email, password });
-                this.$router.push("/panel");
+                this.$router.push("/" + config.entryPoint);
             }
         }
     }

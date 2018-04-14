@@ -1,0 +1,18 @@
+{
+    "default": {
+        "title": {
+            "type": "String"
+        },
+        "subtitle": {
+            "type": "String"
+        },
+        "content": {
+            "type": "wyswyg"
+        }
+    },
+    "eva": {
+        "image": {
+            "type": "image"
+        }
+    }
+}

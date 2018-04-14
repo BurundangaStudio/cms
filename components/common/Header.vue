@@ -10,7 +10,7 @@
         <nav class="navigation">
             <ul>
                 <li v-for="(link, index) in links" :key="index">
-                    <nuxt-link :to="link" v-text="link" />
+                    <nuxt-link :to="'/' + link" v-text="link" />
                 </li>
             </ul>
         </nav>

@@ -8,13 +8,15 @@
 <template>
     <section class="pages">
         <h1 class="title">Pages</h1>
+        <nuxt-link to="/page">New page</nuxt-link>
     </section>
 </template>
 
 <script>
 
 export default {
-    layout: 'logged'
+    name: "pages",
+    layout: "logged"
 }
 
 </script>

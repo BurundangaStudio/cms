@@ -1,20 +1,21 @@
 <!--
-    pages/page.vue
+    pages/albums.vue
 
     Coded by Christian MacMillan (_@burundanga.studio)
     April 2018 | http://burundanga.studio
 -->
 
 <template>
-    <section class="page">
-        <h1 class="title">Page</h1>
+    <section class="albums">
+        <h1 class="title">Albums</h1>
     </section>
 </template>
 
 <script>
 
 export default {
-    layout: 'logged'
+    name: "albums",
+    layout: "logged"
 }
 
 </script>
