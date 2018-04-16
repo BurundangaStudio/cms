@@ -26,7 +26,7 @@
 
 <script>
 
-    import config from "~/config/navigation"
+    import Config from "~/config/dashboard/navigation"
 
     export default {
         data() {
@@ -40,7 +40,7 @@
         methods: {
             setConfig() {
 
-                this.links = config.menu
+                this.links = Config.menu
             },
 
             async logout() {

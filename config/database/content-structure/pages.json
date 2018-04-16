@@ -1,10 +1,16 @@
 {
     "default": {
+        "link": {
+            "type": "text",
+            "limit": 10,
+            "rules": [ "no-spaces" ]
+        },
         "title": {
-            "type": "String"
+            "type": "text",
+            "limit": 150
         },
         "subtitle": {
-            "type": "String"
+            "type": "text"
         },
         "content": {
             "type": "wyswyg"

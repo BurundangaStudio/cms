@@ -7,19 +7,34 @@
 
 <template>
     <div class="form">
-        <p>Form</p>
+        Form
+        <div class="fields">
+            <field v-for="(field, key) in fields" :key="key" :name="key" :field="field"></field>
+        </div>
     </div>
 </template>
 
 <script>
 
+import Field from "~/components/form/components/Field";
+
 export default {
-    name: "form-component",
+    name: "formm",
     props: {
         fields: Object
     },
     mounted() {
+
         console.log("Form with fields: ", this.fields);
+    },
+    methods: {
+        getData() {
+
+            return "Form data";
+        }
+    },
+    components: {
+        Field
     }
 }
 

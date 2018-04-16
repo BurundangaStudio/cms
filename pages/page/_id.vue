@@ -7,8 +7,9 @@
 
 <template>
     <section class="page">
-        <h1 class="title">{{ id ? "Page " + id : "New page" }}</h1>
-        <form-component :fields="fields"></form-component>
+        <no-ssr>
+            <formm ref="form" :fields="getFields()"></formm>
+        </no-ssr>
         <button @click="save">SAVE</button>
     </section>
 </template>
@@ -17,41 +18,39 @@
 
 import _ from "underscore";
 
-import FormComponent from "~/components/form/Form";
-import Config from "~/config/content/pages.json";
+import Formm from "~/components/form/Form";
+import structure from "~/config/database/content-structure/pages.json";
 
 export default {
     name: "page",
     layout: "logged",
-    data() {
-        return {
-            id: undefined,
-            fields: undefined
+    data () {
+        return { 
+            structure
         }
-    },
-    watch: {
-        $route: "setData"
-    },
-    created() {
-        this.setData();
     },
     mounted() {
         this.init();
     },
     methods: {
-        setData() {
-            this.id = this.$route.params.id;
-            this.fields = this.id ? _.defaults(Config.default, Config[this.id]) : Config.default;
+        getFields() {
+            const fields = this.$route.params.id ? _.defaults(this.structure.default, this.structure[this.$route.params.id]) : structure.default;
+            return fields;
         },
         init() {
 
+            this.fields = _.clone(structure.default)
         },
-        save() {
-            console.log("SAVE WITH DATA");
+        async save() {
+
+            await console.log("SAVE WITH DATA:", this.$refs.form.getData());
         }
     },
+    destroyed() {
+        this.fields = {}
+    },
     components: {
-        FormComponent
+        Formm
     }
 }
 

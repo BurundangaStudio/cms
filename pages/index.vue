@@ -20,7 +20,7 @@
 
 <script>
 
-    import config from "~/config/navigation"
+    import config from "~/config/dashboard/navigation"
     import { TweenMax } from "gsap";
 
     export default {
