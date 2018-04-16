@@ -11,7 +11,7 @@ npm-debug.log
 dist
 
 # Google Cloud
-config/service-account.json
+config/database/service-account.json
 
 # Firebase data
-config/firebase.js
+config/database/firebase.js
