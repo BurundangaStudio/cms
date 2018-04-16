@@ -34,20 +34,18 @@ export default {
     },
     methods: {
         getFields() {
-            const fields = this.$route.params.id ? _.defaults(this.structure.default, this.structure[this.$route.params.id]) : structure.default;
-            return fields;
+            const aux = JSON.parse(JSON.stringify(this.structure))
+            return this.$route.params.id 
+                   ? _.defaults(aux.default, aux[this.$route.params.id]) 
+                   : aux.default;
         },
         init() {
 
-            this.fields = _.clone(structure.default)
         },
         async save() {
 
             await console.log("SAVE WITH DATA:", this.$refs.form.getData());
         }
-    },
-    destroyed() {
-        this.fields = {}
     },
     components: {
         Formm
