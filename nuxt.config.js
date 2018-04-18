@@ -21,7 +21,13 @@ module.exports = {
                 content: "Burundanga Studio CMS for websites."
             }
         ],
-        link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+        script: [
+            { src: 'https://cdn.quilljs.com/1.3.6/quill.js' }
+        ],
+        link: [
+            { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+            { rel: 'stylesheet', href: 'https://cdn.quilljs.com/1.3.6/quill.snow.css' }
+        ]
     },
 
     loading: false,
@@ -35,7 +41,7 @@ module.exports = {
         { src: "~/plugins/init.js", ssr: false }
     ],
 
-    serverMiddleware: [ "~/serverMiddleware/auth-cookie.js" ],
+    serverMiddleware: ["~/serverMiddleware/auth-cookie.js"],
 
     build: {
         extend(config, { isDev, isClient }) {

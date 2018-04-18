@@ -19,6 +19,9 @@
     "eva": {
         "image": {
             "type": "image"
+        },
+        "images": {
+            "type": "images"
         }
     }
 }

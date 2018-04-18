@@ -1,23 +1,20 @@
 <!--
-    components/form/components/Input.vue
+    components/form/components/Images.vue
 
     Coded by Christian MacMillan (_@burundanga.studio)
     April 2018 | http://burundanga.studio
 -->
 
 <template>
-    <div class="input">
-        Input
+    <div class="images">
+        Images
     </div>
 </template>
 
 <script>
 
 export default {
-    name: "inputt",
-    mounted() {
-        console.log("Input");
-    }
+    name: "images-field"
 }
 
 </script>

@@ -7,11 +7,19 @@
 
 <template>
     <div class="field">
-        <p>{{ name }} : {{ field }}</p>
+        {{ name }}
+        <component ref="field" :is="field.type + '-field'" />
     </div>
 </template>
 
 <script>
+
+import AreaField from "./types/Area"
+import ImageField from "./types/Image"
+import ImagesField from "./types/Images"
+import PassField from "./types/Pass"
+import TextField from "./types/Text"
+import WyswygField from "./types/Wyswyg"
 
 export default {
     name: "field",
@@ -20,7 +28,15 @@ export default {
         field: Object
     },
     mounted() {
-        console.log("Field");
+        console.log(this.field.type);
+    },
+    components: {
+        AreaField,
+        ImageField,
+        ImagesField,
+        PassField,
+        TextField,
+        WyswygField
     }
 }
 
