@@ -6,7 +6,7 @@
 -->
 
 <template>
-    <div class="logged-layout">
+    <div class="layout logged">
         <header-component/>
         <nuxt/>
         <footer-component/>
