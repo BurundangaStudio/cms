@@ -4,3 +4,43 @@
 //
 // Coded by Christian MacMillan (_@burundanga.studio)
 // April 2018 | http://burundanga.studio
+
+
+@mixin transform($transforms) {
+    -moz-transform: $transforms;
+    -o-transform: $transforms;
+    -ms-transform: $transforms;
+    -webkit-transform: $transforms;
+    transform: $transforms;
+}
+
+@mixin borderRadius($border-radiuss) {
+    -moz-border-radius: $border-radiuss;
+    -o-border-radius: $border-radiuss;
+    -ms-border-radius: $border-radiuss;
+    -webkit-border-radius: $border-radiuss;
+    border-radius: $border-radiuss;
+}
+
+@mixin centerX() {
+    left: 50%;
+    @include transform(translateX(-50%));
+}
+
+@mixin centerY() {
+    top: 50%;
+    @include transform(translateY(-50%));
+}
+
+@mixin centerXY() {
+    left: 50%;
+    top: 50%;
+    @include transform(translate(-50%, -50%));
+}
+
+@mixin inputBorder() {
+    border: 1px solid $light_grey;
+    @include borderRadius(5px);
+}
+
+

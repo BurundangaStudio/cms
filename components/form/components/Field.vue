@@ -42,3 +42,10 @@ export default {
 
 </script>
 
+<style lang="scss" scoped>
+
+.field {
+    padding: 10px 0px;
+}
+
+</style>

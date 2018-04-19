@@ -22,11 +22,14 @@ module.exports = {
             }
         ],
         script: [
-            { src: 'https://cdn.quilljs.com/1.3.6/quill.js' }
+            { src: "https://cdn.quilljs.com/1.3.6/quill.js" }
         ],
         link: [
             { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
-            { rel: 'stylesheet', href: 'https://cdn.quilljs.com/1.3.6/quill.snow.css' }
+            {
+                rel: "stylesheet",
+                href: "https://cdn.quilljs.com/1.3.6/quill.snow.css"
+            }
         ]
     },
 
@@ -34,9 +37,12 @@ module.exports = {
 
     transition: require("./local_modules/transitions/default.js"),
 
-    css: ["@/assets/css/main.scss"],
+    modules: ["nuxt-sass-resources-loader"],
+
+    sassResources: ["@/assets/css/main.scss"],
 
     plugins: [
+        { src: "~/plugins/sortable.js", ssr: false },
         { src: "~/plugins/firebase.js", ssr: false },
         { src: "~/plugins/init.js", ssr: false }
     ],
