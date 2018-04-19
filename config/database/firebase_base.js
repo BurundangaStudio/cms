@@ -1,6 +1,5 @@
 //
-// config/firebase_base.js
-//
+// config/database/firebase_base.js
 
 //
 // Coded by Christian MacMillan (_@burundanga.studio)

@@ -23,10 +23,6 @@ export default {
     props: {
         fields: Object
     },
-    mounted() {
-
-        console.log("Form with fields: ", this.fields);
-    },
     methods: {
         getData() {
 

@@ -18,10 +18,15 @@
     },
     "eva": {
         "image": {
-            "type": "image"
+            "type": "files",
+            "limit": 1,
+            "format": [ "png", "jpg", "gif" ],
+            "maxSize": 42
         },
         "images": {
-            "type": "images"
+            "type": "files",
+            "format": [ "png", "jpg", "gif", "mp4" ],
+            "maxSize": 1000
         }
     }
 }

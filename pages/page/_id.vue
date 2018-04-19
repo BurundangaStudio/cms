@@ -19,7 +19,7 @@
 import _ from "underscore";
 
 import Formm from "~/components/form/Form";
-import structure from "~/config/database/content-structure/pages.json";
+import structure from "~/config/content/pages.json";
 
 export default {
     name: "page",

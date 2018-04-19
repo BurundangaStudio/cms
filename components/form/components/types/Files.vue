@@ -22,31 +22,40 @@
 <script>
 
 import Resumable from "resumablejs";
+import Config from "~/config/form/files";
 
 export default {
     name: "images-field",
+    props: {
+        field: Object
+    },
     data() {
         return {
             r: {},
-            images: []
+            images: [],
+            config: []
         }
     },
     mounted() {
         this.init();
     },
-    watch: {
-        images() {
-            console.log(this.images)
-        }
-    },
     methods: {
         init() {
+
+            this.setConfig();
 
             this.box = this.$el.querySelector(".box");
             this.list = this.box.querySelector(".list");
             this.button = this.$el.querySelector(".select-files");
 
             this.initResumable();
+        },
+        setConfig() {
+
+            this.ERRORS = [];
+            this.LIMIT = this.field.limit ? this.field.limit : Config.limit;
+            this.FORMAT = this.field.format ? this.field.format : Config.format;
+            this.MAXSIZE = this.field.maxSize ? this.field.maxSize : Config.maxSize;
         },
         initResumable() {
 
@@ -56,8 +65,10 @@ export default {
             this.r.on("fileAdded", this.readAddedFile);
         },
         readAddedFile(file) {
-
-            this.images.push({ order: this.images.length + 1, file });
+            
+            this.isRightFile(file) 
+            ? this.images.push({ order: this.images.length + 1, file })
+            : this.dispatchError();
         },
         reorder({ oldIndex, newIndex }) {
 
@@ -66,7 +77,25 @@ export default {
         },
         deleteItem(key) {
 
+            this.images[key].file.cancel();
             this.images.splice(key, 1);
+        },
+        getFileExtensionOf(name) {
+
+            const segments = name.split(".");
+            return segments[segments.length - 1];
+        },
+        isRightFile(file) {
+            
+            this.ERRORS = [];
+            if (this.images.length + 1 > this.LIMIT) this.ERRORS.push("Limit exceeded.");
+            if (!this.FORMAT.includes(this.getFileExtensionOf(file.fileName))) this.ERRORS.push("Wrong format.");
+            if (file.size * 0.001 > this.MAXSIZE) this.ERRORS.push("Max size exceeded - " + file.size * 0.001);
+
+            return this.ERRORS.length == 0;
+        },
+        dispatchError() {
+            console.error("ERRORRRR:" + this.ERRORS);
         }
     }
 }
