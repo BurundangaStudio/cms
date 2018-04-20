@@ -31,8 +31,11 @@ export default {
             }
             this.quill = new Quill(this.$el.querySelector(".editor"), options);
         },
-        getData() {
+        getValue() {
             return "wyswyg";
+        },
+        valid() {
+            return true;
         }
     }
 }

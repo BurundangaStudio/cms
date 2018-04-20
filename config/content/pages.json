@@ -2,12 +2,17 @@
     "default": {
         "link": {
             "type": "text",
-            "limit": 10,
-            "rules": [ "no-spaces" ]
+            "rules": {
+                "required": true,
+                "limit": 10,
+                "no-spaces": true
+            }
         },
         "title": {
             "type": "text",
-            "limit": 150
+            "rules": {
+                "limit": 150
+            }
         },
         "subtitle": {
             "type": "text"
@@ -19,14 +24,19 @@
     "eva": {
         "image": {
             "type": "files",
-            "limit": 1,
-            "format": [ "png", "jpg", "gif" ],
-            "maxSize": 42
+            "rules": {
+                "limit": 1,
+                "format": [ "png", "jpg", "gif" ],
+                "maxSize": 42
+            }
         },
         "images": {
             "type": "files",
-            "format": [ "png", "jpg", "gif", "mp4" ],
-            "maxSize": 1000
+            "rules": {
+                "required": true,
+                "format": [ "png", "jpg", "gif", "mp4" ],
+                "maxSize": 3000
+            }
         }
     }
 }

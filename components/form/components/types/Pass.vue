@@ -16,8 +16,11 @@
 export default {
     name: "pass-field",
     methods: {
-        getData() {
+        getValue() {
             return "Pass";
+        },
+        valid() {
+            return true;
         }
     }
 }

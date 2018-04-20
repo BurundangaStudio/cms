@@ -7,7 +7,7 @@
 
 <template>
     <div class="text">
-        <input type="text" />
+        <input type="text" v-model="text"/>
     </div>
 </template>
 
@@ -18,11 +18,29 @@
 export default {
     name: "text-field",
     props: {
-        field: Object
+        field: Object,
+        value: String
+    },
+    data() {
+        return {
+            text: ""
+        }
+    },
+    created() {
+        this.setInitValue();
     },
     methods: {
-        getData() {
-            return "Text";
+        setInitValue() {
+
+            this.text = this.value;
+        },
+        getValue() {
+
+            return this.text;
+        },
+        valid() {
+
+            return true;
         }
     }
 }
@@ -30,10 +48,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    // input[type="text"] {
-    //     background: none;
-    //     border: 1px solid lightgray;
-    //     border-radius: 2px;
-    //     outline: 0;
-    // }
+    input[type="text"] {
+        background: none;
+        border: 1px solid lightgray;
+        border-radius: 2px;
+        outline: 0;
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+    }
 </style>

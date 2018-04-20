@@ -21,19 +21,26 @@
 
 <script>
 
+import _ from "lodash";
 import Resumable from "resumablejs";
-import Config from "~/config/form/files";
+import Rules from "~/config/form/rules";
+import { FilesRules } from "~/config/form/rules";
 
 export default {
     name: "images-field",
     props: {
-        field: Object
+        field: Object,
+        name: String
     },
     data() {
         return {
             r: {},
             images: [],
-            config: []
+            rules: {},
+            error: {
+                name: "",
+                type: []
+            }
         }
     },
     mounted() {
@@ -42,7 +49,7 @@ export default {
     methods: {
         init() {
 
-            this.setConfig();
+            this.setRules();
 
             this.box = this.$el.querySelector(".box");
             this.list = this.box.querySelector(".list");
@@ -50,12 +57,9 @@ export default {
 
             this.initResumable();
         },
-        setConfig() {
+        setRules() {
 
-            this.ERRORS = [];
-            this.LIMIT = this.field.limit ? this.field.limit : Config.limit;
-            this.FORMAT = this.field.format ? this.field.format : Config.format;
-            this.MAXSIZE = this.field.maxSize ? this.field.maxSize : Config.maxSize;
+            this.rules = _.defaults(this.field.rules, FilesRules, Rules);
         },
         initResumable() {
 
@@ -65,8 +69,10 @@ export default {
             this.r.on("fileAdded", this.readAddedFile);
         },
         readAddedFile(file) {
-            
-            this.isRightFile(file) 
+
+            this.box.classList.remove("error");
+
+            this.isValidFile(file)
             ? this.images.push({ order: this.images.length + 1, file })
             : this.dispatchError();
         },
@@ -80,26 +86,43 @@ export default {
             this.images[key].file.cancel();
             this.images.splice(key, 1);
         },
+        isValidFile(file) {
+
+            this.error.name = file.fileName;
+            this.error.type = [];
+
+            if (this.images.length + 1 > this.rules.limit) this.error.type.push("Limit exceeded.");
+            if (!this.rules.format.includes(this.getFileExtensionOf(file.fileName))) this.error.type.push("Wrong format.");
+            if (this.rules.maxSize < (file.size * 0.001)) this.error.type.push("Max size exceeded - " + file.size * 0.001);
+
+            const valid = this.error.type == 0;
+            if (!valid) file.cancel();
+            return valid;
+        },
         getFileExtensionOf(name) {
 
             const segments = name.split(".");
             return segments[segments.length - 1];
         },
-        isRightFile(file) {
-            
-            this.ERRORS = [];
-            if (this.images.length + 1 > this.LIMIT) this.ERRORS.push("Limit exceeded.");
-            if (!this.FORMAT.includes(this.getFileExtensionOf(file.fileName))) this.ERRORS.push("Wrong format.");
-            if (file.size * 0.001 > this.MAXSIZE) this.ERRORS.push("Max size exceeded - " + file.size * 0.001);
-
-            return this.ERRORS.length == 0;
-        },
         dispatchError() {
-            console.error("ERRORRRR:" + this.ERRORS);
+
+            this.$store.dispatch("pushError", this.error);
         },
-        getData() {
+        getValue() {
             return this.images;
-        }   
+        },
+        valid() {
+            const valid = !(this.rules.required && this.images.length == 0);
+            if (!valid) {
+                this.box.classList.add("error");
+                this.error = {
+                    name: this.name,
+                    type: [ "required field" ]
+                }
+                this.dispatchError();
+            }
+            return valid;
+        }
     }
 }
 
@@ -112,7 +135,9 @@ export default {
         max-height: 200px;
         overflow-y: scroll;
         @include inputBorder();
-        margin: 20px 0px;
+        &.error {
+            border-color: $error_color;
+        }
         .text {
             position: absolute;
             @include centerXY();

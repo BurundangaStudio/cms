@@ -7,8 +7,8 @@
 
 <template>
     <div class="field">
-        {{ name }}
-        <component ref="field" :is="field.type + '-field'" :field="field"/>
+        <label>{{ name }}</label>
+        <component ref="field" :is="field.type + '-field'" :name="name" :field="field"/>
     </div>
 </template>
 
@@ -28,9 +28,12 @@ export default {
         field: Object
     },
     methods: {
-        getData() {
-            
-            return this.$refs.field.getData();
+        valid() {
+            return this.$refs.field.valid();
+        },
+        getValue() {
+
+            return this.$refs.field.getValue();
         }
     },
     components: {
@@ -49,6 +52,10 @@ export default {
 
 .field {
     padding: 10px 0px;
+    label {
+        display: block;
+        padding-bottom: 5px;
+    }
 }
 
 </style>

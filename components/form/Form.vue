@@ -19,17 +19,31 @@
 import Field from "~/components/form/components/Field";
 
 export default {
+    data() {
+        return {
+            data: [],
+            error: false
+        }
+    },
     name: "formm",
     props: {
         fields: Object
     },
     methods: {
-        getData() {
-            const data = [];
+        getValue() {
+
+            this.data = [];
+            this.error = false;
+
             Array.from(this.$refs.field).forEach(field => {
-                data.push(field.getData());
+
+                if (!field.valid()) this.error = true;
+
+                this.data.push({ key: field.name, data: field.getValue() });
             })
-            return data;
+
+            if (this.error) return "ERRORRRRRR";
+            return this.data;
         }
     },
     components: {

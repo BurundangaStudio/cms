@@ -8,6 +8,7 @@
 <template>
     <div class="layout logged">
         <header-component/>
+        <error-overlay/>
         <nuxt/>
         <footer-component/>
     </div>
@@ -15,8 +16,12 @@
 
 <script>
 
-    import HeaderComponent from "~/components/common/Header"
-    import FooterComponent from "~/components/common/Footer"
+    import _ from "lodash";
+
+    import HeaderComponent from "~/components/common/Header";
+    import FooterComponent from "~/components/common/Footer";
+
+    import ErrorOverlay from "~/components/common/overlays/Error";
 
     export default {
 
@@ -27,7 +32,8 @@
         components: {
 
             HeaderComponent,
-            FooterComponent
+            FooterComponent,
+            ErrorOverlay
         }
     }
 

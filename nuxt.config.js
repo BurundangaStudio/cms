@@ -1,6 +1,5 @@
 //
 // nuxt.config.js
-//
 
 //
 // Coded by Christian MacMillan (_@burundanga.studio)
@@ -50,6 +49,7 @@ module.exports = {
     serverMiddleware: ["~/serverMiddleware/auth-cookie.js"],
 
     build: {
+        vendor: ["lodash"],
         extend(config, { isDev, isClient }) {
             if (isDev && isClient) {
                 config.module.rules.push({

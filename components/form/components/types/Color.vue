@@ -16,8 +16,11 @@
 export default {
     name: "color",
     methods: {
-        getData() {
+        getValue() {
             return "Color";
+        },
+        valid() {
+            return true;
         }
     }
 }

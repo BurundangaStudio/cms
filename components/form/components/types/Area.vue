@@ -16,8 +16,11 @@
 export default {
     name: "area-field",
     methods: {
-        getData() {
+        getValue() {
             return "Area";
+        },
+        valid() {
+            return true;
         }
     }
 }

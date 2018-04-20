@@ -16,7 +16,7 @@
 
 <script>
 
-import _ from "underscore";
+import _ from "lodash";
 
 import Formm from "~/components/form/Form";
 import structure from "~/config/content/pages.json";
@@ -43,8 +43,8 @@ export default {
 
         },
         async save() {
-            
-            await this.$store.dispatch("uploadStorage", this.$refs.form.getData());
+
+            await this.$store.dispatch("uploadStorage", this.$refs.form.getValue());
         }
     },
     components: {
