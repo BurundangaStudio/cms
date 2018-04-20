@@ -30,6 +30,9 @@ export default {
                 theme: 'snow'
             }
             this.quill = new Quill(this.$el.querySelector(".editor"), options);
+        },
+        getData() {
+            return "wyswyg";
         }
     }
 }

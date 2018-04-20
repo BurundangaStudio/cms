@@ -43,8 +43,8 @@ export default {
 
         },
         async save() {
-
-            await console.log("SAVE WITH DATA:", this.$refs.form.getData());
+            
+            await this.$store.dispatch("uploadStorage", this.$refs.form.getData());
         }
     },
     components: {

@@ -27,6 +27,12 @@ export default {
         name: String,
         field: Object
     },
+    methods: {
+        getData() {
+            
+            return this.$refs.field.getData();
+        }
+    },
     components: {
         AreaField,
         ColorField,

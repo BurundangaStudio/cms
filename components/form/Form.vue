@@ -9,7 +9,7 @@
     <div class="form">
         Form
         <div class="fields">
-            <field v-for="(field, key) in fields" :key="key" :name="key" :field="field"></field>
+            <field ref="field" v-for="(field, key) in fields" :key="key" :name="key" :field="field"></field>
         </div>
     </div>
 </template>
@@ -25,8 +25,11 @@ export default {
     },
     methods: {
         getData() {
-
-            return "Form data";
+            const data = [];
+            Array.from(this.$refs.field).forEach(field => {
+                data.push(field.getData());
+            })
+            return data;
         }
     },
     components: {

@@ -96,7 +96,10 @@ export default {
         },
         dispatchError() {
             console.error("ERRORRRR:" + this.ERRORS);
-        }
+        },
+        getData() {
+            return this.images;
+        }   
     }
 }
 

@@ -14,7 +14,12 @@
 <script>
 
 export default {
-    name: "area-field"
+    name: "area-field",
+    methods: {
+        getData() {
+            return "Area";
+        }
+    }
 }
 
 </script>

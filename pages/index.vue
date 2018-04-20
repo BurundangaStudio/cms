@@ -48,7 +48,7 @@
                 const email = this.emailInput.value;
                 const password = this.passwordInput.value;
 
-                await this.$store.dispatch('login', { email, password });
+                await this.$store.dispatch("login", { email, password });
                 this.$router.push("/" + config.entryPoint);
             }
         }

@@ -14,7 +14,12 @@
 <script>
 
 export default {
-    name: "pass-field"
+    name: "pass-field",
+    methods: {
+        getData() {
+            return "Pass";
+        }
+    }
 }
 
 </script>

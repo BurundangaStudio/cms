@@ -19,6 +19,11 @@ export default {
     name: "text-field",
     props: {
         field: Object
+    },
+    methods: {
+        getData() {
+            return "Text";
+        }
     }
 }
 

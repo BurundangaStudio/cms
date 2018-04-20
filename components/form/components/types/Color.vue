@@ -14,7 +14,12 @@
 <script>
 
 export default {
-    name: "color"
+    name: "color",
+    methods: {
+        getData() {
+            return "Color";
+        }
+    }
 }
 
 </script>
