@@ -15,13 +15,13 @@ export default {
         progress: 0
     },
     mutations: {
-        setRef(state, ref) {
+        SET_REF(state, ref) {
             state.ref = ref;
         },
-        setUploading(state) {
+        SET_UPLOADING(state) {
             state.uploading = true;
         },
-        setUploaded(state) {
+        SET_UPLOADED(state) {
             state.uploaded = true;
         }
     },
@@ -29,12 +29,12 @@ export default {
 
         async uploadStorage({ dispatch, commit }, assets) {
 
-            await dispatch("setRef");
+            await dispatch("SET_REF");
             console.log(assets);
         },
 
         setRef({ dispatch, commit }) {
-            
+
         }
     }
 };

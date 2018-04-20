@@ -13,14 +13,14 @@ export default {
         logged: undefined
     },
     mutations: {
-        setUser(state, user) {
+        SET_USER(state, user) {
             state.user = user;
             state.logged = user ? true : false;
         }
     },
     actions: {
         setUser({ commit }, user) {
-            commit("setUser", user);
+            commit("SET_USER", user);
         },
 
         async login({}, data) {

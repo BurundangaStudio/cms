@@ -13,20 +13,20 @@ export default {
     },
     mutations: {
 
-        push(state, error) {
+        PUSH(state, error) {
             state.errors.push(_.cloneDeep(error));
         },
-        clean(state) {
+        CLEAN(state) {
             state.errors = [];
         }
     },
     actions: {
 
         pushError({ commit }, error) {
-            commit("push", error);
+            commit("PUSH", error);
         },
         cleanErrors({ commit }) {
-            commit("clean");
+            commit("CLEAN");
         }
     }
 };

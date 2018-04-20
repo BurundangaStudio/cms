@@ -32,6 +32,10 @@ module.exports = {
         ]
     },
 
+    router: {
+        middleware: 'i18n'
+    },
+
     loading: false,
 
     transition: require("./local_modules/transitions/default.js"),
@@ -43,7 +47,8 @@ module.exports = {
     plugins: [
         { src: "~/plugins/sortable.js", ssr: false },
         { src: "~/plugins/firebase.js", ssr: false },
-        { src: "~/plugins/init.js", ssr: false }
+        { src: "~/plugins/init.js", ssr: false },
+        { src: "~/plugins/i18n.js", ssr: true }
     ],
 
     serverMiddleware: ["~/serverMiddleware/auth-cookie.js"],

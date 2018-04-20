@@ -8,6 +8,7 @@
 
 export default {
     menu: ["dashboard", "pages", "posts"],
-    entryPoint: "dashboard"
+    entryPoint: "dashboard",
+    entryLang: "en"
 }
 
