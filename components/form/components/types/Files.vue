@@ -10,8 +10,8 @@
         <div class="box">
             <p v-if="images.length == 0" class="text" v-text="$t('form:drag:drop:placeholder')"></p>
             <ul class="list" v-sortable="{ onEnd: reorder }">
-                <li class="item" v-for="(i, index) in images" :key="i.order">
-                    {{ i.file.fileName }} <button @click="deleteItem(index)" v-text="$t('button:delete')"/>
+                <li class="item" v-for="(img, index) in images" :key="img.file.uniqueIdentifier">
+                    <img v-if="!img.loading" :src="img.preview" /> {{ index + 1 }} ---- {{ img.file.fileName }} <button @click="deleteItem(index)" v-text="$t('button:delete')"/>
                 </li>
             </ul>
         </div>
@@ -72,9 +72,26 @@ export default {
 
             this.box.classList.remove("error");
 
-            this.isValidFile(file)
-            ? this.images.push({ order: this.images.length + 1, file })
+            this.isValid(file)
+            ? this.load(file)
             : this.dispatchError();
+        },
+        load(file) {
+
+            let image = {};
+
+            image.file = file;
+            image.loading = true;
+            this.images.push(image);
+
+            const index = this.images.length - 1;
+
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(image.file.file);
+            fileReader.onload = file => {
+                this.images[index].preview = file.target.result;
+                this.images[index].loading = false;
+            }
         },
         reorder({ oldIndex, newIndex }) {
 
@@ -86,7 +103,7 @@ export default {
             this.images[key].file.cancel();
             this.images.splice(key, 1);
         },
-        isValidFile(file) {
+        isValid(file) {
 
             this.error.name = file.fileName;
             this.error.type = [];
@@ -152,6 +169,9 @@ export default {
             .item {
                 border-bottom: 1px solid $light_grey;
                 padding: 10px 20px;
+                img {
+                    width: 20px;
+                }
                 &:last-child {
                     border-bottom: none;
                 }

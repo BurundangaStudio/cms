@@ -29,7 +29,7 @@ export default {
 
         async uploadStorage({ dispatch, commit }, assets) {
 
-            await dispatch("SET_REF");
+            await dispatch("setRef");
             console.log(assets);
         },
 

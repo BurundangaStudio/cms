@@ -7,37 +7,49 @@
 
 <template>
     <section>
-        <h1 class="title">{{ $t('album') + " " + id }}</h1>
+        <no-ssr>
+            <formm ref="form" :fields="getFields()"></formm>
+        </no-ssr>
+        <button @click="save" v-text="$t('button:save')"/>
     </section>
 </template>
 
 <script>
 
+import _ from "lodash";
+
+import Formm from "~/components/form/Form";
+import structure from "~/config/content/albums.json";
+
 export default {
     name: "album",
     layout: "logged",
-    data() {
+    data () {
         return {
-            id: undefined
+            structure
         }
-    },
-    watch: {
-        $route: "setData"
-    },
-    created() {
-        this.setData();
     },
     mounted() {
         this.init();
     },
     methods: {
-        setData() {
-            this.id = this.$route.params.id;
+        getFields() {
+            const aux = JSON.parse(JSON.stringify(this.structure))
+            return this.$route.params.id
+                   ? _.defaults(aux.default, aux[this.$route.params.id])
+                   : aux.default;
         },
         init() {
 
             console.log("Album " + this.id);
+        },
+        async save() {
+
+            await this.$store.dispatch("uploadStorage", this.$refs.form.getValue());
         }
+    },
+    components: {
+        Formm
     }
 }
 

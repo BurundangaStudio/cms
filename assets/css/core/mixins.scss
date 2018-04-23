@@ -40,7 +40,6 @@
 
 @mixin inputBorder() {
     border: 1px solid $light_grey;
-    @include borderRadius(5px);
 }
 
 

@@ -50,11 +50,10 @@ export default {
 <style lang="scss" scoped>
     input[type="text"] {
         background: none;
-        border: 1px solid lightgray;
-        border-radius: 2px;
         outline: 0;
         width: 100%;
         padding: 10px;
         font-size: 14px;
+        @include inputBorder();
     }
 </style>

@@ -11,3 +11,10 @@
     </footer>
 </template>
 
+<style lang="scss" scoped>
+
+    footer {
+        display: none;
+    }
+
+</style>

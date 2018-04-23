@@ -1,0 +1,29 @@
+{
+    "default": {
+        "link": {
+            "type": "text",
+            "rules": {
+                "required": true,
+                "limit": 10,
+                "no-spaces": true
+            }
+        },
+        "title": {
+            "type": "text",
+            "rules": {
+                "limit": 150
+            }
+        },
+        "content": {
+            "type": "wyswyg"
+        },
+        "images": {
+            "type": "files",
+            "rules": {
+                "required": true,
+                "format": [ "png", "jpg", "gif", "mp4" ],
+                "maxSize": 4000
+            }
+        }
+    }
+}
