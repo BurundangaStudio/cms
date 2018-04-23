@@ -7,7 +7,7 @@
 
 <template>
     <section class="pages">
-        <h1 class="title">Pages</h1>
+        <h1 class="title" v-text="$t('pages')"></h1>
     </section>
 </template>
 

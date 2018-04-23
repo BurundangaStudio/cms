@@ -7,7 +7,6 @@
 
 <template>
     <div class="form">
-        Form {{ $t('test') }}
         <div class="fields">
             <field ref="field" v-for="(field, key) in fields" :key="key" :name="key" :field="field"></field>
         </div>

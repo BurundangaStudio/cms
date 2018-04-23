@@ -7,7 +7,7 @@
 
 <template>
     <div class="field">
-        <label>{{ name }}</label>
+        <label v-text="$t(name)" />
         <component ref="field" :is="field.type + '-field'" :name="name" :field="field"/>
     </div>
 </template>

@@ -7,7 +7,7 @@
 
 <template>
     <footer>
-        <p>Footer - credits</p>
+        <p v-text="$t('footer')" />
     </footer>
 </template>
 

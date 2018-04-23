@@ -8,14 +8,14 @@
 <template>
     <div class="images">
         <div class="box">
-            <p v-if="images.length == 0" class="text">Drag/drop here your images</p>
+            <p v-if="images.length == 0" class="text" v-text="$t('form:drag:drop:placeholder')"></p>
             <ul class="list" v-sortable="{ onEnd: reorder }">
                 <li class="item" v-for="(i, index) in images" :key="i.order">
-                    {{ i.file.fileName }} <button @click="deleteItem(index)">DELETE</button>
+                    {{ i.file.fileName }} <button @click="deleteItem(index)" v-text="$t('button:delete')"/>
                 </li>
             </ul>
         </div>
-        <button class="select-files">Select files</button>
+        <button class="select-files" v-text="$t('button:select:files')" />
     </div>
 </template>
 

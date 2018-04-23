@@ -26,7 +26,6 @@ export default {
     methods: {
         init() {
             const options = {
-                placeholder: 'Compose an epic...',
                 theme: 'snow'
             }
             this.quill = new Quill(this.$el.querySelector(".editor"), options);

@@ -9,10 +9,10 @@
     <section class="page login">
         <div class="grid">
             <div class="centered">
-                <h1 class="title">Login</h1>
-                <input type="text" name="email" id="email" placeholder="Enter your email" value="_@burundanga.studio">
-                <input type="password" name="password" id="password" placeholder="Enter your password" value="Burundanga.1">
-                <button class="button" @click="login">Login</button>
+                <h1 class="title" v-text="$t('login')" />
+                <input type="text" name="email" id="email" :placeholder="$t('login:email:placeholder')" value="_@burundanga.studio">
+                <input type="password" name="password" id="password" :placeholder="$t('login:pass:placeholder')" value="Burundanga.1">
+                <button class="button" @click="login" v-text="$t('login')" />
             </div>
         </div>
     </section>

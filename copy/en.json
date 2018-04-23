@@ -1,3 +1,34 @@
 {
-    "test": "Hello"
+    "dashboard": "Dashboard",
+    "pages": "Pages",
+    "page": "Page",
+    "posts": "Posts",
+    "post": "Post",
+    "albums": "Albums",
+    "album": "Album",
+    "users": "Users",
+    "user": "User",
+
+    "logout": "Logout",
+
+    "link": "link",
+    "title": "title",
+    "subtitle": "subtitle",
+    "content": "content",
+    "image": "image",
+    "images": "images",
+
+    "login": "Login",
+    "login:email:placeholder": "Enter your email",
+    "login:pass:placeholder": "Enter your password",
+
+    "form:drag:drop:placeholder": "Drag/drop here your images",
+
+    "button:save": "Save",
+    "button:delete": "Delete",
+    "button:select:files": "Select files",
+
+    "clean": "Clean",
+
+    "footer": "Footer - credits"
 }

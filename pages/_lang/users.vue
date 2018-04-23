@@ -7,7 +7,7 @@
 
 <template>
     <section class="users">
-        <h1 class="title">Users</h1>
+        <h1 class="title" v-text="$t('users')" />
     </section>
 </template>
 

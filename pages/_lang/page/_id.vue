@@ -10,7 +10,7 @@
         <no-ssr>
             <formm ref="form" :fields="getFields()"></formm>
         </no-ssr>
-        <button @click="save">SAVE</button>
+        <button @click="save" v-text="$t('button:save')"/>
     </section>
 </template>
 

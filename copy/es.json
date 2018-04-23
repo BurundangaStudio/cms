@@ -1,3 +1,34 @@
 {
-    "test": "Hola"
+    "dashboard": "Inicio",
+    "pages": "Páginas",
+    "page": "Página",
+    "posts": "Blog",
+    "post": "Entrada",
+    "albums": "Álbumes",
+    "album": "Álbum",
+    "users": "Usuarios",
+    "user": "Usuario",
+
+    "logout": "Cerrar sesión",
+
+    "link": "Link",
+    "title": "Título",
+    "subtitle": "Subtítulo",
+    "content": "Contenido",
+    "image": "Imagen",
+    "images": "Imágenes",
+
+    "login": "Login",
+    "login:email:placeholder": "Introduce tu email",
+    "login:pass:placeholder": "Introduce tu contraseña",
+
+    "form:drag:drop:placeholder": "Arrastra aquí tus imágenes",
+
+    "button:save": "Guardar",
+    "button:delete": "Borrar",
+    "button:select:files": "Selecciona archivos",
+
+    "clean": "Limpiar",
+
+    "footer": "Footer - créditos"
 }

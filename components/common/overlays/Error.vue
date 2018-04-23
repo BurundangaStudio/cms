@@ -13,7 +13,7 @@
                 {{ t }}
             </p>
         </div>
-        <button @click="clean">Clean</button>
+        <button @click="clean" v-text="$t('clean')"></button>
     </div>
 </template>
 

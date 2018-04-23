@@ -7,7 +7,7 @@
 
 <template>
     <section class="post">
-        <h1 class="title">Post {{ id }}</h1>
+        <h1 class="title">{{ $t('post') + " " + id }}</h1>
     </section>
 </template>
 

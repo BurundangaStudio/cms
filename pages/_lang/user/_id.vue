@@ -7,7 +7,7 @@
 
 <template>
     <section>
-        User {{ id }}
+        <h1 class="title">{{ $t('user') + " " + id }}</h1>
     </section>
 </template>
 

@@ -7,7 +7,7 @@
 
 <template>
     <section>
-        Album {{ id }}
+        <h1 class="title">{{ $t('album') + " " + id }}</h1>
     </section>
 </template>
 

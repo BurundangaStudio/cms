@@ -10,14 +10,14 @@
         <nav class="navigation">
             <ul>
                 <li v-for="(link, index) in links" :key="index">
-                    <nuxt-link :to="{ name: getNameOf(link) }" v-text="link" />
+                    <nuxt-link :to="{ name: getNameOf(link) }" v-text="$t(link)" />
                 </li>
             </ul>
         </nav>
         <nav class="account">
             <ul>
                 <li>
-                    <a class="loggout" @click="logout">Logout</a>
+                    <a class="loggout" @click="logout" v-text="$t('logout')"></a>
                 </li>
             </ul>
         </nav>
