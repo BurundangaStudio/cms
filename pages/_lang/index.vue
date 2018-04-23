@@ -10,8 +10,8 @@
         <div class="grid">
             <div class="centered">
                 <h1 class="title">Login</h1>
-                <input type="text" name="email" id="email" placeholder="Enter your email">
-                <input type="password" name="password" id="password" placeholder="Enter your password">
+                <input type="text" name="email" id="email" placeholder="Enter your email" value="_@burundanga.studio">
+                <input type="password" name="password" id="password" placeholder="Enter your password" value="Burundanga.1">
                 <button class="button" @click="login">Login</button>
             </div>
         </div>
@@ -33,6 +33,11 @@
                 TweenMax.to(el, 1, { opacity: 1 })
             }
         },
+        computed: {
+            lang() {
+                return this.$store.state.lang.locale
+            }
+        },
         mounted() {
             this.init();
         },
@@ -49,7 +54,7 @@
                 const password = this.passwordInput.value;
 
                 await this.$store.dispatch("login", { email, password });
-                this.$router.push("/" + config.entryPoint);
+                this.$router.push("/" + this.lang + "/" + config.entryPoint);
             }
         }
     }
@@ -86,7 +91,7 @@
                 }
 
                 input, button {
-                    
+
                     width: 100%;
                     padding: 10px;
                     margin: 5px 0px;

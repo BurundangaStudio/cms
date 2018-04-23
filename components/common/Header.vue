@@ -10,7 +10,7 @@
         <nav class="navigation">
             <ul>
                 <li v-for="(link, index) in links" :key="index">
-                    <nuxt-link :to="'/' + link" v-text="link" />
+                    <nuxt-link :to="{ name: getNameOf(link) }" v-text="link" />
                 </li>
             </ul>
         </nav>
@@ -34,6 +34,11 @@
                 links: Array
             }
         },
+        computed: {
+            lang() {
+                return this.$store.state.lang.locale
+            }
+        },
         created() {
             this.setConfig()
         },
@@ -43,10 +48,14 @@
                 this.links = Config.menu
             },
 
+            getNameOf(link) {
+                return "lang-" + link;
+            },
+
             async logout() {
 
                 await this.$store.dispatch('logout');
-                this.$router.push("/");
+                this.$router.push("/" + this.lang);
             }
         }
     }
