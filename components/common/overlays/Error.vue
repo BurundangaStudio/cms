@@ -13,7 +13,7 @@
                 {{ t }}
             </p>
         </div>
-        <button @click="clean" v-text="$t('clean')"></button>
+        <button v-if="errors.length != 0" @click="clean" v-text="$t('clean')"></button>
     </div>
 </template>
 

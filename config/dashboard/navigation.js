@@ -7,7 +7,7 @@
 // April 2018 | http://burundanga.studio
 
 export default {
-    menu: ["dashboard", "pages", "posts"],
+    menu: ["dashboard", "albums", "pages", "posts", "users" ],
     entryPoint: "dashboard",
     entryLang: "en"
 }

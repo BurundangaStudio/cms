@@ -65,7 +65,20 @@
 
     header {
         padding: 20px 0px;
+
+        display: grid;
+
+        grid-template-columns: 1fr max-content;
+        -ms-grid-columns: 1fr max-content;
+        grid-template-rows: 1fr;
+        -ms-grid-row: 1fr;
+
         nav {
+            &.account {
+                a {
+                    padding: 0;
+                }
+            }
             ul {
                 list-style: none;
                 padding: 0px;

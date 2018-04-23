@@ -43,10 +43,10 @@ export default {
                         .currentUser.getIdToken(true)
                         .then(idToken => {
                             document.cookie =
-                                "__session=" + idToken + ";max-age=3600";
+                                "__session=" + idToken + ";max-age=3600;path=/";
                         });
                 } else {
-                    document.cookie = "__session=0;max-age=0";
+                    document.cookie = "__session=0;max-age=0;path=/";
                 }
             });
         }
