@@ -9,7 +9,7 @@ import * as firebase from "firebase";
 
 export default {
     state: {
-        ref: Object,
+        ref: undefined,
         uploading: false,
         uploaded: false,
         progress: 0
@@ -27,14 +27,19 @@ export default {
     },
     actions: {
 
-        async uploadStorage({ dispatch, commit }, assets) {
+        async uploadStorage({ dispatch, commit, state }, data) {
 
-            await dispatch("setRef");
-            console.log(assets);
+            if (_.isUndefined(state.ref))
+                await dispatch("setRef");
+
+            console.log("upload: ", data.assets);
+            console.log(" to " + data.path);
         },
 
-        setRef({ dispatch, commit }) {
+        setRef({ commit }) {
 
+            console.log("SET FIREBASE STORAGE REF");
+            commit("SET_REF", firebase.storage().ref());
         }
     }
 };

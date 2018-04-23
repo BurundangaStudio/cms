@@ -11,18 +11,19 @@
 
     "logout": "Logout",
 
-    "link": "link",
-    "title": "title",
-    "subtitle": "subtitle",
-    "content": "content",
-    "image": "image",
-    "images": "images",
+    "link": "Link",
+    "title": "Title",
+    "subtitle": "Subtitle",
+    "content": "Content",
+    "image": "Image",
+    "images": "Images",
+    "files": "Files",
 
     "login": "Login",
     "login:email:placeholder": "Enter your email",
     "login:pass:placeholder": "Enter your password",
 
-    "form:drag:drop:placeholder": "Drag/drop here your images",
+    "form:drag:drop:placeholder": "Drop your files here",
 
     "button:save": "Save",
     "button:delete": "Delete",

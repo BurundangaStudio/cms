@@ -16,3 +16,7 @@ export const FilesRules = {
     format: [ "png", "jpg", "svg", "gif", "mp4", "ogg", "webm", "ogv", "pdf" ],
     maxSize: 2000
 }
+
+export const StorageFields = [
+    "image", "images"
+]

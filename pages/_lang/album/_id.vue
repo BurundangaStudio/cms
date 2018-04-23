@@ -19,33 +19,46 @@
 import _ from "lodash";
 
 import Formm from "~/components/form/Form";
-import structure from "~/config/content/albums.json";
+import { StorageFields } from "~/config/form/rules";
+import Structure from "~/config/content/albums.json";
+
 
 export default {
     name: "album",
     layout: "logged",
     data () {
         return {
-            structure
+            Structure
         }
-    },
-    mounted() {
-        this.init();
     },
     methods: {
         getFields() {
-            const aux = JSON.parse(JSON.stringify(this.structure))
+
+            const aux = JSON.parse(JSON.stringify(this.Structure))
             return this.$route.params.id
                    ? _.defaults(aux.default, aux[this.$route.params.id])
                    : aux.default;
         },
-        init() {
-
-            console.log("Album " + this.id);
-        },
         async save() {
 
-            await this.$store.dispatch("uploadStorage", this.$refs.form.getValue());
+            const formData = this.$refs.form.getValue();
+
+           if (formData) {
+
+                const storageData = this.getStorageDataOf(formData);
+
+                // await this.$store.dispatch("uploadStorage", storageData);
+            }
+
+        },
+        getStorageDataOf(formData) {
+            const storageData = {};
+            console.log(formData, Date.now());
+            // storageData.path = "albums/" + this.link.
+            // Array.from(formData).forEach(field => {
+            //     if (StorageFields.includes(field.key)) storageData.push(field);
+            // })
+            return storageData;
         }
     },
     components: {

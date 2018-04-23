@@ -17,12 +17,13 @@
     "content": "Contenido",
     "image": "Imagen",
     "images": "Imágenes",
+    "files": "Archivos",
 
     "login": "Login",
     "login:email:placeholder": "Introduce tu email",
     "login:pass:placeholder": "Introduce tu contraseña",
 
-    "form:drag:drop:placeholder": "Arrastra aquí tus imágenes",
+    "form:drag:drop:placeholder": "Arrastra aquí tus archivos",
 
     "button:save": "Guardar",
     "button:delete": "Borrar",

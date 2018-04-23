@@ -31,17 +31,17 @@ export default {
     methods: {
         getValue() {
 
-            this.data = [];
+            this.data = {};
             this.error = false;
 
             Array.from(this.$refs.field).forEach(field => {
 
                 if (!field.valid()) this.error = true;
 
-                this.data.push({ key: field.name, data: field.getValue() });
+                this.data[field.name] = field.getValue();
             })
 
-            if (this.error) return "ERRORRRRRR";
+            if (this.error) return false;
 
             this.$store.dispatch("cleanErrors");
             return this.data;

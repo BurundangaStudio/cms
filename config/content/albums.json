@@ -17,11 +17,11 @@
         "content": {
             "type": "wyswyg"
         },
-        "images": {
+        "files": {
             "type": "files",
             "rules": {
                 "required": true,
-                "format": [ "png", "jpg", "gif", "mp4" ],
+                "format": [ "png", "jpg", "gif" ],
                 "maxSize": 4000
             }
         }
