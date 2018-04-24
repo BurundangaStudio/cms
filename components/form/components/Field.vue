@@ -29,6 +29,7 @@ export default {
     },
     methods: {
         valid() {
+
             return this.$refs.field.valid();
         },
         getValue() {

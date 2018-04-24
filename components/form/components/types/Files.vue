@@ -12,12 +12,14 @@
             <ul class="list" v-sortable="{ onEnd: reorder }">
                 <li class="file" v-for="(file, index) in files" :key="file.key">
                     <file-video
+                        ref="file"
                         v-if="file.type == TYPE_VIDEO"
                         :index="index"
                         :order="index + 1"
                         v-on:delete-file="deleteFile"
                     />
                     <file
+                        ref="file"
                         v-else
                         :index="index"
                         :order="index + 1"
@@ -154,7 +156,12 @@ export default {
         },
         getValue() {
 
-            return this.files;
+            const value = [];
+            Array.from(this.$refs.file).forEach(file => {
+                const fieldValue = file.getValue();
+                value[fieldValue.order - 1] = fieldValue;
+            })
+            return value;
         },
         valid() {
 

@@ -37,8 +37,7 @@ export default {
             Array.from(this.$refs.field).forEach(field => {
 
                 if (!field.valid()) this.error = true;
-
-                this.data[field.name] = field.getValue();
+                else this.data[field.name] = field.getValue();
             })
 
             if (this.error) return false;

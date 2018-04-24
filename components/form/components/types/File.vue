@@ -107,6 +107,20 @@ export default {
                 image.preview = file.target.result;
                 image.loading = false;
             }
+        },
+        getValue() {
+
+            const value = {};
+            value.order = this.order;
+            value.type = this.backFile ? "after/before" : "default"
+            if (value.type == "default") {
+                value.file = this.file;
+            } else {
+                value.files = [];
+                value.files.push(this.file);
+                value.files.push(this.backFile.file);
+            }
+            return value;
         }
     }
 }
