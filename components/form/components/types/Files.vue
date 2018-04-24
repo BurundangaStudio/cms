@@ -25,6 +25,8 @@
                         :loading="file.loading"
                         :preview="file.preview"
                         v-on:delete-file="deleteFile"
+                        v-on:is-valid="isValid"
+                        v-on:dispatch-error="dispatchError"
                     />
                 </li>
             </ul>
