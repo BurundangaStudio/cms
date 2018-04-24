@@ -23,7 +23,7 @@
                         v-else
                         :index="index"
                         :order="index + 1"
-                        :file="file.file"
+                        :file="file"
                         :loading="file.loading"
                         :preview="file.preview"
                         :back-enabled="rules.backEnabled"
@@ -91,7 +91,7 @@ export default {
         },
         initResumable() {
 
-            this.r = new Resumable();
+            this.r = new Resumable({ maxFiles: this.rules.limit });
             this.r.assignDrop(this.box);
             this.r.assignBrowse(this.button);
             this.r.on("fileAdded", this.readAddedFile);
@@ -120,6 +120,12 @@ export default {
             fileReader.onload = file => {
                 this.files[index].preview = file.target.result;
                 this.files[index].loading = false;
+                var newImg = new Image();
+                newImg.src = this.files[index].preview;
+                newImg.onload = () => {
+                    this.files[index].size = newImg.width + "x" + newImg.height;
+                    this.files[index].uploadFile = newImg;
+                }
             }
         },
         reorder({ oldIndex, newIndex }) {
@@ -137,7 +143,6 @@ export default {
             this.error.name = file.fileName;
             this.error.type = [];
 
-            if (this.files.length + 1 > this.rules.limit) this.error.type.push("Limit exceeded.");
             if (!this.rules.format.includes(this.getFileExtensionOf(file.fileName))) this.error.type.push("Wrong format.");
             if (this.rules.maxSize < (file.size * 0.001)) this.error.type.push("Max size exceeded - " + file.size * 0.001);
 

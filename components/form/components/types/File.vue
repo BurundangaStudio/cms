@@ -9,9 +9,9 @@
     <ul :class="{ withBack }">
         <span>
             {{ order }}
-            <img v-if="!loading" :src="preview" />
-            {{ file.fileName }}
-            {{ (file.size * 0.001).toFixed(0) }} KB
+            <img v-if="!loading" :src="file.preview" />
+            {{ file.file.fileName }}
+            {{ (file.file.size * 0.001).toFixed(0) }} KB
         </span>
         <span class="second-file" v-if="withBack">
             <span v-if="backFile">
@@ -20,6 +20,7 @@
                 {{ (backFile.file.size * 0.001).toFixed(0) }} KB
             </span>
             <span v-else>
+                <p class="text" v-text="$t('form:drag:drop:placeholder')"></p>
                 <button class="upload" v-text="$t('button:second:upload')" />
             </span>
         </span>
@@ -106,6 +107,12 @@ export default {
             fileReader.onload = file => {
                 image.preview = file.target.result;
                 image.loading = false;
+                var newImg = new Image();
+                newImg.src = image.preview;
+                newImg.onload = () => {
+                    image.size = newImg.width + "x" + newImg.height;
+                    image.uploadFile = newImg;
+                }
             }
         },
         getValue() {
@@ -114,11 +121,11 @@ export default {
             value.order = this.order;
             value.type = this.backFile ? "after/before" : "default"
             if (value.type == "default") {
-                value.file = this.file;
+                value.file = this.file.uploadFile;
             } else {
                 value.files = [];
-                value.files.push(this.file);
-                value.files.push(this.backFile.file);
+                value.files.push(this.file.uploadFile);
+                value.files.push(this.backFile.uploadFile);
             }
             return value;
         }
@@ -130,7 +137,9 @@ export default {
 <style lang="scss" scoped>
 
     ul {
-        height: 50px;
+
+        padding: 0;
+
         list-style: none;
 
         display: grid;
@@ -143,15 +152,19 @@ export default {
             grid-template-columns: 1fr 1fr max-content;
         }
 
-        span {
+        > span {
+            display: block;
+            align-self: center;
+            padding: 10px 0px;
             width: 100%;
             border-right: 1px solid $light_grey;
-            justify-self: start;
             &:last-child {
                 border-right: none;
             }
             img {
-                width: 20px;
+                width: 30px;
+                height: 30px;
+                object-fit: cover;
             }
         }
     }

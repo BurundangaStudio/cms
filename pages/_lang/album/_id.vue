@@ -53,7 +53,7 @@ export default {
         },
         getStorageDataOf(formData) {
             const storageData = {};
-            console.log(formData, Date.now());
+            console.log(formData);
             // storageData.path = "albums/" + this.link.
             // Array.from(formData).forEach(field => {
             //     if (StorageFields.includes(field.key)) storageData.push(field);
