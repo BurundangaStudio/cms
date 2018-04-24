@@ -24,6 +24,7 @@
                         :file="file.file"
                         :loading="file.loading"
                         :preview="file.preview"
+                        :back-enabled="rules.backEnabled"
                         v-on:delete-file="deleteFile"
                         v-on:is-valid="isValid"
                         v-on:dispatch-error="dispatchError"
@@ -31,7 +32,7 @@
                 </li>
             </ul>
         </div>
-        <button @click="addVideo" v-text="$t('button:add:video')" />
+        <button v-if="rules.videoEnabled" @click="addVideo" v-text="$t('button:add:video')" />
         <button class="select-files" v-text="$t('button:select:files')" />
     </div>
 </template>

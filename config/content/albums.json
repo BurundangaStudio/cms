@@ -22,7 +22,9 @@
             "rules": {
                 "required": true,
                 "format": [ "png", "jpg", "gif" ],
-                "maxSize": 4000
+                "maxSize": 4000,
+                "backEnabled": true,
+                "videoEnabled": true
             }
         }
     }

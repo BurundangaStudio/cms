@@ -24,7 +24,7 @@
             </span>
         </span>
         <span>
-            <button @click="withBack = !withBack" v-text="$t(withBack ? 'button:remove:back' : 'button:add:back')" />
+            <button v-if="backEnabled" @click="withBack = !withBack" v-text="$t(withBack ? 'button:remove:back' : 'button:add:back')" />
             <button @click="$emit('delete-file', index)" v-text="$t('button:delete')"/>
         </span>
     </ul>
@@ -41,7 +41,8 @@ export default {
         order: Number,
         loading: Boolean,
         preview: String,
-        file: Object
+        file: Object,
+        backEnabled: Boolean
     },
     data() {
         return {
