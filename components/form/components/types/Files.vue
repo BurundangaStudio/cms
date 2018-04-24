@@ -118,14 +118,9 @@ export default {
             const fileReader = new FileReader();
             fileReader.readAsDataURL(image.file.file);
             fileReader.onload = file => {
+                this.files[index].data_url = file.target.result;
                 this.files[index].preview = file.target.result;
                 this.files[index].loading = false;
-                var newImg = new Image();
-                newImg.src = this.files[index].preview;
-                newImg.onload = () => {
-                    this.files[index].size = newImg.width + "x" + newImg.height;
-                    this.files[index].uploadFile = newImg;
-                }
             }
         },
         reorder({ oldIndex, newIndex }) {

@@ -28,13 +28,14 @@ export default {
     layout: "logged",
     data () {
         return {
-            Structure
+            Structure,
+            mode: undefined
         }
     },
     methods: {
         getFields() {
 
-            const aux = JSON.parse(JSON.stringify(this.Structure))
+            const aux = JSON.parse(JSON.stringify(this.Structure));
             return this.$route.params.id
                    ? _.defaults(aux.default, aux[this.$route.params.id])
                    : aux.default;
@@ -46,18 +47,23 @@ export default {
            if (formData) {
 
                 const storageData = this.getStorageDataOf(formData);
-
-                // await this.$store.dispatch("uploadStorage", storageData);
+                await this.$store.dispatch("uploadStorage", storageData);
             }
 
         },
         getStorageDataOf(formData) {
+
             const storageData = {};
-            console.log(formData);
-            // storageData.path = "albums/" + this.link.
-            // Array.from(formData).forEach(field => {
-            //     if (StorageFields.includes(field.key)) storageData.push(field);
-            // })
+            storageData.path = "albums/" + formData.link
+            storageData.files = [];
+            Array.from(formData.files).forEach(data => {
+                if (data.type == "default") storageData.files.push(data.file);
+                if (data.type == "after/before") {
+                    Array.from(data.files).forEach(file => {
+                        storageData.files.push(file);
+                    });
+                }
+            });
             return storageData;
         }
     },

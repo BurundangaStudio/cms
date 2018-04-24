@@ -11,13 +11,15 @@
             {{ order }}
             <img v-if="!loading" :src="file.preview" />
             {{ file.file.fileName }}
-            {{ (file.file.size * 0.001).toFixed(0) }} KB
+            {{ (file.file.size * 0.001).toFixed(0) }}KB
+            {{ file.size }}
         </span>
         <span class="second-file" v-if="withBack">
             <span v-if="backFile">
                 <img v-if="!backFile.loading" :src="backFile.preview" />
                 {{ backFile.file.fileName }}
-                {{ (backFile.file.size * 0.001).toFixed(0) }} KB
+                {{ (backFile.file.size * 0.001).toFixed(0) }}KB
+                {{ backFile.size }}
             </span>
             <span v-else>
                 <p class="text" v-text="$t('form:drag:drop:placeholder')"></p>
@@ -105,14 +107,9 @@ export default {
             const fileReader = new FileReader();
             fileReader.readAsDataURL(image.file.file);
             fileReader.onload = file => {
+                image.data_url = file.target.result;
                 image.preview = file.target.result;
                 image.loading = false;
-                var newImg = new Image();
-                newImg.src = image.preview;
-                newImg.onload = () => {
-                    image.size = newImg.width + "x" + newImg.height;
-                    image.uploadFile = newImg;
-                }
             }
         },
         getValue() {
@@ -121,11 +118,11 @@ export default {
             value.order = this.order;
             value.type = this.backFile ? "after/before" : "default"
             if (value.type == "default") {
-                value.file = this.file.uploadFile;
+                value.file = { name: this.file.file.fileName, data_url: this.file.data_url };
             } else {
                 value.files = [];
-                value.files.push(this.file.uploadFile);
-                value.files.push(this.backFile.uploadFile);
+                value.files.push({ name: this.file.file.fileName, data_url: this.file.data_url } );
+                value.files.push({ name: this.backFile.file.fileName, data_url: this.backFile.data_url });
             }
             return value;
         }

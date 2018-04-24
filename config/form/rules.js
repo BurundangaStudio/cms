@@ -15,10 +15,6 @@ export const FilesRules = {
     limit: undefined,
     backEnabled: false,
     videoEnabled: false,
-    format: [ "png", "jpg", "svg", "gif", "mp4", "ogg", "webm", "ogv", "pdf" ],
-    maxSize: 2000
+    maxSize: 2000,
+    format: [ "png", "jpg", "svg", "gif", "mp4", "ogg", "webm", "ogv", "pdf" ]
 }
-
-export const StorageFields = [
-    "files"
-]
