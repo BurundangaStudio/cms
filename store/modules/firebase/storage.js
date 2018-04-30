@@ -1,10 +1,11 @@
 //
-// store/modules/storage.js
+// store/modules/firebase/storage.js
 
 //
 // Coded by Christian MacMillan (_@burundanga.studio)
 // April 2018 | http://burundanga.studio
 
+import _ from "lodash";
 import * as firebase from "firebase";
 
 export default {

@@ -1,5 +1,5 @@
 //
-// store/modules/auth.js
+// store/modules/firebase/auth.js
 
 //
 // Coded by Christian MacMillan (_@burundanga.studio)
