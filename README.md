@@ -21,6 +21,16 @@ The first time you run the project you should follow ALL the steps.
 ### Database
 - Enter into your new project in firebase. Go to database and create a new cloud firestore. You can find some basic info about this [here](https://firebase.google.com/docs/firestore/quickstart).
 - Add a new collection `config` and a new doc (inside config collection) `init` in your firestore. Then add a field named `dataset` with the default value `false`.
+- Go to the firestore rules and change the default `false` permissions to `true`. This is just to create the structure of the database. Then we will defined it again. The rules should now look like :
+```
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
+```
 - The structure of the database have to be defined in your directory `~/config/database`.
 
 ### Server
