@@ -8,7 +8,7 @@
 // Partial credits David Roger :: https://github.com/davidroyer
 
 const admin = require('firebase-admin');
-const key = require("../config/database/service-account.json");
+const key = require("../config/firebase/service-account.json");
 
 module.exports = admin.initializeApp({
     credential: admin.credential.cert(key),

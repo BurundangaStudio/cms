@@ -20,7 +20,7 @@ import _ from "lodash";
 
 import Formm from "~/components/form/Form";
 import { StorageFields } from "~/config/form/rules";
-import Structure from "~/config/content/albums.json";
+import Structure from "~/config/database/albums.json";
 
 
 export default {

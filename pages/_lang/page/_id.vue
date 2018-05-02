@@ -19,7 +19,7 @@
 import _ from "lodash";
 
 import Formm from "~/components/form/Form";
-import structure from "~/config/content/pages.json";
+import structure from "~/config/database/pages.json";
 
 export default {
     name: "page",

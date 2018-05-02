@@ -13,10 +13,15 @@ The first time you run the project you should follow ALL the steps.
 
 ### Firebase
 - Go to the [Firebase console](https://console.firebase.google.com/) and create a new project.
-- Open `~config/database/firebase_base.js` and introduce the config data.
-- Rename `~config/database/firebase_base.js` -> `~config/database/firebase.js`. This file now will be `.gitignore`d.
+- Open `~config/firebase/config_base.js` and introduce the config data.
+- Rename `~config/firebase/config_base.js` -> `~config/firebase/config.js`. This file now will be `.gitignore`d.
 - Go to [Google Cloud Platform](https://console.cloud.google.com/projectselector/iam-admin/serviceaccounts) and create a new Service Account for the project. 
-- Save the .json that it will download like `service-account.json` into `~config/database/`. This file will be `.gitignore`d as well.
+- Save the .json that it will download like `service-account.json` into `~config/firebase/`. This file will be `.gitignore`d as well.
+
+### Database
+- Enter into your new project in firebase. Go to database and create a new cloud firestore. You can find some basic info about this [here](https://firebase.google.com/docs/firestore/quickstart).
+- Add a new collection `config` and a new doc (inside config collection) `init` in your firestore. Then add a field named `dataset` with the default value `false`.
+- The structure of the database have to be defined in your directory `~/config/database`.
 
 ### Server
 - `npm install`

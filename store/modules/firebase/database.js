@@ -29,11 +29,16 @@ export default {
             if (_.isUndefined(state.ref))
                 await dispatch("setRef");
 
-            dispatch("watchDatabase");
+            state.ref.doc("config/init").get().then(snap => {
+                if (snap && snap.exists) {
+                    const dataset = snap.data().dataset;
+                    dataset ? dispatch("watchDatabase") : console.error("MISSING DATABASE: RUN 'NPM RUN INSTALL-DATABASE'");
+                }
+            })
         },
 
         watchDatabase({ state }) {
-            console.log(state.ref);
+
             state.ref.get().then(snap => {
                 console.log(snap, snap.exists);
                 if (snap && snap.exists) {
@@ -48,7 +53,7 @@ export default {
 
         setRef({ commit }) {
 
-            commit("SET_DB_REF", firebase.firestore().collection("albums").doc("test"));
+            commit("SET_DB_REF", firebase.firestore());
         }
     }
 };
