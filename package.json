@@ -11,7 +11,7 @@
         "generate": "nuxt generate",
         "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
         "precommit": "npm run lint",
-        "init-database": "node plugins/database.js"
+        "set-database": "node plugins/database.js"
     },
     "dependencies": {
         "cookie-parser": "^1.4.3",
