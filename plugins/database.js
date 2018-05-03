@@ -35,7 +35,9 @@ Array.from(_files).forEach(_file => {
 setRef(0);
 
 function setRef(i) {
+
     const docRef = refs[i];
+
     _db
         .ref(_DATABASE + docRef.ref)
         .once("value")
@@ -43,29 +45,64 @@ function setRef(i) {
             if (!snap) {
                 console.error("ERROR!");
                 process.exit();
-            } else if (snap.val()) {
-                console.log(docRef.ref + " already exists!");
-                next(i);
-            } else {
-                console.log("Creating " + docRef.ref + "...");
-                const fields = {};
-                for (let f in docRef.json) fields[f] = "";
-                _db
-                    .ref(_DATABASE + docRef.ref)
-                    .set(fields)
-                    .then(() => {
-                        console.log(docRef.ref + " created successfully!");
-                        next(i);
-                    })
-                    .catch(error => {
-                        console.error(error);
-                        process.exit();
-                    });
             }
+
+            const _val = snap.val();
+            const _exists = !_.isNull(_val);
+
+            const _ref = docRef.ref;
+            const _json = docRef.json;
+
+            const _remove = _exists
+                ? Object.size(_val) > Object.size(_json)
+                : false;
+
+            _exists
+                ? console.log(_ref + " already exists!")
+                : console.log("Creating " + _ref + "...");
+
+            const fields = {};
+
+            for (let f in _json) {
+                if (!_exists) {
+                    fields[f] = getInitValueOf(f);
+                } else if (_.isUndefined(_val[f])) {
+                    fields[f] = getInitValueOf(f);
+                }
+            }
+
+            if (_remove) {
+                for (let f in _val) {
+                    if (!_json.hasOwnProperty(f)) fields[f] = null;
+                }
+            }
+
+            _db
+                .ref(_DATABASE + _ref)
+                .update(fields)
+                .then(() => {
+                    let msg = "";
+                    msg = _exists
+                        ? Object.size(fields) > 0
+                            ? "updated succesfully"
+                            : "without changes"
+                        : "created successfully!";
+                    console.log(_ref + " " + msg + "\n");
+                    next(i);
+                })
+                .catch(error => {
+                    console.error(error);
+                    process.exit();
+                });
         })
         .catch(error => {
             console.error(error);
+            process.exit();
         });
+}
+
+function getInitValueOf() {
+    return "";
 }
 
 function next(i) {
@@ -74,11 +111,23 @@ function next(i) {
         setRef(i);
     } else {
         _db
-            .ref(_DATABASE + "config/init")
-            .set({ dataset: true })
+            .ref(_DATABASE + "_config")
+            .set({
+                dataset: true,
+                dynamic: [ "albums", "posts" ]
+            })
             .then(() => {
                 console.log("\n- DATABASE SETTED! \n");
                 process.exit();
             });
     }
 }
+
+Object.size = function(obj) {
+    var size = 0,
+        key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};

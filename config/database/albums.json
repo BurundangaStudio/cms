@@ -8,6 +8,12 @@
                 "no-spaces": true
             }
         },
+        "lang": {
+            "type": "text"
+        },
+        "hello": {
+            "type": "text"
+        },
         "title": {
             "type": "text",
             "rules": {

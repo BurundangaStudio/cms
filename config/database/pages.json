@@ -8,6 +8,9 @@
                 "no-spaces": true
             }
         },
+        "lang": {
+            "type": "text"
+        },
         "title": {
             "type": "text",
             "rules": {
