@@ -6,54 +6,44 @@
 // April 2018 | http://burundanga.studio
 
 import _ from "lodash";
-import * as firebase from "firebase";
-import firestore from "firebase/firestore";
+import firebase from "~/plugins/firebase";
+import database from "firebase/database";
 
 export default {
     state: {
         ref: undefined,
-        db: undefined
+        data: Array
     },
     mutations: {
         SET_DB_REF(state, ref) {
             state.ref = ref;
         },
         SET_DB_DATA(state, data) {
-            state.db = data;
+            state.data = data;
         }
     },
     actions: {
 
-        async initDatabase({ dispatch, state }) {
+        async initDatabase({ dispatch, commit, state }) {
 
-            if (_.isUndefined(state.ref))
-                await dispatch("setRef");
+            if (_.isUndefined(state.ref)) await dispatch("setDatabaseRef");
 
-            state.ref.doc("config/init").get().then(snap => {
-                if (snap && snap.exists) {
-                    const dataset = snap.data().dataset;
-                    dataset ? dispatch("watchDatabase") : console.error("MISSING DATABASE: RUN 'NPM RUN INSTALL-DATABASE'");
-                }
-            })
+            state.ref
+                .ref("web/config/init")
+                .get()
+                .then(snap => {
+                    const dataset =
+                        snap && snap.exists ? snap.data().dataset : false;
+                    if (!dataset)
+                        console.error(
+                            "MISSING DATABASE: RUN 'npm run set-database'"
+                        );
+                });
         },
 
-        watchDatabase({ state }) {
+        setDatabaseRef({ commit }) {
 
-            state.ref.get().then(snap => {
-                console.log(snap, snap.exists);
-                if (snap && snap.exists) {
-
-                    console.log("EHHH: " +  snap.data().title);
-                    commit("SET_DB_DATA", snap.data());
-                }
-            }).catch(error => {
-                console.log(error);
-            })
-        },
-
-        setRef({ commit }) {
-
-            commit("SET_DB_REF", firebase.firestore());
+            commit("SET_DB_REF", firebase.database());
         }
     }
 };

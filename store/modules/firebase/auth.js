@@ -35,6 +35,7 @@ export default {
 
         authState({ dispatch }) {
             firebase.auth().onAuthStateChanged(user => {
+
                 dispatch("setUser", user ? user : undefined);
 
                 if (user) {

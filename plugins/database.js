@@ -8,10 +8,12 @@
 const fs = require("fs");
 const _ = require("lodash");
 const firebase = require("./firebase.js");
-const firestore = require("firebase/firestore");
+const database = require("firebase/database");
 
-const _db = firebase.firestore();
+const _db = firebase.database();
 const _files = fs.readdirSync("config/database");
+
+const _DATABASE = "web/";
 
 let refs = [];
 
@@ -20,25 +22,63 @@ Array.from(_files).forEach(_file => {
     const _collection = _file.replace(".json", "");
     for (var _doc in _json) {
         const ref = _collection + "/" + _doc;
-        refs.push(ref);
+        const json = ref.includes("_default")
+            ? _.cloneDeep(_json[_doc])
+            : _.defaults(
+                  _.cloneDeep(_json["_default"]),
+                  _.cloneDeep(_json[_doc])
+              );
+        refs.push({ ref, json });
     }
 });
 
 setRef(0);
 
 function setRef(i) {
-    const ref = refs[i];
+    const docRef = refs[i];
     _db
-        .doc(ref)
-        .get()
+        .ref(_DATABASE + docRef.ref)
+        .once("value")
         .then(snap => {
-            console.log(ref + " snapexists: " + snap.exists);
-            if (i < refs.length - 1) {
-                i++;
-                setRef(i);
-            } else {
-                console.log("\nDATABASE SETTED! \n");
+            if (!snap) {
+                console.error("ERROR!");
                 process.exit();
+            } else if (snap.val()) {
+                console.log(docRef.ref + " already exists!");
+                next(i);
+            } else {
+                console.log("Creating " + docRef.ref + "...");
+                const fields = {};
+                for (let f in docRef.json) fields[f] = "";
+                _db
+                    .ref(_DATABASE + docRef.ref)
+                    .set(fields)
+                    .then(() => {
+                        console.log(docRef.ref + " created successfully!");
+                        next(i);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        process.exit();
+                    });
             }
+        })
+        .catch(error => {
+            console.error(error);
         });
+}
+
+function next(i) {
+    if (i < refs.length - 1) {
+        i++;
+        setRef(i);
+    } else {
+        _db
+            .ref(_DATABASE + "config/init")
+            .set({ dataset: true })
+            .then(() => {
+                console.log("\n- DATABASE SETTED! \n");
+                process.exit();
+            });
+    }
 }

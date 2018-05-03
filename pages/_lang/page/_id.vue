@@ -34,10 +34,10 @@ export default {
     },
     methods: {
         getFields() {
-            const aux = JSON.parse(JSON.stringify(this.structure))
-            return this.$route.params.id
-                   ? _.defaults(aux.default, aux[this.$route.params.id])
-                   : aux.default;
+            // const aux = JSON.parse(JSON.stringify(this.structure))
+            // return this.$route.params.id
+            //        ? _.defaults(aux.default, aux[this.$route.params.id])
+            //        : aux.default;
         },
         init() {
 

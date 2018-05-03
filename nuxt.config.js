@@ -36,7 +36,9 @@ module.exports = {
         middleware: 'i18n'
     },
 
-    loading: false,
+    loading: {
+        color: 'blue'
+    },
 
     transition: require("./local_modules/transitions/default.js"),
 
@@ -54,7 +56,7 @@ module.exports = {
     serverMiddleware: ["~/serverMiddleware/auth-cookie.js"],
 
     build: {
-        vendor: ["lodash"],
+        vendor: ["lodash", "isomorphic-fetch"],
         extend(config, { isDev, isClient }) {
             if (isDev && isClient) {
                 config.module.rules.push({

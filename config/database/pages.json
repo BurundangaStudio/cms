@@ -1,5 +1,5 @@
 {
-    "default": {
+    "_default": {
         "link": {
             "type": "text",
             "rules": {
@@ -37,6 +37,11 @@
                 "format": [ "png", "jpg", "gif", "mp4" ],
                 "maxSize": 3000
             }
+        }
+    },
+    "contact": {
+        "tel": {
+            "type": "text"
         }
     }
 }
