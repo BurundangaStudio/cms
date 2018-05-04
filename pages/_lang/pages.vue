@@ -10,6 +10,7 @@
         <h1 class="title" v-text="$t('pages')" />
         <div class="list">
             <div class="el" v-for="(page, index) in pages" :key="index" v-html="page" />
+            {{ config._config }}
         </div>
     </section>
 </template>
@@ -18,13 +19,17 @@
 
 import fetch from "isomorphic-fetch";
 
+import Config from "~/config/index";
+
 export default {
     name: "pages",
     layout: "logged",
     async asyncData ({}) {
-        const response = await fetch("https://burundanga-admin.firebaseio.com/web/pages.json");
-        const pages = await response.json();
-        return { pages };
+        const webResponse = await fetch(Config.fetchUrl + "web/pages.json");
+        const adminResponse = await fetch(Config.fetchUrl + "admin/pages.json");
+        const pages = await webResponse.json();
+        const config = await adminResponse.json();
+        return { pages, config };
     }
 }
 

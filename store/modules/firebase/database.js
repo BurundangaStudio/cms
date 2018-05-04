@@ -29,15 +29,12 @@ export default {
             if (_.isUndefined(state.ref)) await dispatch("setDatabaseRef");
 
             state.ref
-                .ref("web/config/init")
-                .get()
+                .ref("admin/_config")
+                .once("value")
                 .then(snap => {
-                    const dataset =
-                        snap && snap.exists ? snap.data().dataset : false;
-                    if (!dataset)
-                        console.error(
-                            "MISSING DATABASE: RUN 'npm run set-database'"
-                        );
+                    if (_.isNull(snap.val())) {
+                        console.error("DATABASE NOT SETTED! run 'npm run init-database'");
+                    }
                 });
         },
 

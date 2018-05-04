@@ -1,5 +1,5 @@
 //
-// config/navigation.js
+// config/index.js
 //
 
 //
@@ -9,6 +9,7 @@
 export default {
     menu: ["dashboard", "pages", "albums", "posts", "users" ],
     entryPoint: "dashboard",
-    entryLang: "en"
+    entryLang: "en",
+    fetchUrl: "https://burundanga-admin.firebaseio.com/"
 }
 

@@ -1,4 +1,7 @@
 {
+    "_config": {
+        "modular": false
+    },
     "_default": {
         "link": {
             "type": "text",
@@ -7,9 +10,6 @@
                 "limit": 10,
                 "no-spaces": true
             }
-        },
-        "lang": {
-            "type": "text"
         },
         "title": {
             "type": "text",
@@ -31,14 +31,6 @@
                 "limit": 1,
                 "format": [ "png", "jpg", "gif" ],
                 "maxSize": 42
-            }
-        },
-        "images": {
-            "type": "files",
-            "rules": {
-                "required": true,
-                "format": [ "png", "jpg", "gif", "mp4" ],
-                "maxSize": 3000
             }
         }
     },

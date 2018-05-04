@@ -10,124 +10,78 @@ const _ = require("lodash");
 const firebase = require("./firebase.js");
 const database = require("firebase/database");
 
-const _db = firebase.database();
-const _files = fs.readdirSync("config/database");
+const _DB = firebase.database();
+const _FILES = fs.readdirSync("config/database");
 
-const _DATABASE = "web/";
+const _ADMIN = "admin/";
+const _WEB = "web/";
+let _UPDATE = false;
 
+let ref = "";
 let refs = [];
+let json = "";
+let i = 0;
 
-Array.from(_files).forEach(_file => {
+process.argv.forEach((val, index) => {
+    _UPDATE = index == 2;
+});
+
+Array.from(_FILES).forEach(_file => {
     const _json = require("../config/database/" + _file);
     const _collection = _file.replace(".json", "");
     for (var _doc in _json) {
         const ref = _collection + "/" + _doc;
-        const json = ref.includes("_default")
-            ? _.cloneDeep(_json[_doc])
-            : _.defaults(
-                  _.cloneDeep(_json["_default"]),
-                  _.cloneDeep(_json[_doc])
-              );
+        const json =
+            adminRef(ref)
+                ? _.cloneDeep(_json[_doc])
+                : _.defaults(
+                      _.cloneDeep(_json["_default"]),
+                      _.cloneDeep(_json[_doc])
+                  );
         refs.push({ ref, json });
     }
 });
 
-setRef(0);
+function setRef() {
 
-function setRef(i) {
+    ref = refs[i].ref;
+    json = refs[i].json;
 
-    const docRef = refs[i];
+    const adminFields = {};
+    const webFields = {};
 
-    _db
-        .ref(_DATABASE + docRef.ref)
-        .once("value")
-        .then(snap => {
-            if (!snap) {
-                console.error("ERROR!");
-                process.exit();
-            }
+    for (let f in json) {
+        adminFields[f] = json[f];
+        webFields[f] = "";
+    }
 
-            const _val = snap.val();
-            const _exists = !_.isNull(_val);
-
-            const _ref = docRef.ref;
-            const _json = docRef.json;
-
-            const _remove = _exists
-                ? Object.size(_val) > Object.size(_json)
-                : false;
-
-            _exists
-                ? console.log(_ref + " already exists!")
-                : console.log("Creating " + _ref + "...");
-
-            const fields = {};
-
-            for (let f in _json) {
-                if (!_exists) {
-                    fields[f] = getInitValueOf(f);
-                } else if (_.isUndefined(_val[f])) {
-                    fields[f] = getInitValueOf(f);
-                }
-            }
-
-            if (_remove) {
-                for (let f in _val) {
-                    if (!_json.hasOwnProperty(f)) fields[f] = null;
-                }
-            }
-
-            _db
-                .ref(_DATABASE + _ref)
-                .update(fields)
-                .then(() => {
-                    let msg = "";
-                    msg = _exists
-                        ? Object.size(fields) > 0
-                            ? "updated succesfully"
-                            : "without changes"
-                        : "created successfully!";
-                    console.log(_ref + " " + msg + "\n");
-                    next(i);
-                })
-                .catch(error => {
-                    console.error(error);
-                    process.exit();
-                });
-        })
-        .catch(error => {
-            console.error(error);
-            process.exit();
-        });
+    _DB.ref(_ADMIN + ref).set(adminFields).then(() => {
+        !adminRef(ref) && !_UPDATE
+            ? _DB.ref(_WEB + ref).set(webFields).then(next).catch(error)
+            : next();
+    }).catch(error);
 }
 
-function getInitValueOf() {
-    return "";
+function adminRef(ref) {
+    return ref.includes("_config") || ref.includes("_default");
 }
 
-function next(i) {
+function next() {
+    console.log(ref + (_UPDATE ? " updated" : " created") +  " successfully!");
     if (i < refs.length - 1) {
         i++;
-        setRef(i);
+        setRef();
     } else {
-        _db
-            .ref(_DATABASE + "_config")
-            .set({
-                dataset: true,
-                dynamic: [ "albums", "posts" ]
-            })
-            .then(() => {
-                console.log("\n- DATABASE SETTED! \n");
-                process.exit();
-            });
+        _DB.ref(_ADMIN + "_config").set({ dataset: true }).then(() => {
+            console.log("\n- DATABASE SETTED! \n");
+            process.exit();
+        }).catch(error);
     }
 }
 
-Object.size = function(obj) {
-    var size = 0,
-        key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
-};
+function error(error) {
+    console.error(error);
+    process.exit();
+}
+
+setRef();

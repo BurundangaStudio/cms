@@ -10,13 +10,5 @@
 </template>
 
 <script>
-
-    export default {
-
-        mounted() {
-
-            console.log("DEFAULT LAYOUT")
-        }
-    }
-
+    export default {}
 </script>

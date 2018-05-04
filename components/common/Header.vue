@@ -26,7 +26,7 @@
 
 <script>
 
-    import Config from "~/config/dashboard/navigation"
+    import Config from "~/config/index"
 
     export default {
         data() {

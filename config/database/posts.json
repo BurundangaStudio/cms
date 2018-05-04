@@ -1,4 +1,7 @@
 {
+    "_config": {
+        "modular": true
+    },
     "_default": {
         "link": {
             "type": "text",
@@ -6,16 +9,19 @@
                 "required": true,
                 "limit": 10,
                 "no-spaces": true
-            }
+            },
+            "value": ""
         },
         "title": {
             "type": "text",
             "rules": {
                 "limit": 150
-            }
+            },
+            "value": ""
         },
         "content": {
-            "type": "wyswyg"
+            "type": "wyswyg",
+            "value": ""
         },
         "files": {
             "type": "files",
@@ -25,7 +31,8 @@
                 "maxSize": 4000,
                 "backEnabled": true,
                 "videoEnabled": true
-            }
+            },
+            "value": ""
         }
     }
 }
