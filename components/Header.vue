@@ -9,8 +9,8 @@
     <header>
         <nav class="navigation">
             <ul>
-                <li v-for="(link, index) in links" :key="index">
-                    <nuxt-link :to="{ name: getNameOf(link) }" v-text="$t(link)" />
+                <li v-for="(link, index) in menu" :key="index">
+                    <nuxt-link :to="{ name: getNameOf(link), params: { id: link }}" v-html="link" />
                 </li>
             </ul>
         </nav>
@@ -29,27 +29,18 @@
     import Config from "~/config/index"
 
     export default {
-        data() {
-            return {
-                links: Array
-            }
-        },
         computed: {
             lang() {
                 return this.$store.state.lang.locale
+            },
+            menu() {
+                return this.$store.state.database.menu
             }
         },
-        created() {
-            this.setConfig()
-        },
         methods: {
-            setConfig() {
-
-                this.links = Config.menu
-            },
 
             getNameOf(link) {
-                return "lang-" + link;
+                return link == Config.entryPoint ? "lang-" + link : "lang-list-id";
             },
 
             async logout() {

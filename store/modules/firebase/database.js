@@ -8,18 +8,23 @@
 import _ from "lodash";
 import firebase from "~/plugins/firebase";
 import database from "firebase/database";
+import Config from "~/config/index"
 
 export default {
     state: {
         ref: undefined,
-        data: Array
+        menu: []
     },
     mutations: {
         SET_DB_REF(state, ref) {
             state.ref = ref;
         },
-        SET_DB_DATA(state, data) {
-            state.data = data;
+        SET_MENU(state, menu) {
+            const aux = [ Config.entryPoint ];
+            for (let key in menu) {
+                if (key != "_config") aux.push(key);
+            }
+            state.menu = aux;
         }
     },
     actions: {
@@ -29,11 +34,13 @@ export default {
             if (_.isUndefined(state.ref)) await dispatch("setDatabaseRef");
 
             state.ref
-                .ref("admin/_config")
+                .ref("admin")
                 .once("value")
                 .then(snap => {
                     if (_.isNull(snap.val())) {
                         console.error("DATABASE NOT SETTED! run 'npm run init-database'");
+                    } else {
+                        commit("SET_MENU", snap.val());
                     }
                 });
         },
