@@ -1,5 +1,5 @@
 <!--
-    components/common/Footer.vue
+    components/Footer.vue
 
     Coded by Christian MacMillan (_@burundanga.studio)
     April 2018 | http://burundanga.studio

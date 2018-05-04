@@ -1,5 +1,5 @@
 <!--
-    components/common/Header.vue
+    components/Header.vue
 
     Coded by Christian MacMillan (_@burundanga.studio)
     April 2018 | http://burundanga.studio

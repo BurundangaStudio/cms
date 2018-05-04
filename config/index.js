@@ -7,7 +7,7 @@
 // April 2018 | http://burundanga.studio
 
 export default {
-    menu: ["dashboard", "pages", "albums", "posts", "users" ],
+    menu: ["dashboard"],
     entryPoint: "dashboard",
     entryLang: "en",
     fetchUrl: "https://burundanga-admin.firebaseio.com/"

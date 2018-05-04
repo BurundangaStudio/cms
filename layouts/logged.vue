@@ -18,10 +18,10 @@
 
     import _ from "lodash";
 
-    import HeaderComponent from "~/components/common/Header";
-    import FooterComponent from "~/components/common/Footer";
+    import HeaderComponent from "~/components/Header";
+    import FooterComponent from "~/components/Footer";
 
-    import ErrorOverlay from "~/components/common/overlays/Error";
+    import ErrorOverlay from "~/components/overlays/Error";
 
     export default {
 

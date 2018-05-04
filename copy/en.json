@@ -18,6 +18,7 @@
     "image": "Image",
     "images": "Images",
     "files": "Files",
+    "list": "List",
 
     "login": "Login",
     "login:email:placeholder": "Enter your email",

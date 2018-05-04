@@ -1,5 +1,5 @@
 <!--
-    components/common/overlays/Error.vue
+    components/overlays/Error.vue
 
     Coded by Christian MacMillan (_@burundanga.studio)
     April 2018 | http://burundanga.studio
