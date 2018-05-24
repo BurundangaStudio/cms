@@ -18,8 +18,7 @@
 export default {
     name: "text-field",
     props: {
-        field: Object,
-        value: String
+        field: Object
     },
     data() {
         return {
@@ -32,7 +31,7 @@ export default {
     methods: {
         setInitValue() {
 
-            this.text = this.value;
+            this.text = this.field.value;
         },
         getValue() {
 

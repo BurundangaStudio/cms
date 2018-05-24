@@ -8,7 +8,7 @@
 <template>
     <section class="list">
         <ul>
-            <item v-for="(item, key) in items" :key="key" :name="key" :item="item" />
+            <item v-for="(item, key) in items" :key="key" :name="key" :item="item" :type="type" />
         </ul>
     </section>
 </template>
@@ -20,7 +20,8 @@
     export default {
         name: "list-component",
         props: {
-            items: Object
+            items: Object,
+            type: String
         },
         components: {
             Item
@@ -28,3 +29,10 @@
     }
 
 </script>
+
+<style lang="scss" scoped>
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+</style>

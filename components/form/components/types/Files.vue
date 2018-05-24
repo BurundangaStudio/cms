@@ -91,7 +91,7 @@ export default {
         },
         initResumable() {
 
-            this.r = new Resumable({ maxFiles: this.rules.limit });
+            this.r = new Resumable();
             this.r.assignDrop(this.box);
             this.r.assignBrowse(this.button);
             this.r.on("fileAdded", this.readAddedFile);
@@ -105,6 +105,9 @@ export default {
             : this.dispatchError();
         },
         load(file) {
+
+            if (this.rules.limit === this.files.length)
+                this.deleteFile(this.files.length - 1)
 
             let image = {};
 
@@ -155,12 +158,13 @@ export default {
             this.$store.dispatch("pushError", this.error);
         },
         getValue() {
-
             const value = [];
-            Array.from(this.$refs.file).forEach(file => {
-                const fieldValue = file.getValue();
-                value[fieldValue.order - 1] = fieldValue;
-            })
+            if (this.$refs.file) {
+                Array.from(this.$refs.file).forEach(file => {
+                    const fieldValue = file.getValue();
+                    value[fieldValue.order - 1] = fieldValue;
+                })
+            }
             return value;
         },
         valid() {
@@ -196,7 +200,7 @@ export default {
 <style lang="scss" scoped>
     .box {
         position: relative;
-        min-height: 80px;
+        min-height: 53px;
         max-height: 200px;
         overflow-y: scroll;
         @include inputBorder();

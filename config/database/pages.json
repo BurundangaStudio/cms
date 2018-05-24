@@ -30,7 +30,7 @@
             "rules": {
                 "limit": 1,
                 "format": [ "png", "jpg", "gif" ],
-                "maxSize": 42
+                "maxSize": 1000
             }
         }
     },

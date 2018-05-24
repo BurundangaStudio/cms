@@ -8,7 +8,7 @@
 <template>
     <div class="form">
         <div class="fields">
-            <field ref="field" v-for="(field, key) in fields" :key="key" :name="key" :field="field"></field>
+            <field ref="field" v-for="(field, key) in fields" :key="key" :name="key" :field="field" />
         </div>
     </div>
 </template>
@@ -35,7 +35,6 @@ export default {
             this.error = false;
 
             Array.from(this.$refs.field).forEach(field => {
-
                 if (!field.valid()) this.error = true;
                 else this.data[field.name] = field.getValue();
             })

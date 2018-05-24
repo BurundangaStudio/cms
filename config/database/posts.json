@@ -9,19 +9,16 @@
                 "required": true,
                 "limit": 10,
                 "no-spaces": true
-            },
-            "value": ""
+            }
         },
         "title": {
             "type": "text",
             "rules": {
                 "limit": 150
-            },
-            "value": ""
+            }
         },
         "content": {
-            "type": "wyswyg",
-            "value": ""
+            "type": "wyswyg"
         },
         "files": {
             "type": "files",
@@ -31,8 +28,7 @@
                 "maxSize": 4000,
                 "backEnabled": true,
                 "videoEnabled": true
-            },
-            "value": ""
+            }
         }
     }
 }

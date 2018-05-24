@@ -6,8 +6,8 @@
 -->
 
 <template>
-    <div class="wyswyg">
-        <div class="editor"></div>
+    <div class="wyswyg" @click="getValue">
+        <div class="editor" />
     </div>
 </template>
 
@@ -15,25 +15,39 @@
 
 export default {
     name: "wyswyg-field",
+    props: {
+        field: Object
+    },
     data() {
         return {
             quill: undefined
         }
     },
     mounted() {
-        this.$nextTick(this.init);
+        this.init();
     },
     methods: {
         init() {
+
             const options = {
-                theme: 'snow'
-            }
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                        ['bold', 'italic', 'underline' ],
+                        ['link']
+                    ]
+                }
+            };
             this.quill = new Quill(this.$el.querySelector(".editor"), options);
+            this.quill.clipboard.dangerouslyPasteHTML(0, this.field.value);
         },
         getValue() {
-            return "wyswyg";
+
+            return this.quill.container.firstChild.innerHTML;
         },
         valid() {
+
             return true;
         }
     }

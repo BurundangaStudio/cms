@@ -15,9 +15,11 @@
 <script>
 
 import AreaField from "./types/Area";
+import BooleanField from "./types/Boolean";
 import ColorField from "./types/Color";
 import FilesField from "./types/Files";
 import PassField from "./types/Pass";
+import SelectField from "./types/Select";
 import TextField from "./types/Text";
 import WyswygField from "./types/Wyswyg";
 
@@ -39,9 +41,11 @@ export default {
     },
     components: {
         AreaField,
+        Boolean,
         ColorField,
         FilesField,
         PassField,
+        SelectField,
         TextField,
         WyswygField
     }

@@ -26,10 +26,13 @@
 
     "form:drag:drop:placeholder": "Drop your files here",
 
+    "button:edit": "Edit",
     "button:save": "Save",
     "button:delete": "Delete",
     "button:select:files": "Select files",
     "button:add:video": "Add video",
+
+    "button:add:item": "Add new",
 
     "clean": "Clean",
 

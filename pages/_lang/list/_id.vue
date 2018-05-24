@@ -8,8 +8,8 @@
 <template>
     <section class="list-page">
         <h1 class="title" v-text="$t(id)" />
-        <list-component :items="items" />
-        {{ config._config }}
+        <list-component :items="items" :type="id" />
+        <button v-if="config._config.modular" v-text="$t('button:add:item')" @click="addListItem" />
     </section>
 </template>
 
@@ -34,6 +34,11 @@ export default {
     },
     components: {
         ListComponent
+    },
+    methods: {
+        addListItem() {
+            this.$router.push({ name: "lang-item-id", params: { item: this.id, id: "new" }});
+        }
     }
 }
 
