@@ -12,12 +12,12 @@ import Config from "~/config/index"
 
 export default {
     state: {
-        ref: undefined,
+        db: undefined,
         menu: []
     },
     mutations: {
-        SET_DB_REF(state, ref) {
-            state.ref = ref;
+        SET_DB(state, db) {
+            state.db = db;
         },
         SET_MENU(state, menu) {
             const aux = [ Config.entryPoint ];
@@ -31,9 +31,9 @@ export default {
 
         async initDatabase({ dispatch, commit, state }) {
 
-            if (_.isUndefined(state.ref)) await dispatch("setDatabaseRef");
+            if (_.isUndefined(state.ref)) await dispatch("setDatabase");
 
-            state.ref
+            state.db
                 .ref("admin")
                 .once("value")
                 .then(snap => {
@@ -45,16 +45,22 @@ export default {
                 });
         },
 
-        async updateItem({ commit }, data) {
+        async updateItem({ commit, state }, data) {
 
             delete data.data.id;
 
-            console.log("update", data);
+            state.db
+                .ref("web/" + data.type + "/" + data.id).set(data.data)
+                .then(res => {
+                    if (data.create) this.$router.push({ name: "lang-item-id", params: { item: data.type, id: data.id }});
+                }).catch(error => {
+                    console.log(error)
+                });
         },
 
-        setDatabaseRef({ commit }) {
+        setDatabase({ commit }) {
 
-            commit("SET_DB_REF", firebase.database());
+            commit("SET_DB", firebase.database());
         }
     }
 };

@@ -36,6 +36,7 @@ export default {
 
         let configResponse = await fetch(Config.fetchUrl + "admin/" + type + "/_config.json");
         let config = await configResponse.json();
+
         if (!config) return error({ statusCode: 404 })
 
         let id = NEW_ITEM ? DEF : params.id;
@@ -53,7 +54,7 @@ export default {
         for (let field in fields) {
             if (fields[field].type === ARRAY) {
                 let children = [];
-                if (item) {
+                if (item && item[field]) {
                     Array.from(item[field]).forEach(value => {
                         let credit = _.cloneDeep(fields[field].children);
                         for (let field in credit) {
@@ -87,7 +88,15 @@ export default {
 
             const data = this.$refs.form.getValue();
 
-            if (data) this.$store.dispatch("updateItem", { data, type: this.type, id: this.create ? data.id : this.id })
+            if (data) {
+                this.$store.dispatch("uploadStorage", { path: this.type + "/" + this.id, files: data.files});
+            }
+                // this.$store.dispatch("updateItem", {
+                //     data,
+                //     type: this.type,
+                //     id: this.create ? data.id : this.id,
+                //     create: this.create
+                // })
         }
     }
 }

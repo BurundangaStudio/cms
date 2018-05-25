@@ -42,6 +42,7 @@ export default {
 
         async uploadStorage({ dispatch, commit, state }, data) {
 
+            console.log(data);
             if (_.isUndefined(state.ref))
                 await dispatch("setRef");
 
@@ -51,7 +52,7 @@ export default {
 
         uploadFile({ commit, dispatch, state }) {
 
-            const file = state.files[state.filesUploaded];
+            const file = state.files[state.filesUploaded].file;
             const path = "images/" + state.path + "/" + file.name;
             const uploadTask = state.ref.child(path).putString(file.data_url, "data_url");
             uploadTask.on("state_changed", snapshot => {
