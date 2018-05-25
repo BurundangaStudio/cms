@@ -14,11 +14,13 @@
     "link": "Link",
     "title": "Title",
     "subtitle": "Subtitle",
+    "credits": "Credits",
     "content": "Content",
     "image": "Image",
     "images": "Images",
     "files": "Files",
     "list": "List",
+    "phone": "Phone",
 
     "login": "Login",
     "login:email:placeholder": "Enter your email",

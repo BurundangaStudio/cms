@@ -15,6 +15,7 @@
 <script>
 
 import AreaField from "./types/Area";
+import ArrayField from "./types/Array";
 import BooleanField from "./types/Boolean";
 import ColorField from "./types/Color";
 import FilesField from "./types/Files";
@@ -41,6 +42,7 @@ export default {
     },
     components: {
         AreaField,
+        ArrayField,
         Boolean,
         ColorField,
         FilesField,

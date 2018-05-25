@@ -20,6 +20,23 @@
         "content": {
             "type": "wyswyg"
         },
+        "credits": {
+            "type": "array",
+            "children": {
+                "title": {
+                    "type": "text",
+                    "rules": {
+                        "limit": 150
+                    }
+                },
+                "description": {
+                    "type": "text",
+                    "rules": {
+                        "limit": 250
+                    }
+                }
+            }
+        },
         "files": {
             "type": "files",
             "rules": {

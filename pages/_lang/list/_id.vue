@@ -23,13 +23,13 @@ import ListComponent from "~/components/list/List";
 export default {
     name: "list",
     layout: "logged",
-    async asyncData ({ params, redirect, store }) {
+    async asyncData ({ params, error }) {
         const id = params.id;
         const webResponse = await fetch(Config.fetchUrl + "web/" + id + ".json");
         const adminResponse = await fetch(Config.fetchUrl + "admin/" + id + ".json");
         const items = await webResponse.json();
         const config = await adminResponse.json();
-        if (!config) return redirect("/" + store.state.lang.locale + "/" + Config.entryPoint);
+        if (!config) return error({ statusCode: 404 });
         else return { id, items, config };
     },
     components: {

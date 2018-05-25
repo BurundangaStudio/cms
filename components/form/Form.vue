@@ -34,10 +34,13 @@ export default {
             this.data = {};
             this.error = false;
 
-            Array.from(this.$refs.field).forEach(field => {
-                if (!field.valid()) this.error = true;
-                else this.data[field.name] = field.getValue();
-            })
+            if (this.$refs.field) {
+                Array.from(this.$refs.field).forEach(field => {
+                    if (!field.valid()) this.error = true;
+                    else this.data[field.name] = field.getValue();
+                    console.log(field.name + " " + field.getValue());
+                })
+            }
 
             if (this.error) return false;
 
