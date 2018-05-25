@@ -182,6 +182,8 @@ export default {
         },
         addVideo() {
 
+            this.box.classList.remove("error");
+
             const video = {
                 type: this.TYPE_VIDEO,
                 key: this.filesKey++

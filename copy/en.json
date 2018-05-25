@@ -11,6 +11,7 @@
 
     "logout": "Logout",
 
+    "id": "Id",
     "link": "Link",
     "title": "Title",
     "subtitle": "Subtitle",
@@ -21,6 +22,7 @@
     "files": "Files",
     "list": "List",
     "phone": "Phone",
+    "description": "Description",
 
     "login": "Login",
     "login:email:placeholder": "Enter your email",
@@ -32,9 +34,11 @@
     "button:save": "Save",
     "button:delete": "Delete",
     "button:select:files": "Select files",
+    "button:select:file": "Select file",
     "button:add:video": "Add video",
-
     "button:add:item": "Add new",
+    "button:add:back": "Add back image",
+    "button:remove:back": "Remove back image",
 
     "clean": "Clean",
 

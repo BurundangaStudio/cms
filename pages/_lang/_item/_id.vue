@@ -14,9 +14,11 @@
 
 <script>
 
+import _ from "lodash";
 import fetch from "isomorphic-fetch";
 
 import Config from "~/config/index";
+import _defaultId from "~/config/database/id.json";
 import FormComponent from "~/components/form/Form";
 
 export default {
@@ -26,6 +28,9 @@ export default {
 
         const NEW = "new";
         const DEF = "_default";
+        const ARRAY = "array";
+
+        const NEW_ITEM = params.id === NEW;
 
         let type = params.item;
 
@@ -33,7 +38,7 @@ export default {
         let config = await configResponse.json();
         if (!config) return error({ statusCode: 404 })
 
-        let id = params.id === NEW ? DEF : params.id;
+        let id = NEW_ITEM ? DEF : params.id;
 
         let webResponse = await fetch(Config.fetchUrl + "web/" + type + "/" +  id + ".json");
         let adminResponse = await fetch(Config.fetchUrl + "admin/" + type + "/" + (config.modular ? DEF : id)  + ".json");
@@ -42,13 +47,29 @@ export default {
 
         if (!item && params.id !== NEW) return error({ statusCode: 404 });
 
+        if (NEW_ITEM) fields.id = _defaultId;
+
         let array = []
-        let aux = 0;
         for (let field in fields) {
-            fields[field].value = item && item[field] ? item[field] : "";
+            if (fields[field].type === ARRAY) {
+                let children = [];
+                if (item) {
+                    Array.from(item[field]).forEach(value => {
+                        let credit = _.cloneDeep(fields[field].children);
+                        for (let field in credit) {
+                            credit[field].value = value[field];
+                        }
+                        children.push(credit);
+                    })
+                }
+                fields[field].value = children;
+            } else {
+                fields[field].value = item && item[field] ? item[field] : "";
+            }
             fields[field].key = field;
-            array[fields[field].order - 1] = fields[field];
+            array[fields[field].order - (NEW_ITEM ? 0 : 1)] = fields[field];
         }
+
         const FIELDS = {};
         Array.from(array).forEach(f => {
             const KEY = f.key;
@@ -56,14 +77,17 @@ export default {
             FIELDS[KEY] = f;
         })
 
-        return { fields: FIELDS };
+        return { id, type, fields: FIELDS, create: NEW_ITEM };
     },
     components: {
         FormComponent
     },
     methods: {
         save() {
-            console.log(this.$refs.form.getValue());
+
+            const data = this.$refs.form.getValue();
+
+            if (data) this.$store.dispatch("updateItem", { data, type: this.type, id: this.create ? data.id : this.id })
         }
     }
 }

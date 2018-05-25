@@ -23,7 +23,7 @@
             </span>
             <span v-else>
                 <p class="text" v-text="$t('form:drag:drop:placeholder')"></p>
-                <button class="upload" v-text="$t('button:second:upload')" />
+                <button class="upload" v-text="$t('button:select:file')" />
             </span>
         </span>
         <span>

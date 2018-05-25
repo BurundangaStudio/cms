@@ -7,31 +7,45 @@
 
 <template>
     <div class="text">
-        <input type="text" v-model="text"/>
+        <input type="text" v-model="text" @input="clean"/>
     </div>
 </template>
 
 <script>
 
-
-
 export default {
     name: "text-field",
     props: {
+        name: String,
         field: Object
     },
     data() {
         return {
-            text: ""
+            text: "",
+            error: {
+                name: "",
+                type: []
+            }
         }
     },
     created() {
         this.setInitValue();
     },
+    mounted() {
+        this.init();
+    },
     methods: {
         setInitValue() {
 
             this.text = this.field.value;
+        },
+        init() {
+
+            this.input = this.$el.querySelector("input");
+        },
+        clean() {
+
+            this.input.classList.remove("error");
         },
         getValue() {
 
@@ -39,7 +53,21 @@ export default {
         },
         valid() {
 
+            if (this.field.rules.required && this.text.length === 0) {
+                this.error = {
+                    name: this.name,
+                    type: [ "required field" ]
+                }
+                this.dispatchError();
+                return false;
+            }
             return true;
+        },
+        dispatchError() {
+
+            this.input.classList.add("error");
+
+            this.$store.dispatch("pushError", this.error);
         }
     }
 }
@@ -54,5 +82,8 @@ export default {
         padding: 10px;
         font-size: 14px;
         @include inputBorder();
+        &.error {
+            border-color: $error_color;
+        }
     }
 </style>

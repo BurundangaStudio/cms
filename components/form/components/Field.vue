@@ -14,55 +14,53 @@
 
 <script>
 
-import AreaField from "./types/Area";
-import ArrayField from "./types/Array";
-import BooleanField from "./types/Boolean";
-import ColorField from "./types/Color";
-import FilesField from "./types/Files";
-import PassField from "./types/Pass";
-import SelectField from "./types/Select";
-import TextField from "./types/Text";
-import WyswygField from "./types/Wyswyg";
+    import AreaField from "./types/Area";
+    import BooleanField from "./types/Boolean";
+    import ColorField from "./types/Color";
+    import FilesField from "./types/Files";
+    import PassField from "./types/Pass";
+    import SelectField from "./types/Select";
+    import TextField from "./types/Text";
+    import WyswygField from "./types/Wyswyg";
 
-export default {
-    name: "field",
-    props: {
-        name: String,
-        field: Object
-    },
-    methods: {
-        valid() {
-
-            return this.$refs.field.valid();
+    export default {
+        name: "field",
+        props: {
+            name: String,
+            field: Object
         },
-        getValue() {
+        methods: {
+            valid() {
 
-            return this.$refs.field.getValue();
+                return this.$refs.field.valid();
+            },
+            getValue() {
+
+                return this.$refs.field.getValue();
+            }
+        },
+        components: {
+            AreaField,
+            Boolean,
+            ColorField,
+            FilesField,
+            PassField,
+            SelectField,
+            TextField,
+            WyswygField
         }
-    },
-    components: {
-        AreaField,
-        ArrayField,
-        Boolean,
-        ColorField,
-        FilesField,
-        PassField,
-        SelectField,
-        TextField,
-        WyswygField
     }
-}
 
 </script>
 
 <style lang="scss" scoped>
 
-.field {
-    padding: 10px 0px;
-    label {
-        display: block;
-        padding-bottom: 5px;
+    .field {
+        padding: 10px 0px;
+        label {
+            display: block;
+            padding-bottom: 5px;
+        }
     }
-}
 
 </style>

@@ -1,0 +1,9 @@
+{
+    "order": 0,
+    "type": "text",
+    "rules": {
+        "limit": 10,
+        "required": true,
+        "no-spaces": true
+    }
+}

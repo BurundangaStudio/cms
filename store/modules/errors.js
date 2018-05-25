@@ -22,7 +22,7 @@ export default {
     },
     actions: {
 
-        pushError({ commit }, error) {
+        pushError({ commit, state }, error) {
             commit("PUSH", error);
         },
         cleanErrors({ commit }) {

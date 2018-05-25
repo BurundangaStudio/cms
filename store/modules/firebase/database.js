@@ -45,6 +45,13 @@ export default {
                 });
         },
 
+        async updateItem({ commit }, data) {
+
+            delete data.data.id;
+
+            console.log("update", data);
+        },
+
         setDatabaseRef({ commit }) {
 
             commit("SET_DB_REF", firebase.database());

@@ -8,7 +8,10 @@
 <template>
     <div class="form">
         <div class="fields">
-            <field ref="field" v-for="(field, key) in fields" :key="key" :name="key" :field="field" />
+            <div v-for="(field, key) in fields" :key="key">
+                <field v-if="field.type !== IS_ARRAY" ref="field" :name="key" :field="field" />
+                <fields-array v-else ref="field" :name="key" :field="field" />
+            </div>
         </div>
     </div>
 </template>
@@ -16,12 +19,14 @@
 <script>
 
 import Field from "~/components/form/components/Field";
+import FieldsArray from "~/components/form/components/Array";
 
 export default {
     data() {
         return {
             data: [],
-            error: false
+            error: false,
+            IS_ARRAY: "array"
         }
     },
     name: "formm",
@@ -38,7 +43,6 @@ export default {
                 Array.from(this.$refs.field).forEach(field => {
                     if (!field.valid()) this.error = true;
                     else this.data[field.name] = field.getValue();
-                    console.log(field.name + " " + field.getValue());
                 })
             }
 
@@ -49,7 +53,8 @@ export default {
         }
     },
     components: {
-        Field
+        Field,
+        FieldsArray
     }
 }
 
