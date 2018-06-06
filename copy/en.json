@@ -28,6 +28,9 @@
     "job": "Role",
     "name": "Names",
     "visible": "Visible",
+    "color": "Color",
+    "select": "Select",
+    "pass": "Pass",
 
     "login": "Login",
     "login:email:placeholder": "Enter your email",

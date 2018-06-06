@@ -46,6 +46,7 @@ export default {
     }
 
     .boolean {
+        cursor: pointer;
         position: relative;
         outline: 0;
         appearance: none;

@@ -39,6 +39,7 @@ import _ from "lodash";
 import Resumable from "resumablejs";
 
 export default {
+    name: "file-field",
     props: {
         index: Number,
         order: Number,

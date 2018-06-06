@@ -19,6 +19,7 @@
 <script>
 
 export default {
+    name: "video-field",
     props: {
         index: Number,
         order: Number

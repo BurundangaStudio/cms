@@ -11,7 +11,7 @@
     import Field from "../Field";
 
     export default {
-        name: "Item",
+        name: "item",
         props: {
             item: Object,
             index: Number,

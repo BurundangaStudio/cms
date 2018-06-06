@@ -14,7 +14,7 @@
 <script>
 
 export default {
-    name: "select",
+    name: "select-field",
     methods: {
         getValue() {
             return "Select";

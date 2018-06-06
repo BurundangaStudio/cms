@@ -6,6 +6,15 @@
         "visible": {
             "type": "boolean"
         },
+        "color": {
+            "type": "color"
+        },
+        "pass": {
+            "type": "pass"
+        },
+        "select": {
+            "type": "select"
+        },
         "link": {
             "type": "text",
             "rules": {
