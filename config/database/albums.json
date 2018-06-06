@@ -3,6 +3,9 @@
         "modular": true
     },
     "_default": {
+        "visible": {
+            "type": "boolean"
+        },
         "link": {
             "type": "text",
             "rules": {
@@ -23,18 +26,39 @@
         "credits": {
             "type": "array",
             "children": {
-                "title": {
+                "job": {
                     "type": "text",
                     "rules": {
                         "limit": 150
                     }
                 },
-                "description": {
+                "name": {
                     "type": "text",
                     "rules": {
                         "limit": 250
                     }
+                },
+                "link": {
+                    "type": "text",
+                    "rules": {
+                        "limit": 250
+                    }
+                },
+                "pic": {
+                    "type": "files",
+                    "rules": {
+                        "limit": 1,
+                        "format": [ "jpg" ],
+                        "maxSize": 2000
+                    }
                 }
+            }
+        },
+        "carousel": {
+            "type": "files",
+            "rules": {
+                "format": ["png", "jpg", "gif"],
+                "maxSize": 4000
             }
         },
         "files": {

@@ -27,6 +27,7 @@ process.argv.forEach((val, index) => {
 });
 
 Array.from(_FILES).forEach(_file => {
+    if (_file === "id.json") return;
     const _json = require("../config/database/" + _file);
     const _collection = _file.replace(".json", "");
     for (var _doc in _json) {
@@ -50,7 +51,19 @@ function setRef() {
     const adminFields = {};
     const webFields = {};
 
+    let order = 1;
+
     for (let f in json) {
+        if (f !== "modular") json[f].order = order;
+        order++;
+        if (json[f].type === "array") {
+            let childOrder = 1;
+            for (let c in json[f].children) {
+                json[f].children[c].order = childOrder;
+                c.order = childOrder;
+                childOrder++;
+            }
+        }
         adminFields[f] = json[f];
         webFields[f] = "";
     }

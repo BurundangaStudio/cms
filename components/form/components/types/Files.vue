@@ -15,6 +15,7 @@
                         ref="file"
                         v-if="file.type == TYPE_VIDEO"
                         :index="index"
+                        :limit="rules.limit"
                         :order="index + 1"
                         v-on:delete-file="deleteFile"
                     />
@@ -24,6 +25,7 @@
                         :index="index"
                         :order="index + 1"
                         :file="file"
+                        :limit="rules.limit"
                         :loading="file.loading"
                         :preview="file.preview"
                         :back-enabled="rules.backEnabled"
@@ -168,7 +170,6 @@ export default {
             return value;
         },
         valid() {
-
             const valid = !(this.rules.required && this.files.length == 0);
             if (!valid) {
                 this.box.classList.add("error");
@@ -215,12 +216,12 @@ export default {
         }
         .list {
             cursor: grab;
-            &.dragging {
-                cursor: grabbing;
-            }
             list-style: none;
             padding: 0;
             .file {
+                &.sortable-ghost {
+                    cursor: grabbing;
+                }
                 border-bottom: 1px solid $light_grey;
                 &:last-child {
                     border-bottom: none;

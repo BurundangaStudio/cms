@@ -8,16 +8,24 @@
 <template>
     <div class="array">
         <label v-text="$t(name)" />
-        <div class="grid" :class="{ empty : (children.length === 0) }">
-            <child v-for="(child, key) in children" ref="child" :key="key" :child="child" />
+        <div class="grid" v-sortable="{ onEnd: reorder }">
+            <p v-if="children.length == 0" class="text" v-text="$t('add:new') + $t(name)"></p>
+            <item
+                v-for="(item, index) in children"
+                ref="item"
+                :key="item.key"
+                :index="index"
+                :order="index + 1"
+                :item="item"
+                v-on:delete-item="deleteItem" />
         </div>
-        <button @click="addItem" :aria-labe="$t('button:add:item')" v-text="$t('button:add:item')"/>
+        <button @click="addItem" :aria-label="$t('button:add:item')" v-text="$t('button:add:item')"/>
     </div>
 </template>
 
 <script>
 
-    import Child from "./Child";
+    import Item from "./types/Item";
 
     export default {
         name: "Array",
@@ -30,6 +38,7 @@
         },
         props: {
             name: String,
+            type: String,
             field: Object
         },
         created() {
@@ -37,33 +46,76 @@
         },
         methods: {
             setData() {
-                this.children = [ ...this.field.value ];
+
+                this.itemKey = 0;
+
+                this.children = [ ...this.ordered(this.field.value) ];
+            },
+            ordered(data) {
+                const ORDERED = [];
+                Array.from(data).forEach(item => {
+                    const AUX = {};
+                    AUX.key = this.itemKey++;
+                    AUX.fields = {};
+                    for (let field in item) {
+                        item[field].key = field;
+                    }
+                    let array = Object.values(item);
+                    array.sort(this.compare);
+                    Array.from(array).forEach(field => {
+                        let key = field.key;
+                        delete field.key;
+                        AUX.fields[key] = field;
+                    })
+                    ORDERED.push(AUX);
+                })
+                return ORDERED;
+            },
+            compare(a,b) {
+                if (a.order < b.order)
+                    return -1;
+                if (a.order > b.order)
+                    return 1;
+                return 0;
+            },
+            reorder({ oldIndex, newIndex }) {
+
+                const movedItem = this.children.splice(oldIndex, 1)[0];
+                this.children.splice(newIndex, 0, movedItem);
             },
             getValue() {
 
                 this.data = [];
-                this.error = false;
 
-                if (this.$refs.child) {
-                    Array.from(this.$refs.child).forEach(child => {
-                        if (!child.valid()) this.error = true;
-                        else this.data.push(child.getValue());
+                if (this.$refs.item) {
+                    Array.from(this.$refs.item).forEach(item => {
+                        this.data[item.order - 1] = item.getValue();
                     })
                 }
-
-                if (this.error) return false;
 
                 return this.data;
             },
             valid() {
-                return true;
+                this.error = false;
+                if (this.$refs.item) {
+                    Array.from(this.$refs.item).forEach(item => {
+                        if (!item.valid()) this.error = true;
+                    })
+                }
+                return !this.error;
             },
             addItem() {
-                this.children.push(this.field.children);
+                let data = [];
+                data.push(this.field.children);
+                this.children.push(this.ordered(data)[0]);
+            },
+            deleteItem(index) {
+
+                this.children.splice(index, 1);
             }
         },
         components: {
-            Child
+            Item
         }
     }
 
@@ -72,18 +124,27 @@
 <style lang="scss" scoped>
 
     .array {
+        padding: 10px 0px;
         label {
             display: block;
-            padding-bottom: 5px;
+            padding-bottom: 10px;
         }
         .grid {
+            position: relative;
             @include inputBorder();
             display: flex;
             flex-wrap: wrap;
-            &.empty {
-                border: none;
+            padding: 0;
+            cursor: grab;
+            min-height: 50px;
+            .text {
+                position: absolute;
+                @include centerXY();
             }
-            .child {
+            .item {
+                &.sortable-ghost {
+                    cursor: grabbing;
+                }
                 @include transform(scale(0.85));
                 padding: 10px;
                 width: 25%;

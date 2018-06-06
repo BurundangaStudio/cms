@@ -22,7 +22,12 @@
     "files": "Files",
     "list": "List",
     "phone": "Phone",
+    "carousel": "Carousel",
+    "pic": "Picture",
     "description": "Description",
+    "job": "Role",
+    "name": "Names",
+    "visible": "Visible",
 
     "login": "Login",
     "login:email:placeholder": "Enter your email",
@@ -39,6 +44,8 @@
     "button:add:item": "Add new",
     "button:add:back": "Add back image",
     "button:remove:back": "Remove back image",
+
+    "add:new": "Add new ",
 
     "clean": "Clean",
 

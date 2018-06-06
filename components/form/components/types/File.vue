@@ -6,9 +6,9 @@
 -->
 
 <template>
-    <ul :class="{ withBack }">
+    <section :class="{ withBack }">
         <span>
-            {{ order }}
+            <span v-if="limit !== 1">{{ order }}</span>
             <img v-if="!loading" :src="file.preview" />
             {{ file.file.fileName }}
             {{ (file.file.size * 0.001).toFixed(0) }}KB
@@ -26,11 +26,11 @@
                 <button class="upload" v-text="$t('button:select:file')" />
             </span>
         </span>
-        <span>
+        <span class="buttons">
             <button v-if="backEnabled" @click="withBack = !withBack" v-text="$t(withBack ? 'button:remove:back' : 'button:add:back')" />
             <button @click="$emit('delete-file', index)" v-text="$t('button:delete')"/>
         </span>
-    </ul>
+    </section>
 </template>
 
 <script>
@@ -45,7 +45,8 @@ export default {
         loading: Boolean,
         preview: String,
         file: Object,
-        backEnabled: Boolean
+        backEnabled: Boolean,
+        limit: Number
     },
     data() {
         return {
@@ -133,9 +134,9 @@ export default {
 
 <style lang="scss" scoped>
 
-    ul {
+    section {
 
-        padding: 0;
+        padding: 0px 10px;
 
         list-style: none;
 
@@ -150,11 +151,18 @@ export default {
         }
 
         > span {
+            pointer-events: none;
             display: block;
             align-self: center;
             padding: 10px 0px;
             width: 100%;
             border-right: 1px solid $light_grey;
+            &.buttons, &.second-file  {
+                pointer-events: auto;
+                button {
+                    cursor: pointer;
+                }
+            }
             &:last-child {
                 border-right: none;
             }

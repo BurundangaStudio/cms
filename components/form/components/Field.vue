@@ -27,7 +27,9 @@
         name: "field",
         props: {
             name: String,
-            field: Object
+            type: String,
+            field: Object,
+            order: Number,
         },
         methods: {
             valid() {
@@ -41,7 +43,7 @@
         },
         components: {
             AreaField,
-            Boolean,
+            BooleanField,
             ColorField,
             FilesField,
             PassField,
@@ -59,7 +61,7 @@
         padding: 10px 0px;
         label {
             display: block;
-            padding-bottom: 5px;
+            padding-bottom: 10px;
         }
     }
 

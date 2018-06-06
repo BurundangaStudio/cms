@@ -9,8 +9,8 @@
     <div class="form">
         <div class="fields">
             <div v-for="(field, key) in fields" :key="key">
-                <field v-if="field.type !== IS_ARRAY" ref="field" :name="key" :field="field" />
-                <fields-array v-else ref="field" :name="key" :field="field" />
+                <field v-if="field.type !== IS_ARRAY" ref="field" :name="key" :type="field.type" :field="field" />
+                <fields-array v-else ref="field" :name="key" :type="field.type" :field="field" />
             </div>
         </div>
     </div>
@@ -36,13 +36,17 @@ export default {
     methods: {
         getValue() {
 
-            this.data = {};
+            this.data = [];
             this.error = false;
 
             if (this.$refs.field) {
                 Array.from(this.$refs.field).forEach(field => {
                     if (!field.valid()) this.error = true;
-                    else this.data[field.name] = field.getValue();
+                    else this.data.push({
+                        key: field.name,
+                        type: field.type,
+                        value: field.getValue()
+                    });
                 })
             }
 
@@ -59,8 +63,4 @@ export default {
 }
 
 </script>
-
-<style lang="scss" scoped>
-
-</style>
 

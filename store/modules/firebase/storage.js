@@ -42,7 +42,6 @@ export default {
 
         async uploadStorage({ dispatch, commit, state }, data) {
 
-            console.log(data);
             if (_.isUndefined(state.ref))
                 await dispatch("setRef");
 
