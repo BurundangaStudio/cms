@@ -36,7 +36,6 @@ export default {
     $switch-width: $switch-height;
     $knob-height: 24px;
     $translate-distance: $switch-width;
-    // Sprite with two flags
     $first-flag: $light_grey center;
     $second-flag: #34762f center;
 
@@ -48,7 +47,7 @@ export default {
         cursor: pointer;
         position: relative;
         outline: 0;
-        appearance: none;
+        // appearance: none;
         -webkit-perspective: 1000;
         -webkit-backface-visibility: hidden;
         -webkit-transform:translate3d(0,0,0);
