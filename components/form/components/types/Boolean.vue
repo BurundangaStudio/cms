@@ -30,7 +30,6 @@ export default {
 
 <style lang="scss" scoped>
 
-    $color1: #999;
     $color2: #3e8a38;
     $color3: white;
     $switch-height: 30px;
@@ -38,7 +37,7 @@ export default {
     $knob-height: 24px;
     $translate-distance: $switch-width;
     // Sprite with two flags
-    $first-flag: $color1 center;
+    $first-flag: $light_grey center;
     $second-flag: #34762f center;
 
     *, *:before, *:after {
@@ -85,7 +84,7 @@ export default {
             &:after {
                 top: 3px;
                 left: 3px;
-                border: 2px solid #DFDFDF;
+                border: 2px solid white;
                 width: $knob-height;
                 height: $knob-height;
                 background: $second-flag;
@@ -103,7 +102,7 @@ export default {
         }
 
         input:checked + label:before {
-            background-color: $color1;
+            background-color: $light_grey;
         }
     }
 </style>

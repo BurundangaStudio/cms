@@ -21,6 +21,9 @@ import { TweenMax } from "gsap";
 
 export default {
     name: "color-field",
+    props: {
+        field: Object
+    },
     data() {
         return {
             color: "",
@@ -34,7 +37,13 @@ export default {
             TweenMax.to(this.$refs.show, 1, { background: "#" + (this.validColor ? this.color : "fff") });
         }
     },
+    created() {
+        this.setData();
+    },
     methods: {
+        setData() {
+            this.color = this.field.value.replace("#", "");
+        },
         getValue() {
             return "Color";
         },

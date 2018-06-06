@@ -18,3 +18,9 @@ export const FilesRules = {
     maxSize: 2000,
     format: [ "png", "jpg", "svg", "gif", "mp4", "ogg", "webm", "ogv", "pdf" ]
 }
+
+export const PassRules = {
+    numberRequired: false,
+    capitalRequired: false,
+    signRequired: false
+}
