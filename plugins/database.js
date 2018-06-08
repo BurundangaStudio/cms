@@ -8,13 +8,21 @@
 const fs = require("fs");
 const _ = require("lodash");
 const firebase = require("./firebase.js");
-const database = require("firebase/database");
+
+const Config = require("../config/index");
+const langs = Config.webLangs;
+
+const langsInit = {};
+Array.from(langs).forEach(lang => {
+    langsInit[lang] = { init: "true" };
+})
 
 const _DB = firebase.database();
 const _FILES = fs.readdirSync("config/database");
 
 const _ADMIN = "admin/";
 const _WEB = "web/";
+const _COPY = "copy/";
 let _UPDATE = false;
 
 let ref = "";
@@ -27,7 +35,6 @@ process.argv.forEach((val, index) => {
 });
 
 Array.from(_FILES).forEach(_file => {
-    if (_file === "id.json") return;
     const _json = require("../config/database/" + _file);
     const _collection = _file.replace(".json", "");
     for (var _doc in _json) {
@@ -86,10 +93,17 @@ function next() {
         setRef();
     } else {
         _DB.ref(_ADMIN + "_config").set({ dataset: true }).then(() => {
-            console.log("\n- DATABASE SETTED! \n");
-            process.exit();
+            if (!_UPDATE) {
+                console.log("Copy created succesfully!")
+                _DB.ref(_COPY).set(langsInit).then(end).catch(error);
+            } else end();
         }).catch(error);
     }
+}
+
+function end() {
+    console.log("\n- DATABASE SETTED! \n");
+    process.exit();
 }
 
 function error(error) {

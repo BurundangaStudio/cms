@@ -10,7 +10,6 @@ export default {
     required: false
 }
 
-
 export const FilesRules = {
     limit: undefined,
     backEnabled: false,

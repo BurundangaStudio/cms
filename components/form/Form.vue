@@ -31,7 +31,8 @@ export default {
     },
     name: "formm",
     props: {
-        fields: Object
+        fields: Object,
+        lang: String
     },
     methods: {
         getValue() {

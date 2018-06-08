@@ -13,20 +13,24 @@ Vue.use(VueI18n);
 
 export default ({ app, store }) => {
 
-  app.i18n = new VueI18n({
-    locale: store.state.lang.locale,
-    fallbackLocale: Config.entryLang,
-    messages: {
-      'en': require('~/copy/en.json'),
-      'es': require('~/copy/es.json')
-    }
-  })
+    let messages = {};
 
-  app.i18n.path = (link) => {
-    if (app.i18n.locale === app.i18n.fallbackLocale) {
-      return `/${link}`
-    }
+    Array.from(Config.adminLangs).forEach(lang => {
+        messages[lang] = require('~/copy/' + lang + '.json');
+    });
 
-    return `/${app.i18n.locale}/${link}`
-  }
+    app.i18n = new VueI18n({
+        locale: store.state.lang.locale,
+        fallbackLocale: Config.entryLang,
+        messages
+    })
+
+    app.i18n.path = (link) => {
+        if (app.i18n.locale === app.i18n.fallbackLocale) {
+            return `/${link}`
+        }
+
+        return `/${app.i18n.locale}/${link}`
+    }
 }
+

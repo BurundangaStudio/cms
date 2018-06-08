@@ -54,7 +54,7 @@ export default {
         setRules() {
 
             this.rules = _.defaults(this.field.rules, PassRules, Rules);
-            console.log(this.rules);
+            // console.log(this.rules);
         },
         clean() {
 

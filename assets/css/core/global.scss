@@ -27,3 +27,14 @@ html {
 .layout {
     padding: 20px;
 }
+
+button {
+    width: 150px;
+    padding: 10px 0px;
+    background: none;
+    @include inputBorder();
+    font-size: 14px;
+    text-transform: uppercase;
+    outline: 0;
+    cursor: pointer;
+}

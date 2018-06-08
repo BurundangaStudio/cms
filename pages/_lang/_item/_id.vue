@@ -6,10 +6,29 @@
 -->
 
 <template>
-    <section class="item">
-        <form-component ref="form" :fields="fields" />
-        <button class="button" v-html="$t('button:save')" @click="save" />
-    </section>
+    <div class="item">
+        <div>
+            <pre v-text="data" />
+        </div>
+        <div>
+            <pre v-text="fields" />
+        </div>
+
+        <!-- <div class="header">
+            <h1 v-text="create ? 'New' : 'Edit ' + id"/>
+
+            <div class="langs">
+                <div class="menu">
+                    <button v-for="lang in langs" :key="lang" v-text="lang" @click="active(lang)" />
+                </div>
+            </div>
+
+            <button class="button" v-html="$t('button:save')" @click="save" />
+        </div>
+
+        <form-component ref="form" :fields="fields" /> -->
+
+    </div>
 </template>
 
 <script>
@@ -18,7 +37,10 @@ import _ from "lodash";
 import fetch from "isomorphic-fetch";
 
 import Config from "~/config/index";
-import _defaultId from "~/config/database/id.json";
+
+import Rules, { FilesRules, PassRules } from "~/config/form/rules";
+
+import TextField from "~/components/form/components/types/Text";
 import FormComponent from "~/components/form/Form";
 
 export default {
@@ -29,59 +51,85 @@ export default {
         const NEW = "new";
         const DEF = "_default";
         const ARRAY = "array";
+        const CONFIG = "config";
 
         const NEW_ITEM = params.id === NEW;
+        const ID = NEW_ITEM ? DEF : params.id;
 
-        let type = params.item;
+        const TYPE = params.item;
 
-        let configResponse = await fetch(Config.fetchUrl + "admin/" + type + "/_config.json");
-        let config = await configResponse.json();
+        let endPoints = [
+            { key: CONFIG, url: Config.fetchUrl + "admin/" + TYPE + "/_config.json", required: true },
+            { key: "item", url: Config.fetchUrl + "web/" + TYPE + "/" + ID + ".json", required: !NEW_ITEM }
+        ];
 
-        if (!config) return error({ statusCode: 404 })
+        for (let lang of Config.webLangs) {
+            endPoints.push({ key: "copy", subKey: lang, url: Config.fetchUrl + "copy/" + lang + ".json" })
+        }
 
-        let id = NEW_ITEM ? DEF : params.id;
+        let data = {};
+        for (let ep of endPoints) {
 
-        let webResponse = await fetch(Config.fetchUrl + "web/" + type + "/" +  id + ".json");
-        let adminResponse = await fetch(Config.fetchUrl + "admin/" + type + "/" + (config.modular ? DEF : id)  + ".json");
-        let item = await webResponse.json();
-        let fields = await adminResponse.json();
+            let req = await fetch(ep.url);
+            let res = await req.json();
 
-        if (!item && params.id !== NEW) return error({ statusCode: 404 });
+            if (ep.required && !res) return error({ statusCode: 404 });
 
-        if (NEW_ITEM) fields.id = _defaultId;
+            if (ep.key === CONFIG)
+                endPoints.push({ key: "fields", url: Config.fetchUrl + "admin/" + TYPE + "/" + (res.modular ? DEF : ID) + ".json" });
 
-        let array = []
-        for (let field in fields) {
-            if (fields[field].type === ARRAY) {
+            if (ep.subKey) {
+                if (!data[ep.key]) data[ep.key] = {}
+                data[ep.key][ep.subKey] = res;
+            } else data[ep.key] = res;
+        }
+
+        if (NEW_ITEM)
+            data.fields.id =  { "order": 0, "type": "text", "rules": { "limit": 10, "required": true, "no-spaces": true } };
+
+        let array = [];
+        for (let field in data.fields) {
+            let obj = data.fields[field];
+            if (obj.type === ARRAY) {
                 let children = [];
-                if (item && item[field]) {
-                    Array.from(item[field]).forEach(value => {
-                        let credit = _.cloneDeep(fields[field].children);
+                if (data.item && data.item[field]) {
+                    for (let value of data.item[field]) {
+                        let credit = _.cloneDeep(obj.children);
                         for (let field in credit) {
                             credit[field].value = value[field];
                         }
                         children.push(credit);
-                    })
+                    }
                 }
-                fields[field].value = children;
+
+                obj.value = children;
             } else {
-                fields[field].value = item && item[field] ? item[field] : "";
+
+                obj.value = data.item && data.item[field] ? data.item[field] : "";
             }
-            fields[field].key = field;
-            array[fields[field].order - (NEW_ITEM ? 0 : 1)] = fields[field];
+            obj.key = field;
+            obj.rules = { ...Rules, ...obj.rules };
+            array[obj.order - (NEW_ITEM ? 0 : 1)] = obj;
         }
 
-        const FIELDS = {};
-        Array.from(array).forEach(f => {
+        let fields = {};
+        for (let f of array) {
             const KEY = f.key;
             delete f.key;
-            FIELDS[KEY] = f;
-        })
+            delete f.order;
+            fields[KEY] = f;
+        }
 
-        return { id, type, fields: FIELDS, create: NEW_ITEM };
-    },
-    components: {
-        FormComponent
+        return {
+            // id,
+            // copy,
+            // type: TYPE,
+            // fields: FIELDS,
+            // create: NEW_ITEM,
+            // langs: Config.webLangs
+            data: data.fields,
+            fields
+        };
     },
     methods: {
         async save() {
@@ -139,8 +187,26 @@ export default {
             let nameParts = file.name.split(".");
             let format = nameParts[nameParts.length - 1];
             let fileName = Math.random().toString(36).substr(2, 5) + file.size +  "." + format;
+        },
+
+        active(lang) {
+            console.log("active lang-" + lang);
         }
+    },
+    components: {
+        TextField,
+        FormComponent
     }
 }
 
 </script>
+
+
+<style lang="scss" scoped>
+    .item {
+        display: flex;
+        > div {
+            width: 50%;
+        }
+    }
+</style>

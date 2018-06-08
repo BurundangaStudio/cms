@@ -3,9 +3,6 @@
         "modular": true
     },
     "_default": {
-        "visible": {
-            "type": "boolean"
-        },
         "color": {
             "type": "color"
         },
@@ -13,7 +10,8 @@
             "type": "pass"
         },
         "select": {
-            "type": "select"
+            "type": "select",
+            "lang": "true"
         },
         "link": {
             "type": "text",
@@ -25,24 +23,28 @@
         },
         "title": {
             "type": "text",
+            "lang": "true",
             "rules": {
                 "limit": 150
             }
         },
         "content": {
-            "type": "wyswyg"
+            "type": "wyswyg",
+            "lang": "true"
         },
         "credits": {
             "type": "array",
             "children": {
                 "job": {
                     "type": "text",
+                    "lang": "true",
                     "rules": {
                         "limit": 150
                     }
                 },
                 "name": {
                     "type": "text",
+                    "lang": "true",
                     "rules": {
                         "limit": 250
                     }
@@ -57,7 +59,7 @@
                     "type": "files",
                     "rules": {
                         "limit": 1,
-                        "format": [ "jpg" ],
+                        "format": ["gif"],
                         "maxSize": 2000
                     }
                 }
@@ -79,6 +81,9 @@
                 "backEnabled": true,
                 "videoEnabled": true
             }
+        },
+        "visible": {
+            "type": "boolean"
         }
     }
 }

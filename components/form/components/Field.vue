@@ -6,7 +6,7 @@
 -->
 
 <template>
-    <div class="field">
+    <div class="field" :class="field.type">
         <label v-text="$t(name)" />
         <component ref="field" :is="field.type + '-field'" :name="name" :field="field"/>
     </div>
@@ -60,6 +60,9 @@
         label {
             display: block;
             padding-bottom: 10px;
+        }
+        &.boolean {
+            color: black;
         }
     }
 
