@@ -8,7 +8,13 @@
 <template>
     <div class="field" :class="field.type">
         <label v-text="$t(name)" />
-        <component ref="field" :is="field.type + '-field'" :name="name" :field="field" :copy="copy"/>
+        <component v-if="!field.lang" ref="field" :is="field.type + '-field'" :name="name" :field="field" />
+        <div v-else class="langs">
+            <div class="indicators">
+                <p v-for="(lang, key) in copy" :key="key" class="lang" :class="'lang-' + key" v-text="key" @click="$store.dispatch('setEditLang', key)" />
+            </div>
+            <component v-for="(lang, key) in copy" :key="key" class="lang" :class="'lang-' + key" ref="field" :data-lang="key" :is="field.type + '-field'" :name="name" :field="field" :value="copy[key][field.value]"/>
+        </div>
     </div>
 </template>
 
@@ -65,6 +71,17 @@
         }
         &.boolean {
             color: black;
+        }
+        .indicators {
+            position: absolute;
+            right: 0;
+            top: 10px;
+            p {
+                font-size: 10px;
+                margin: 0 2.5px;
+                display: inline-block;
+                text-transform: uppercase;
+            }
         }
     }
 

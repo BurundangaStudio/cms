@@ -20,17 +20,29 @@
 
 <script>
 
-export default {
-    name: "select-field",
-    methods: {
-        getValue() {
-            return "Select";
+    export default {
+        name: "select-field",
+        props: {
+            field: Object
         },
-        valid() {
-            return true;
+        methods: {
+            getValue() {
+                return "Select";
+            },
+            valid() {
+                return true;
+            }
         }
     }
-}
 
 </script>
 
+<style lang="scss">
+
+    .select {
+        select {
+            width: 100%;
+        }
+    }
+
+</style>

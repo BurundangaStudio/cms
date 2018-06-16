@@ -7,13 +7,7 @@
 
 <template>
     <div class="text">
-        <input v-if="!field.lang" type="text" v-model="text" @input="clean"/>
-        <div v-else class="langs">
-            <div class="indicators">
-                <p v-for="(lang, key) in copy" :key="key" class="lang" :class="'lang-' + key" v-text="key" @click="$store.dispatch('setEditLang', key)" />
-            </div>
-            <input v-for="(lang, key) in copy" :key="key" class="lang" :class="'lang-' + key" ref="lang" :data-lang="key" type="text" @input="clean" />
-        </div>
+        <input type="text" v-model="text" @input="clean"/>
     </div>
 </template>
 
@@ -23,8 +17,8 @@
         name: "text-field",
         props: {
             name: String,
-            field: Object,
-            copy: Object
+            value: String,
+            field: Object
         },
         data() {
             return {
@@ -44,7 +38,7 @@
         methods: {
             setInitValue() {
 
-                this.text = this.field.value;
+                this.text = this.value ? this.value : this.field.value;
             },
             init() {
 
@@ -55,14 +49,8 @@
                 this.input.classList.remove("error");
             },
             getValue() {
-                if (this.field.lang) {
-                    let val = {}
-                    val.key = this.text;
-                    this.$refs.lang.forEach(el => {
-                        val[el.dataset.lang] = el.value;
-                    });
-                    return val;
-                } else return this.text;
+
+                return this.text;
             },
             valid() {
 
@@ -98,18 +86,6 @@
             @include inputBorder();
             &.error {
                 border-color: $error_color;
-            }
-        }
-        .indicators {
-            position: absolute;
-            right: 0;
-            top: 0;
-            p {
-                font-size: 10px;
-                margin: 0 2.5px;
-                display: inline-block;
-                text-transform: uppercase;
-                @include transform(translateY(-25px));
             }
         }
     }
