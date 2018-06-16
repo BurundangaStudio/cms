@@ -8,7 +8,7 @@
 <template>
     <div class="field" :class="field.type">
         <label v-text="$t(name)" />
-        <component ref="field" :is="field.type + '-field'" :name="name" :field="field"/>
+        <component ref="field" :is="field.type + '-field'" :name="name" :field="field" :copy="copy"/>
     </div>
 </template>
 
@@ -29,6 +29,7 @@
             type: String,
             field: Object,
             order: Number,
+            copy: Object
         },
         methods: {
             valid() {

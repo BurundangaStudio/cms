@@ -17,6 +17,7 @@
                 :index="index"
                 :order="index + 1"
                 :item="item"
+                :copy="copy"
                 v-on:delete-item="deleteItem" />
         </div>
         <button @click="addItem" :aria-label="$t('button:add:item')" v-text="$t('button:add:item')"/>
@@ -29,17 +30,18 @@
 
     export default {
         name: "Array",
+        props: {
+            name: String,
+            type: String,
+            field: Object,
+            copy: Object
+        },
         data() {
             return {
                 data: [],
                 error: false,
                 children: []
             }
-        },
-        props: {
-            name: String,
-            type: String,
-            field: Object
         },
         created() {
             this.setData();

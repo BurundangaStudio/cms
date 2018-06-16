@@ -14,17 +14,17 @@
 
 <script>
 
-export default {
-    name: "boolean-field",
-    methods: {
-        getValue() {
-            return "Boolean";
-        },
-        valid() {
-            return true;
+    export default {
+        name: "boolean-field",
+        methods: {
+            getValue() {
+                return "Boolean";
+            },
+            valid() {
+                return true;
+            }
         }
     }
-}
 
 </script>
 

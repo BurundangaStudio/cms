@@ -9,8 +9,8 @@
     <div class="form">
         <div class="fields">
             <div v-for="(field, key) in fields" :key="key">
-                <field v-if="field.type !== IS_ARRAY" ref="field" :name="key" :type="field.type" :field="field" />
-                <fields-array v-else ref="field" :name="key" :type="field.type" :field="field" />
+                <field v-if="field.type !== ARRAY" ref="field" :name="key" :type="field.type" :field="field" :copy="copy" />
+                <fields-array v-else ref="field" :name="key" :type="field.type" :field="field" :copy="copy" />
             </div>
         </div>
     </div>
@@ -22,17 +22,28 @@ import Field from "~/components/form/components/Field";
 import FieldsArray from "~/components/form/components/Array";
 
 export default {
+    name: "formm",
+    computed: {
+        editLang() {
+            return this.$store.state.lang.editLang;
+        }
+    },
+    props: {
+        copy: Object,
+        fields: Object
+    },
     data() {
         return {
             data: [],
             error: false,
-            IS_ARRAY: "array"
+            ARRAY: "array"
         }
     },
-    name: "formm",
-    props: {
-        fields: Object,
-        lang: String
+    watch: {
+        editLang() { this.activeLang(); }
+    },
+    mounted() {
+        this.activeLang();
     },
     methods: {
         getValue() {
@@ -55,6 +66,10 @@ export default {
 
             this.$store.dispatch("cleanErrors");
             return this.data;
+        },
+        activeLang() {
+            this.$el.querySelectorAll(".lang").forEach(el => { el.classList.remove("visible") });
+            this.$el.querySelectorAll(".lang-" + this.editLang).forEach(el => { el.classList.add("visible") });
         }
     },
     components: {
@@ -65,3 +80,24 @@ export default {
 
 </script>
 
+<style lang="scss">
+    .form {
+        p {
+            &.lang {
+                cursor: pointer;
+                color: $light_grey;
+            }
+            &.visible {
+                color: black !important;
+            }
+        }
+        div, input {
+            &.lang {
+                display: none;
+            }
+            &.visible {
+                display: block;
+            }
+        }
+    }
+</style>
