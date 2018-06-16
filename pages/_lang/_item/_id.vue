@@ -139,8 +139,7 @@
                 console.log(data);
             },
             onScrollHandler() {
-                this.scrollPoint = window.scrollY || window.pageYOffset;
-                if (this.scrollPoint > this.scrollLimit) {
+                if (this.$el.getBoundingClientRect().top < 0) {
                     this.$el.classList.add("scrolling");
                     this.$refs.header.classList.add("fixed");
                 } else {
@@ -149,17 +148,13 @@
                 }
             },
             onResizeHandler() {
-                this.scrollLimit = this.$refs.header.getBoundingClientRect().top;
+                this.scrollLimit = this.$el.getBoundingClientRect().top + this.scrollPoint;
             },
             setListeners() {
-                this.onScrollHandler();
                 window.addEventListener("scroll", this.onScrollHandler);
-                this.onResizeHandler();
-                window.addEventListener("resize", this.onResizeHandler);
             },
             destroyListeners() {
                 window.removeEventListener("scroll", this.onScrollHandler);
-                window.removeEventListener("resize", this.onResizeHandler);
             }
         },
         beforeDestroy() {
@@ -176,7 +171,7 @@
 <style lang="scss" scoped>
     .item {
         &.scrolling {
-            padding-top: 39px;
+            padding-top: 59px;
         }
         button {
             &.active {
@@ -185,6 +180,7 @@
         }
         .header {
 
+            padding: 10px 0px;
             display: grid;
             grid-template-columns: max-content 1fr max-content;
 
@@ -193,11 +189,22 @@
                 top: 0;
                 left: 0;
                 width: 100%;
-                background: lime;
+                background: white;
+                z-index: 9;
+                padding: 10px 20px;
+                border-bottom: 1px solid $light_grey;
             }
 
             .langs {
                 text-align: right;
+                padding-right: 20px;
+                button {
+                    width: 50px;
+                    border-left: none;
+                    &:first-child {
+                        border-left: 1px solid $light_grey;
+                    }
+                }
             }
         }
     }

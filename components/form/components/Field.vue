@@ -57,6 +57,7 @@
 <style lang="scss" scoped>
 
     .field {
+        position: relative;
         padding: 10px 0px;
         label {
             display: block;

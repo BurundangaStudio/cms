@@ -55,6 +55,7 @@
 <style lang="scss">
 
     header {
+
         padding: 0px 0px 20px;
 
         display: grid;
