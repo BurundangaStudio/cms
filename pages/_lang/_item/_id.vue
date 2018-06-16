@@ -8,14 +8,16 @@
 <template>
 
     <div class="item">
-        <div class="header">
-            <h1 v-text="create ? 'New' : 'Edit ' + id"/>
-            <div class="langs">
-                <div class="menu">
-                    <button v-for="(lang, key) in copy" :key="key" v-text="key" :class="{ active : key === $store.state.lang.editLang }" @click="$store.dispatch('setEditLang', key)" />
-                </div>
+        <div class="header" ref="header">
+            <div class="title">
+                <h1 v-text="create ? 'New' : 'Edit ' + id"/>
             </div>
-            <button class="button" v-html="$t('button:save')" @click="save" />
+            <div class="langs">
+                <button v-for="(lang, key) in copy" :key="key" v-text="key" :class="{ active : key === $store.state.lang.editLang }" @click="$store.dispatch('setEditLang', key)" />
+            </div>
+            <div class="save-button">
+                <button class="button" v-html="$t('button:save')" @click="save" />
+            </div>
         </div>
         <form-component ref="form" :copy="copy" :fields="fields" />
     </div>
@@ -118,66 +120,50 @@
                 type: TYPE,
                 create: NEW_ITEM,
                 copy: data.copy,
-                fields
+                fields,
+                scrollPoint: 0,
+                scrollLimit: 0
             };
         },
+        mounted() {
+            this.init();
+        },
         methods: {
+            init() {
+
+                this.setListeners();
+            },
             async save() {
 
                 let data = this.$refs.form.getValue();
-
                 console.log(data);
-
-                // let storageData = this.getStorageDataFrom(data);
-
-                // console.log(storageData);
-
-
-                if (data) {
-                    // this.$store.dispatch("uploadStorage", { path: this.type + "/" + this.id, files: data.files});
+            },
+            onScrollHandler() {
+                this.scrollPoint = window.scrollY || window.pageYOffset;
+                if (this.scrollPoint > this.scrollLimit) {
+                    this.$el.classList.add("scrolling");
+                    this.$refs.header.classList.add("fixed");
+                } else {
+                    this.$el.classList.remove("scrolling");
+                    this.$refs.header.classList.remove("fixed");
                 }
-                    // this.$store.dispatch("updateItem", {
-                    //     data,
-                    //     type: this.type,
-                    //     id: this.create ? data.id : this.id,
-                    //     create: this.create
-                    // })
             },
-
-            getStorageDataFrom(data) {
-
-                let files = [];
-                let dataFiles = [];
-                let path = "images/" + this.type + "/" + data.id;
-
-                Array.from(data.files).forEach(file => {
-                    if (file.type === "video") return;
-                    if (!file.files) {
-                        console.log
-                        if (!this.dataContainsItem(files, file.file)) files.push(file.file);
-                    } else {
-                        Array.from(file.files).forEach(file => {
-                            if (!this.dataContainsItem(files, file)) files.push(file);
-                        });
-                    }
-                });
-
-                return { path, files, dataFiles };
+            onResizeHandler() {
+                this.scrollLimit = this.$refs.header.getBoundingClientRect().top;
             },
-
-            dataContainsItem(data, item) {
-                let exists = false;
-                Array.from(data).forEach((el, index) => {
-                    if (el.data_url === item.data_url) exists = true;
-                })
-                return exists;
+            setListeners() {
+                this.onScrollHandler();
+                window.addEventListener("scroll", this.onScrollHandler);
+                this.onResizeHandler();
+                window.addEventListener("resize", this.onResizeHandler);
             },
-
-            generateRandomNameFrom(file) {
-                let nameParts = file.name.split(".");
-                let format = nameParts[nameParts.length - 1];
-                let fileName = Math.random().toString(36).substr(2, 5) + file.size +  "." + format;
-            },
+            destroyListeners() {
+                window.removeEventListener("scroll", this.onScrollHandler);
+                window.removeEventListener("resize", this.onResizeHandler);
+            }
+        },
+        beforeDestroy() {
+            this.destroyListeners();
         },
         components: {
             FormComponent
@@ -189,9 +175,29 @@
 
 <style lang="scss" scoped>
     .item {
+        &.scrolling {
+            padding-top: 39px;
+        }
         button {
             &.active {
                 background: $light_grey;
+            }
+        }
+        .header {
+
+            display: grid;
+            grid-template-columns: max-content 1fr max-content;
+
+            &.fixed {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                background: lime;
+            }
+
+            .langs {
+                text-align: right;
             }
         }
     }
