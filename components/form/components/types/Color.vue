@@ -45,7 +45,7 @@ export default {
             this.color = this.field.value.replace("#", "");
         },
         getValue() {
-            return "Color";
+            return this.color;
         },
         valid() {
             return true;

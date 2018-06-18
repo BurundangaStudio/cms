@@ -7,14 +7,16 @@
 
 <template>
     <div class="select">
-        <select>
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-        </select>
+        <div class="frame">
+            <select>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
     </div>
 </template>
 
@@ -40,16 +42,20 @@
 <style lang="scss">
 
     .select {
-        select {
-            background: none;
-            outline: 0;
-            width: 100%;
-            padding: 10px;
-            height: 40px;
-            font-size: 14px;
+        .frame {
             @include inputBorder();
-            &.error {
-                border-color: $error_color;
+            padding: 0px 5px;
+            select {
+                background: none;
+                outline: 0;
+                width: 100%;
+                padding: 10px;
+                height: 40px;
+                font-size: 14px;
+                border: none;
+                &.error {
+                    border-color: $error_color;
+                }
             }
         }
     }

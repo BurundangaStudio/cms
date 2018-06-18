@@ -10,7 +10,7 @@
         <div class="fields">
             <div v-for="(field, key) in fields" :key="key">
                 <field v-if="field.type !== ARRAY" ref="field" :name="key" :type="field.type" :field="field" :copy="copy" />
-                <fields-array v-else ref="field" :name="key" :type="field.type" :field="field" :copy="copy" />
+                <fields-array v-else ref="field" :name="key" v-on:new-field="activeLang" :type="field.type" :field="field" :copy="copy" />
             </div>
         </div>
     </div>
@@ -68,6 +68,7 @@ export default {
             return this.data;
         },
         activeLang() {
+            console.log("UPDATE LANG");
             this.$el.querySelectorAll(".lang").forEach(el => { el.classList.remove("visible") });
             this.$el.querySelectorAll(".lang-" + this.editLang).forEach(el => { el.classList.add("visible") });
         }

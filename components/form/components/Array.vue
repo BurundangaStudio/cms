@@ -110,6 +110,9 @@
                 let data = [];
                 data.push(this.field.children);
                 this.children.push(this.ordered(data)[0]);
+                this.$nextTick(() => { 
+                    this.$emit("new-field"); 
+                });
             },
             deleteItem(index) {
 

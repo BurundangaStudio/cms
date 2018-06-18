@@ -1,7 +1,7 @@
 <template>
     <div class="item">
         {{ order }}
-        <field v-for="(field, key) in item.fields" ref="field" :key="key" :name="key" :field="field" />
+        <field v-for="(field, key) in item.fields" ref="field" :key="key" :name="key" :field="field" :copy="copy" />
         <button @click="$emit('delete-item', index)" v-text="$t('button:delete')"/>
     </div>
 </template>
@@ -14,6 +14,7 @@
         name: "item",
         props: {
             item: Object,
+            copy: Object,
             index: Number,
             order: Number
         },
