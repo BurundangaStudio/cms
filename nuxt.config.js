@@ -37,7 +37,7 @@ module.exports = {
     },
 
     loading: {
-        color: 'blue'
+        color: 'black'
     },
 
     transition: require("./local_modules/transitions/default.js"),

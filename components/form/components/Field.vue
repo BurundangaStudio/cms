@@ -42,7 +42,10 @@
                 let error = false;
                 if (Array.isArray(this.$refs.field)) {
                     for (let field of this.$refs.field) {
-                        if (!field.valid()) error = true;
+                        if (!field.valid()) { 
+                            error = true;
+                            this.$store.dispatch("setEditLang", field.$el.dataset.lang);
+                        }
                     }
                 } else error = !this.$refs.field.valid();
                 return !error;

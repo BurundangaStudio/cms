@@ -76,8 +76,8 @@
                 } else data[endPoint.key] = response;
             }
 
-            if (NEW_ITEM)
-                data.fields.id =  { "order": 0, "type": "text", "rules": { "limit": 10, "required": true, "no-spaces": true } };
+            // if (NEW_ITEM)
+                // data.fields.id =  { "order": 0, "type": "text", "rules": { "limit": 10, "required": true, "no-spaces": true } };
 
             let array = [];
             for (let field in data.fields) {
@@ -101,7 +101,7 @@
                 }
                 obj.key = field;
                 obj.rules = { ...Rules, ...obj.rules };
-                array[obj.order - (NEW_ITEM ? 0 : 1)] = obj;
+                array[obj.order - 1] = obj;
             }
 
             let fields = {};
@@ -113,7 +113,7 @@
             }
 
             let editLang = store.state.lang.editLang ? store.state.lang.editLang : Config.webLangs[0];
-            store.dispatch('setEditLang', editLang);
+            store.dispatch("setEditLang", editLang);
 
             return {
                 id: ID,

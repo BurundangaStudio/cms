@@ -41,7 +41,16 @@
 
     .select {
         select {
+            background: none;
+            outline: 0;
             width: 100%;
+            padding: 10px;
+            height: 40px;
+            font-size: 14px;
+            @include inputBorder();
+            &.error {
+                border-color: $error_color;
+            }
         }
     }
 
