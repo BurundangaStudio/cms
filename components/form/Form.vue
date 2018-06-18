@@ -68,7 +68,6 @@ export default {
             return this.data;
         },
         activeLang() {
-            console.log("UPDATE LANG");
             this.$el.querySelectorAll(".lang").forEach(el => { el.classList.remove("visible") });
             this.$el.querySelectorAll(".lang-" + this.editLang).forEach(el => { el.classList.add("visible") });
         }
