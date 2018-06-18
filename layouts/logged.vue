@@ -8,8 +8,10 @@
 <template>
     <div class="layout logged">
         <header-component/>
-        <error-overlay/>
-        <nuxt/>
+        <div class="content">
+            <error-overlay/>
+            <nuxt/>
+        </div>
         <footer-component/>
     </div>
 </template>

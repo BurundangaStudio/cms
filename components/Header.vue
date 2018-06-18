@@ -56,7 +56,8 @@
 
     header {
 
-        padding: 0px 0px 20px;
+        background: $light_grey; 
+        padding: 20px;
 
         display: grid;
 
@@ -66,8 +67,13 @@
         -ms-grid-row: 1fr;
 
         nav {
+            a, a:hover, a:focus, a:active {
+                color: black;
+                text-decoration: none;
+                text-transform: capitalize;
+            }
             &.account {
-                a {
+                a, a:hover, a:focus, a:active {
                     padding: 0;
                 }
             }

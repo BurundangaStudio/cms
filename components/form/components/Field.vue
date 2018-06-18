@@ -39,12 +39,23 @@
         },
         methods: {
             valid() {
-
-                return this.$refs.field.valid();
+                let error = false;
+                if (Array.isArray(this.$refs.field)) {
+                    for (let field of this.$refs.field) {
+                        if (!field.valid()) error = true;
+                    }
+                } else error = !this.$refs.field.valid();
+                return !error;
             },
             getValue() {
-
-                return this.$refs.field.getValue();
+                let value = {};
+                value.key = this.field.value;
+                if (Array.isArray(this.$refs.field)) {
+                    for (let field of this.$refs.field) {
+                        value[field.$el.dataset.lang] = field.getValue();
+                    }
+                } else value = this.$refs.field.getValue();
+                return value;
             }
         },
         components: {
