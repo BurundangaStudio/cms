@@ -7,7 +7,7 @@
 
 <template>
     <div class="text">
-        <input type="text" v-model="text" @input="clean"/>
+        <input type="text" ref="input" v-model="text" @input="clean"/>
     </div>
 </template>
 
@@ -32,21 +32,14 @@
         created() {
             this.setInitValue();
         },
-        mounted() {
-            this.init();
-        },
         methods: {
             setInitValue() {
 
                 this.text = this.value ? this.value : this.field.value;
             },
-            init() {
-
-                this.input = this.$el.querySelector("input");
-            },
             clean() {
 
-                this.input.classList.remove("error");
+                this.$refs.input.classList.remove("error");
             },
             getValue() {
 
@@ -66,7 +59,7 @@
             },
             dispatchError() {
 
-                this.input.classList.add("error");
+                this.$refs.input.classList.add("error");
                 this.$store.dispatch("pushError", this.error);
             }
         }

@@ -9,8 +9,8 @@
     <div class="color">
         <span class="show" ref="show" :class="{ empty : !validColor }" />
         <span class="hash" ref="hash" />
-        <span class="input">
-            <input type="text" ref="input" v-model="color"/>
+        <span class="input" ref="input">
+            <input type="text" v-model="color" @input="clean"/>
         </span>
     </div>
 </template>
@@ -22,6 +22,7 @@ import { TweenMax } from "gsap";
 export default {
     name: "color-field",
     props: {
+        name: String,
         field: Object
     },
     data() {
@@ -44,11 +45,37 @@ export default {
         setData() {
             this.color = this.field.value.replace("#", "");
         },
+        clean() {
+
+            this.$refs.input.classList.remove("error");
+        },
         getValue() {
             return this.color;
         },
         valid() {
+
+            if (!(this.color.length !== 0 && this.color.length > 2 && this.color.length < 7)) {
+                this.error = {
+                    name: this.name,
+                    type: [ "bad structure" ]
+                }
+                this.dispatchError();
+                return false;
+            } else if (this.color.length === 0 && this.field.required) {
+                this.error = {
+                    name: this.name,
+                    type: [ "required field" ]
+                }
+                this.dispatchError();
+                return false;
+            }
+
             return true;
+        },
+        dispatchError() {
+
+            this.$refs.input.classList.add("error");
+            this.$store.dispatch("pushError", this.error);
         }
     }
 }
@@ -73,15 +100,17 @@ export default {
                 @include centerXY();
             }
         }
-        input[type="text"] {
-            background: none;
-            outline: 0;
-            width: 100%;
-            padding: 10px;
-            font-size: 14px;
-            border: none;
+        .input {
             &.error {
                 border-color: $error_color;
+            }
+            input[type="text"] {
+                background: none;
+                outline: 0;
+                width: 100%;
+                padding: 10px;
+                font-size: 14px;
+                border: none;
             }
         }
         .show {
