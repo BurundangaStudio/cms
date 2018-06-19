@@ -52,8 +52,10 @@ export default {
             this.errors = false;
 
             this.$refs.field.forEach(field =>  {
-                if (!field.valid()) this.errors = true;
-                else this.data.push({
+                if (!field.valid()) {
+                    console.log("FIELD WITH ERROR", field);
+                    this.errors = true;
+                } else this.data.push({
                     key: field.name,
                     type: field.type,
                     value: field.getValue()

@@ -112,7 +112,7 @@ import { create } from 'domain';
                     this.$refs.item.forEach(item => {
                         if (!item.valid()) childrenError = true;
                     })
-                    return childrenError;
+                    return !childrenError;
                 }
             },
             addItem() {

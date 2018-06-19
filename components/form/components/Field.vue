@@ -46,8 +46,8 @@
             },
             getValue() {
                 let value = {};
-                value.key = this.field.value;
                 if (Array.isArray(this.$refs.field)) {
+                    value.key = this.field.value;
                     this.$refs.field.forEach(field => {
                         value[field.$el.dataset.lang] = field.getValue();
                     });
