@@ -10,12 +10,18 @@
             "type": "pass"
         },
         "select": {
-            "type": "select"
+            "type": "select",
+            "options": [
+                "select:album:one",
+                "select:album:two",
+                "select:album:three",
+                "select:album:four",
+                "select:album:five"
+            ]
         },
         "link": {
             "type": "text",
             "rules": {
-                "required": true,
                 "limit": 20,
                 "no-spaces": true
             }
@@ -24,7 +30,6 @@
             "type": "text",
             "rules": {
                 "lang": true,
-                "required": true,
                 "limit": 150
             }
         },
@@ -77,7 +82,6 @@
         "files": {
             "type": "files",
             "rules": {
-                "required": true,
                 "format": ["png", "jpg", "gif"],
                 "maxSize": 4000,
                 "backEnabled": true,

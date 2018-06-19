@@ -54,7 +54,6 @@ export default {
         setRules() {
 
             this.rules = _.defaults(this.field.rules, PassRules, Rules);
-            // console.log(this.rules);
         },
         clean() {
 
@@ -82,13 +81,20 @@ export default {
                 }
                 this.dispatchError();
                 return false;
+            } else if (this.pass !== this.cpass) {
+                this.error = {
+                    name: this.name,
+                    type: [ "passes didn't match" ]
+                }
+                this.dispatchError();
+                return false;
             }
             return true;
         },
         dispatchError() {
 
-            this.input.classList.add("error");
-
+            this.$refs.pass.classList.add("error");
+            this.$refs.cpass.classList.add("error");
             this.$store.dispatch("pushError", this.error);
         }
     }

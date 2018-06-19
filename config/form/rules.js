@@ -19,7 +19,7 @@ export const FilesRules = {
 }
 
 export const PassRules = {
-    numberRequired: false,
-    capitalRequired: false,
-    signRequired: false
+    // numberRequired: false,
+    // capitalRequired: false,
+    // signRequired: false
 }

@@ -50,22 +50,19 @@ export default {
 
             this.data = [];
             this.errors = false;
+            this.$store.dispatch("cleanErrors");
 
             this.$refs.field.forEach(field =>  {
-                if (!field.valid()) {
-                    console.log("FIELD WITH ERROR", field);
-                    this.errors = true;
-                } else this.data.push({
+                if (!field.valid()) this.errors = true;
+                else this.data.push({
                     key: field.name,
                     type: field.type,
                     value: field.getValue()
                 });
             });
-
+            
             if (this.errors) return false;
-
-            this.$store.dispatch("cleanErrors");
-            return this.data;
+            else return this.data;
         },
         activeLang() {
             this.$el.querySelectorAll(".lang").forEach(el => { el.classList.remove("visible") });

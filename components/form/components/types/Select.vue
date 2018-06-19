@@ -7,14 +7,10 @@
 
 <template>
     <div class="select">
-        <div class="frame">
-            <select>
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
+        <div ref="select" class="frame">
+            <select v-model="select" @change="clean">
+                <option value="0" disabled v-text="$t('select:default')" />
+                <option v-for="(val, i) in field.options" :key="i" :value="i + 1" v-text="$t(val)" />
             </select>
         </div>
     </div>
@@ -25,14 +21,43 @@
     export default {
         name: "select-field",
         props: {
+            name: String,
             field: Object
         },
+        data() {
+            return {
+                select: undefined,
+                error: false
+            }
+        },
+        created() {
+            this.setInitValue();
+        },   
         methods: {
+            setInitValue() {
+                this.select = this.field.value ? this.field.value : 0;
+            },
             getValue() {
-                return "Select";
+                return this.select;
+            },
+            clean() {
+                this.$refs.select.classList.remove("error");
             },
             valid() {
+                if (this.select == 0) {
+                    this.error = {
+                        name: this.name,
+                        type: [ "Select any option" ]
+                    }
+                    this.dispatchError();
+                    return false;
+                }
                 return true;
+            },
+            dispatchError() {
+
+                this.$refs.select.classList.add("error");
+                this.$store.dispatch("pushError", this.error);
             }
         }
     }
@@ -45,6 +70,9 @@
         .frame {
             @include inputBorder();
             padding: 0px 5px;
+            &.error {
+                border-color: $error_color;
+            }
             select {
                 background: none;
                 outline: 0;
@@ -52,10 +80,7 @@
                 padding: 10px;
                 height: 40px;
                 font-size: 14px;
-                border: none;
-                &.error {
-                    border-color: $error_color;
-                }
+                border: none; 
             }
         }
     }

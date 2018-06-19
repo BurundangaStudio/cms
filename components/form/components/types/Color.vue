@@ -7,10 +7,10 @@
 
 <template>
     <div class="color">
-        <span class="show" ref="show" :class="{ empty : !validColor }" />
+        <span class="show" ref="show" :class="{ empty : !validColor, white : whiteColor }" />
         <span class="hash" ref="hash" />
         <span class="input" ref="input">
-            <input type="text" v-model="color" @input="clean"/>
+            <input type="text" v-model="color" maxlength="6" @input="clean"/>
         </span>
     </div>
 </template>
@@ -29,11 +29,13 @@ export default {
         return {
             color: "",
             validColor: false,
+            whiteColor: false,
             error: false
         }
     },
     watch: {
         color() {
+            this.whiteColor = this.color.match(/^(fff|ffff|fffff|ffffff)$/);
             this.validColor = this.color.length !== 0 && this.color.length > 2 && this.color.length < 7;
             TweenMax.to(this.$refs.show, 1, { background: "#" + (this.validColor ? this.color : "fff") });
         }
@@ -43,7 +45,8 @@ export default {
     },
     methods: {
         setData() {
-            this.color = this.field.value.replace("#", "");
+
+            this.color = this.field.value ? this.field.value.replace("#", "") : "fff";
         },
         clean() {
 
@@ -114,7 +117,7 @@ export default {
             }
         }
         .show {
-            &.empty {
+            &.empty, &.white {
                 @include inputBorder();
                 border-right: 0;
             }

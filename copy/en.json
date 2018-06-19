@@ -48,6 +48,13 @@
     "button:add:back": "Add back image",
     "button:remove:back": "Remove back image",
 
+    "select:default": "Select your option",
+    "select:album:one": "First option",
+    "select:album:two": "Second option",
+    "select:album:three": "Third option",
+    "select:album:four": "Fourth option",
+    "select:album:five": "Fifth option",
+
     "add:new": "Add new ",
 
     "clean": "Clean",

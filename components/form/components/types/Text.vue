@@ -7,7 +7,7 @@
 
 <template>
     <div class="text">
-        <input type="text" ref="input" v-model="text" @input="clean"/>
+        <input type="text" ref="input" v-model="text" :maxlength="field.rules.limit" @input="clean"/>
     </div>
 </template>
 
