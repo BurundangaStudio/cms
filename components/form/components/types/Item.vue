@@ -25,7 +25,10 @@
 
                 if (this.$refs.field) {
                     this.$refs.field.forEach(field => {
-                        this.data[field.name] = field.getValue();
+                        this.data[field.name] = {
+                            type: field.field.type,
+                            value : field.getValue()
+                        }
                     })
                 }
 

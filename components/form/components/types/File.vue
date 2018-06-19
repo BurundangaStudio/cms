@@ -158,6 +158,10 @@ export default {
             padding: 10px 0px;
             width: 100%;
             border-right: 1px solid $light_grey;
+            > span, img {
+                vertical-align: middle;
+                margin-right: 10px;
+            }
             &.buttons, &.second-file  {
                 pointer-events: auto;
                 button {

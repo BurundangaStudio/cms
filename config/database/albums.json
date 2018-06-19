@@ -3,22 +3,6 @@
         "modular": true
     },
     "_default": {
-        "color": {
-            "type": "color"
-        },
-        "pass": {
-            "type": "pass"
-        },
-        "select": {
-            "type": "select",
-            "options": [
-                "select:album:one",
-                "select:album:two",
-                "select:album:three",
-                "select:album:four",
-                "select:album:five"
-            ]
-        },
         "link": {
             "type": "text",
             "rules": {
@@ -32,6 +16,9 @@
                 "lang": true,
                 "limit": 150
             }
+        },
+        "color": {
+            "type": "color"
         },
         "content": {
             "type": "wyswyg",
@@ -66,7 +53,6 @@
                     "type": "files",
                     "rules": {
                         "limit": 1,
-                        "format": ["gif"],
                         "maxSize": 2000
                     }
                 }
