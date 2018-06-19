@@ -7,7 +7,7 @@
 
 <template>
     <div class="boolean">
-        <input type="checkbox" id="check1" checked>
+        <input type="checkbox" id="check1" v-model="bool">
         <label for="check1"></label>
     </div>
 </template>
@@ -16,9 +16,14 @@
 
     export default {
         name: "boolean-field",
+        data() {
+            return {
+                bool: false
+            }
+        },
         methods: {
             getValue() {
-                return this.color;
+                return !this.bool;
             },
             valid() {
                 return true;
