@@ -22,31 +22,33 @@
         },
         "title": {
             "type": "text",
-            "lang": "true",
             "rules": {
+                "lang": true,
                 "required": true,
                 "limit": 150
             }
         },
         "content": {
             "type": "wyswyg",
-            "lang": "true"
+            "rules": {
+                "lang": true
+            }
         },
         "credits": {
             "type": "array",
             "children": {
                 "job": {
                     "type": "text",
-                    "lang": "true",
                     "rules": {
-                        "limit": 150
+                        "limit": 150,
+                        "lang": true
                     }
                 },
                 "name": {
                     "type": "text",
-                    "lang": "true",
                     "rules": {
-                        "limit": 250
+                        "limit": 250,
+                        "lang": true
                     }
                 },
                 "link": {

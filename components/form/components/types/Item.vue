@@ -24,7 +24,7 @@
                 this.data = {};
 
                 if (this.$refs.field) {
-                    Array.from(this.$refs.field).forEach(field => {
+                    this.$refs.field.forEach(field => {
                         this.data[field.name] = field.getValue();
                     })
                 }
@@ -34,7 +34,7 @@
             valid() {
                 this.error = false
                 if (this.$refs.field) {
-                    Array.from(this.$refs.field).forEach(field => {
+                    this.$refs.field.forEach(field => {
                         if (!field.valid()) this.error = true;
                     })
                 }

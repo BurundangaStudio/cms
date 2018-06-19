@@ -162,7 +162,7 @@ export default {
         getValue() {
             const value = [];
             if (this.$refs.file) {
-                Array.from(this.$refs.file).forEach(file => {
+                this.$refs.file.forEach(file => {
                     const fieldValue = file.getValue();
                     value[fieldValue.order - 1] = fieldValue;
                 })

@@ -15,7 +15,7 @@ export default ({ app, store }) => {
 
     let messages = {};
 
-    Array.from(Config.adminLangs).forEach(lang => {
+   Config.adminLangs.forEach(lang => {
         messages[lang] = require('~/copy/' + lang + '.json');
     });
 

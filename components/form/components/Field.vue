@@ -8,7 +8,7 @@
 <template>
     <div class="field" :class="field.type">
         <label v-text="$t(name)" />
-        <component v-if="!field.lang" ref="field" :is="field.type + '-field'" :name="name" :field="field" />
+        <component v-if="!field.rules.lang" ref="field" :is="field.type + '-field'" :name="name" :field="field" />
         <div v-else class="langs">
             <div class="indicators">
                 <p v-for="(lang, key) in copy" :key="key" class="lang" :class="'lang-' + key" v-text="key" @click="$store.dispatch('setEditLang', key)" />
@@ -20,13 +20,7 @@
 
 <script>
 
-    import BooleanField from "./types/Boolean";
-    import ColorField from "./types/Color";
-    import FilesField from "./types/Files";
-    import PassField from "./types/Pass";
-    import SelectField from "./types/Select";
-    import TextField from "./types/Text";
-    import WyswygField from "./types/Wyswyg";
+    import * as FieldTypes from "./types/_Fields";
 
     export default {
         name: "field",
@@ -41,12 +35,12 @@
             valid() {
                 let error = false;
                 if (Array.isArray(this.$refs.field)) {
-                    for (let field of this.$refs.field) {
-                        if (!field.valid()) { 
+                    this.$refs.field.forEach(field => {
+                        if (!field.valid()) {
                             error = true;
                             this.$store.dispatch("setEditLang", field.$el.dataset.lang);
                         }
-                    }
+                    });
                 } else error = !this.$refs.field.valid();
                 return !error;
             },
@@ -54,21 +48,15 @@
                 let value = {};
                 value.key = this.field.value;
                 if (Array.isArray(this.$refs.field)) {
-                    for (let field of this.$refs.field) {
+                    this.$refs.field.forEach(field => {
                         value[field.$el.dataset.lang] = field.getValue();
-                    }
+                    });
                 } else value = this.$refs.field.getValue();
                 return value;
             }
         },
         components: {
-            BooleanField,
-            ColorField,
-            FilesField,
-            PassField,
-            SelectField,
-            TextField,
-            WyswygField
+            ...FieldTypes
         }
     }
 

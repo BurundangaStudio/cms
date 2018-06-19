@@ -8,7 +8,7 @@
 <template>
     <div class="array">
         <label v-text="$t(name)" />
-        <div class="grid" v-sortable="{ onEnd: reorder }">
+        <div class="grid" ref="grid" v-sortable="{ onEnd: reorder }">
             <p v-if="children.length == 0" class="text" v-text="$t('add:new') + $t(name)"></p>
             <item
                 v-for="(item, index) in children"
@@ -27,6 +27,7 @@
 <script>
 
     import Item from "./types/Item";
+import { create } from 'domain';
 
     export default {
         name: "Array",
@@ -50,12 +51,11 @@
             setData() {
 
                 this.itemKey = 0;
-
                 this.children = [ ...this.ordered(this.field.value) ];
             },
             ordered(data) {
                 const ORDERED = [];
-                Array.from(data).forEach(item => {
+                data.forEach(item => {
                     const AUX = {};
                     AUX.key = this.itemKey++;
                     AUX.fields = {};
@@ -64,7 +64,7 @@
                     }
                     let array = Object.values(item);
                     array.sort(this.compare);
-                    Array.from(array).forEach(field => {
+                    array.forEach(field => {
                         let key = field.key;
                         delete field.key;
                         AUX.fields[key] = field;
@@ -90,7 +90,7 @@
                 this.data = [];
 
                 if (this.$refs.item) {
-                    Array.from(this.$refs.item).forEach(item => {
+                    this.$refs.item.forEach(item => {
                         this.data[item.order - 1] = item.getValue();
                     })
                 }
@@ -98,25 +98,40 @@
                 return this.data;
             },
             valid() {
-                this.error = false;
-                if (this.$refs.item) {
-                    Array.from(this.$refs.item).forEach(item => {
-                        if (!item.valid()) this.error = true;
+
+                if (!this.$refs.item && !this.field.rules.required) return true;
+                else if (!this.$refs.item) {
+                    this.error = {
+                        name: this.name,
+                        type: [ "required field" ]
+                    }
+                    this.dispatchError();
+                    return false;
+                } else {
+                    let childrenError = false;
+                    this.$refs.item.forEach(item => {
+                        if (!item.valid()) childrenError = true;
                     })
+                    return childrenError;
                 }
-                return !this.error;
             },
             addItem() {
                 let data = [];
                 data.push(this.field.children);
                 this.children.push(this.ordered(data)[0]);
-                this.$nextTick(() => { 
-                    this.$emit("new-field"); 
+                this.$nextTick(() => {
+                    this.$emit("new-field");
+                    this.$refs.grid.classList.remove("error")
                 });
             },
             deleteItem(index) {
 
                 this.children.splice(index, 1);
+            },
+            dispatchError() {
+
+                this.$refs.grid.classList.add("error");
+                this.$store.dispatch("pushError", this.error);
             }
         },
         components: {
@@ -142,6 +157,9 @@
             padding: 0;
             cursor: grab;
             min-height: 50px;
+            &.error {
+                border-color: $error_color;
+            }
             .text {
                 position: absolute;
                 @include centerXY();

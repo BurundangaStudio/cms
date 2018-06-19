@@ -24,7 +24,7 @@ export default function({ isHMR, app, store, route, params, redirect }) {
         if (params.lang) routeParts.splice(0, 1);
 
         redir += defaultLocale;
-        Array.from(routeParts).forEach(part => {
+        routeParts.forEach(part => {
             redir += "/" + part;
         });
 
@@ -34,7 +34,7 @@ export default function({ isHMR, app, store, route, params, redirect }) {
 
 function cleanArrayOf(array) {
     const newArray = [];
-    Array.from(array).forEach(part => {
+    array.forEach(part => {
         if (part != "") newArray.push(part);
     });
     return newArray;

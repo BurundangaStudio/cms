@@ -13,7 +13,7 @@ const Config = require("../config/index");
 const langs = Config.webLangs;
 
 const langsInit = {};
-Array.from(langs).forEach(lang => {
+langs.forEach(lang => {
     langsInit[lang] = { init: "true" };
 })
 
@@ -34,7 +34,7 @@ process.argv.forEach((val, index) => {
     _UPDATE = index == 2;
 });
 
-Array.from(_FILES).forEach(_file => {
+_FILES.forEach(_file => {
     const _json = require("../config/database/" + _file);
     const _collection = _file.replace(".json", "");
     for (var _doc in _json) {

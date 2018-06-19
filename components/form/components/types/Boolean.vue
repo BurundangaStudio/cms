@@ -18,7 +18,7 @@
         name: "boolean-field",
         methods: {
             getValue() {
-                return "Boolean";
+                return this.color;
             },
             valid() {
                 return true;
@@ -47,7 +47,6 @@
         cursor: pointer;
         position: relative;
         outline: 0;
-        // appearance: none;
         -webkit-perspective: 1000;
         -webkit-backface-visibility: hidden;
         -webkit-transform:translate3d(0,0,0);

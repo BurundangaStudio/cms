@@ -49,20 +49,18 @@ export default {
         getValue() {
 
             this.data = [];
-            this.error = false;
+            this.errors = false;
 
-            if (this.$refs.field) {
-                Array.from(this.$refs.field).forEach(field => {
-                    if (!field.valid()) this.error = true;
-                    else this.data.push({
-                        key: field.name,
-                        type: field.type,
-                        value: field.getValue()
-                    });
-                })
-            }
+            this.$refs.field.forEach(field =>  {
+                if (!field.valid()) this.errors = true;
+                else this.data.push({
+                    key: field.name,
+                    type: field.type,
+                    value: field.getValue()
+                });
+            });
 
-            if (this.error) return false;
+            if (this.errors) return false;
 
             this.$store.dispatch("cleanErrors");
             return this.data;

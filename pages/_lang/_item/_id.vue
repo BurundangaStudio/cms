@@ -55,9 +55,9 @@
                 { key: "item", url: Config.fetchUrl + "web/" + TYPE + "/" + ID + ".json", required: !NEW_ITEM }
             ];
 
-            for (let lang of Config.webLangs) {
+            Config.webLangs.forEach(lang => {
                 endPoints.push({ key: "copy", subKey: lang, url: Config.fetchUrl + "copy/" + lang + ".json" })
-            }
+            });
 
             let data = {};
             for (let endPoint of endPoints) {
@@ -76,22 +76,19 @@
                 } else data[endPoint.key] = response;
             }
 
-            // if (NEW_ITEM)
-                // data.fields.id =  { "order": 0, "type": "text", "rules": { "limit": 10, "required": true, "no-spaces": true } };
-
             let array = [];
             for (let field in data.fields) {
                 let obj = data.fields[field];
                 if (obj.type === ARRAY) {
                     let children = [];
                     if (data.item && data.item[field]) {
-                        for (let value of data.item[field]) {
+                        data.item[field].forEach(value => {
                             let credit = _.cloneDeep(obj.children);
-                            for (let field in credit) {
+                            credit.forEach(field => {
                                 credit[field].value = value[field];
-                            }
+                            });
                             children.push(credit);
-                        }
+                        })
                     }
 
                     obj.value = children;
@@ -105,12 +102,12 @@
             }
 
             let fields = {};
-            for (let f of array) {
+            array.forEach(f => {
                 const KEY = f.key;
                 delete f.key;
                 delete f.order;
                 fields[KEY] = f;
-            }
+            });
 
             let editLang = store.state.lang.editLang ? store.state.lang.editLang : Config.webLangs[0];
             store.dispatch("setEditLang", editLang);
