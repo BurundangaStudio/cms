@@ -18,30 +18,35 @@
 
 <script>
 
+    import ErrorHandler from "./mixins/ErrorHandler";
+
     export default {
         name: "select-field",
+        mixins: [ ErrorHandler ],
         props: {
             name: String,
             field: Object
         },
         data() {
             return {
-                select: undefined,
-                error: false
+                select: 0
             }
         },
         created() {
             this.setInitValue();
         },   
+        mounted() {
+            this.init();
+        },
         methods: {
             setInitValue() {
                 this.select = this.field.value ? this.field.value : 0;
             },
+            init() {
+                this.errorFrames.push(this.$refs.select);
+            },
             getValue() {
                 return this.select;
-            },
-            clean() {
-                this.$refs.select.classList.remove("error");
             },
             valid() {
                 if (this.select == 0) {
@@ -53,11 +58,6 @@
                     return false;
                 }
                 return true;
-            },
-            dispatchError() {
-
-                this.$refs.select.classList.add("error");
-                this.$store.dispatch("pushError", this.error);
             }
         }
     }
