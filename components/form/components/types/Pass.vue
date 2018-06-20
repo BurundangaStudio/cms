@@ -9,7 +9,7 @@
     <div class="pass">
         <input type="password" ref="pass" v-model="pass" @input="clean"/>
         <input type="password" ref="cpass" v-model="cpass" @input="clean"/>
-        <button v-if="pass.length > 0 || cpass.length > 0" @mousedown="see" @mouseup="hide" v-text="'See'"/>
+        <button v-if="pass.length > 0 || cpass.length > 0" @mousedown="show(true)" @mouseup="show(false)" v-text="'Show'"/>
     </div>
 </template>
 
@@ -55,13 +55,9 @@ export default {
 
             this.rules = _.defaults(this.field.rules, PassRules, Rules);
         },
-        see() {
-            this.$refs.pass.type = "text";
-            this.$refs.cpass.type = "text";
-        },
-        hide() {
-            this.$refs.pass.type = "password";
-            this.$refs.cpass.type = "password";
+        show(state) {
+            this.$refs.pass.type = state === true ? "text" : "password";
+            this.$refs.cpass.type = state === true ? "text" : "password";
         },
         getValue() {
 
