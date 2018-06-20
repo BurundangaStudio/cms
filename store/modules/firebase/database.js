@@ -52,6 +52,8 @@ export default {
             let storageData = Parser.getStorageDataFromWithContext(upload.data, upload.context);
             let copyData = {};
             let webData = {};
+
+            // let uploadData = Parser.getUploadData();
             
             console.log(storageData);
         },
