@@ -8,6 +8,7 @@
 
 const ARRAY_TYPE = "array";
 const FILES_TYPE = "files";
+const TYPE_VIDEO = "video";
 
 export default {
 
@@ -28,6 +29,7 @@ export default {
 
         this.prepareStorageData();
         this.prepareCopyData();
+        this.prepareWebData();
 
         console.log(this.webData);
         console.log(this.copyData);
@@ -58,6 +60,7 @@ export default {
     addFilesOfTo(value, path) {
 
         value.forEach(asset => {
+            if (asset.type === TYPE_VIDEO) return;
             asset.files.forEach((file, index) => {
                 let existingFile = this.fileExists(file.data_url);
                 if (!existingFile) {
@@ -105,5 +108,18 @@ export default {
             }
             field.value = key;
         }
+    },
+
+    prepareWebData() {
+        let data = {};
+
+        this.webData.forEach(field => {
+            if (field.type === ARRAY_TYPE) {
+                data[field.key] = [];
+                // console.log(field);
+            } else data[field.key] = field.value;
+        });
+
+        this.webData = data;
     }
 }
