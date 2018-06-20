@@ -12,12 +12,13 @@
 </template>
 
 <script>
-
+    
     import ErrorHandler from "./mixins/ErrorHandler";
+    import LifecycleHooks from "./mixins/LifecycleHooks";
 
     export default {
         name: "text-field",
-        mixins: [ ErrorHandler ],
+        mixins: [ LifecycleHooks, ErrorHandler ],
         props: {
             name: String,
             value: String,
@@ -28,20 +29,14 @@
                 text: ""
             }
         },
-        created() {
-            this.setInitValue();
-        },
-        mounted() {
-            this.init();
-        },
         methods: {
+            setInitValue() {
+                
+                this.text = this.value ? this.value : this.field.value;
+            },
             init() {
 
                 this.errorFrames.push(this.$refs.input);
-            },
-            setInitValue() {
-
-                this.text = this.value ? this.value : this.field.value;
             },
             getValue() {
 

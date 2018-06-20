@@ -1,4 +1,5 @@
 <!--
+import LifecycleHooks from './mixins/LifecycleHooks';
     components/form/components/Wyswyg.vue
 
     Coded by Christian MacMillan (_@burundanga.studio)
@@ -13,45 +14,45 @@
 
 <script>
 
-export default {
-    name: "wyswyg-field",
-    props: {
-        field: Object
-    },
-    data() {
-        return {
-            quill: undefined
-        }
-    },
-    mounted() {
-        this.init();
-    },
-    methods: {
-        init() {
+    import LifecycleHooks from "./mixins/LifecycleHooks";
 
-            const options = {
-                theme: 'snow',
-                modules: {
-                    toolbar: [
-                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                        ['bold', 'italic', 'underline' ],
-                        ['link']
-                    ]
-                }
-            };
-            this.quill = new Quill(this.$el.querySelector(".editor"), options);
-            this.quill.clipboard.dangerouslyPasteHTML(0, this.field.value);
+    export default {
+        name: "wyswyg-field",
+        mixins: [ LifecycleHooks ],
+        props: {
+            field: Object
         },
-        getValue() {
-
-            return this.quill.container.firstChild.innerHTML;
+        data() {
+            return {
+                quill: undefined
+            }
         },
-        valid() {
+        methods: {
+            init() {
 
-            return true;
+                const options = {
+                    theme: 'snow',
+                    modules: {
+                        toolbar: [
+                            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                            ['bold', 'italic', 'underline' ],
+                            ['link']
+                        ]
+                    }
+                };
+                this.quill = new Quill(this.$el.querySelector(".editor"), options);
+                this.quill.clipboard.dangerouslyPasteHTML(0, this.field.value);
+            },
+            getValue() {
+
+                return this.quill.container.firstChild.innerHTML;
+            },
+            valid() {
+
+                return true;
+            }
         }
     }
-}
 
 </script>
 

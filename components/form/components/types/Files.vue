@@ -43,160 +43,153 @@
 
 <script>
 
-import _ from "lodash";
-import Resumable from "resumablejs";
-import Rules from "~/config/form/rules";
-import { FilesRules } from "~/config/form/rules";
+    import _ from "lodash";
+    import Resumable from "resumablejs";
+    import Rules from "~/config/form/rules";
+    import { FilesRules } from "~/config/form/rules";
 
-import File from "./File";
-import FileVideo from "./FileVideo";
+    import File from "./File";
+    import FileVideo from "./FileVideo";
 
-export default {
-    name: "files-field",
-    props: {
-        field: Object,
-        name: String
-    },
-    data() {
-        return {
-            r: {},
-            files: [],
-            rules: {},
-            error: {
-                name: "",
-                type: []
-            }
-        }
-    },
-    mounted() {
-        this.init();
-    },
-    methods: {
-        init() {
+    import ErrorHandler from './mixins/ErrorHandler';
+    import LifecycleHooks from "./mixins/LifecycleHooks"
 
-            this.TYPE_VIDEO = "video";
-            this.TYPE_IMAGE = "image";
-
-            this.filesKey = 0;
-
-            this.setRules();
-
-            this.box = this.$el.querySelector(".box");
-            this.list = this.box.querySelector(".list");
-            this.button = this.$el.querySelector(".select-files");
-
-            this.initResumable();
+    export default {
+        name: "files-field",
+        mixins: [ LifecycleHooks, ErrorHandler ],
+        props: {
+            field: Object,
+            name: String
         },
-        setRules() {
-
-            this.rules = _.defaults(this.field.rules, FilesRules, Rules);
-        },
-        initResumable() {
-
-            this.r = new Resumable();
-            this.r.assignDrop(this.box);
-            this.r.assignBrowse(this.button);
-            this.r.on("fileAdded", this.readAddedFile);
-        },
-        readAddedFile(file) {
-
-            this.box.classList.remove("error");
-
-            this.isValid(file)
-            ? this.load(file)
-            : this.dispatchError();
-        },
-        load(file) {
-
-            if (this.rules.limit === this.files.length)
-                this.deleteFile(this.files.length - 1)
-
-            let image = {};
-
-            image.key = this.filesKey++;
-            image.file = file;
-            image.loading = true;
-            this.files.push(image);
-
-            const index = this.files.length - 1;
-
-            const fileReader = new FileReader();
-            fileReader.readAsDataURL(image.file.file);
-            fileReader.onload = file => {
-                this.files[index].data_url = file.target.result;
-                this.files[index].preview = file.target.result;
-                this.files[index].loading = false;
+        data() {
+            return {
+                r: {},
+                files: [],
+                rules: {}
             }
         },
-        reorder({ oldIndex, newIndex }) {
+        methods: {
+            init() {
 
-            const movedItem = this.files.splice(oldIndex, 1)[0];
-            this.files.splice(newIndex, 0, movedItem);
-        },
-        deleteFile(key) {
+                this.TYPE_VIDEO = "video";
+                this.TYPE_IMAGE = "image";
 
-            if (this.files[key].type != this.TYPE_VIDEO) this.files[key].file.cancel();
-            this.files.splice(key, 1);
-        },
-        isValid(file) {
+                this.filesKey = 0;
 
-            this.error.name = file.fileName;
-            this.error.type = [];
+                this.setRules();
 
-            if (!this.rules.format.includes(this.getFileExtensionOf(file.fileName))) this.error.type.push("Wrong format.");
-            if (this.rules.maxSize < (file.size * 0.001)) this.error.type.push("Max size exceeded - " + file.size * 0.001);
+                this.box = this.$el.querySelector(".box");
+                this.list = this.box.querySelector(".list");
+                this.button = this.$el.querySelector(".select-files");
 
-            const valid = this.error.type == 0;
-            if (!valid) file.cancel();
-            return valid;
-        },
-        getFileExtensionOf(name) {
+                this.initResumable();
+            },
+            setRules() {
 
-            const segments = name.split(".");
-            return segments[segments.length - 1];
-        },
-        dispatchError() {
+                this.rules = _.defaults(this.field.rules, FilesRules, Rules);
+            },
+            initResumable() {
 
-            this.$store.dispatch("pushError", this.error);
-        },
-        getValue() {
-            const value = [];
-            if (this.$refs.file) {
-                this.$refs.file.forEach(file => {
-                    const fieldValue = file.getValue();
-                    value[fieldValue.order - 1] = fieldValue;
-                })
-            }
-            return value;
-        },
-        valid() {
-            const valid = !(this.rules.required && this.files.length == 0);
-            if (!valid) {
-                this.box.classList.add("error");
-                this.error = {
-                    name: this.name,
-                    type: [ "required field" ]
+                this.r = new Resumable();
+                this.r.assignDrop(this.box);
+                this.r.assignBrowse(this.button);
+                this.r.on("fileAdded", this.readAddedFile);
+            },
+            readAddedFile(file) {
+
+                this.box.classList.remove("error");
+
+                this.isValid(file)
+                ? this.load(file)
+                : this.dispatchError();
+            },
+            load(file) {
+
+                if (this.rules.limit === this.files.length)
+                    this.deleteFile(this.files.length - 1)
+
+                let image = {};
+
+                image.key = this.filesKey++;
+                image.file = file;
+                image.loading = true;
+                this.files.push(image);
+
+                const index = this.files.length - 1;
+
+                const fileReader = new FileReader();
+                fileReader.readAsDataURL(image.file.file);
+                fileReader.onload = file => {
+                    this.files[index].data_url = file.target.result;
+                    this.files[index].preview = file.target.result;
+                    this.files[index].loading = false;
                 }
-                this.dispatchError();
+            },
+            reorder({ oldIndex, newIndex }) {
+
+                const movedItem = this.files.splice(oldIndex, 1)[0];
+                this.files.splice(newIndex, 0, movedItem);
+            },
+            deleteFile(key) {
+
+                if (this.files[key].type != this.TYPE_VIDEO) this.files[key].file.cancel();
+                this.files.splice(key, 1);
+            },
+            isValid(file) {
+
+                this.error.name = file.fileName;
+                this.error.type = [];
+
+                if (!this.rules.format.includes(this.getFileExtensionOf(file.fileName))) this.error.type.push("Wrong format.");
+                if (this.rules.maxSize < (file.size * 0.001)) this.error.type.push("Max size exceeded - " + file.size * 0.001);
+
+                const valid = this.error.type == 0;
+                if (!valid) file.cancel();
+                return valid;
+            },
+            getFileExtensionOf(name) {
+
+                const segments = name.split(".");
+                return segments[segments.length - 1];
+            },
+            getValue() {
+                const value = [];
+                if (this.$refs.file) {
+                    this.$refs.file.forEach(file => {
+                        const fieldValue = file.getValue();
+                        value[fieldValue.order - 1] = fieldValue;
+                    })
+                }
+                return value;
+            },
+            valid() {
+                const valid = !(this.rules.required && this.files.length == 0);
+                if (!valid) {
+                    this.box.classList.add("error");
+                    this.error = {
+                        name: this.name,
+                        type: [ "required field" ]
+                    }
+                    this.dispatchError();
+                }
+                return valid;
+            },
+            addVideo() {
+
+                this.box.classList.remove("error");
+
+                const video = {
+                    type: this.TYPE_VIDEO,
+                    key: this.filesKey++
+                }
+                this.files.push(video);
             }
-            return valid;
         },
-        addVideo() {
-
-            this.box.classList.remove("error");
-
-            const video = {
-                type: this.TYPE_VIDEO,
-                key: this.filesKey++
-            }
-            this.files.push(video);
+        components: {
+            File,
+            FileVideo
         }
-    },
-    components: {
-        File,
-        FileVideo
     }
-}
 
 </script>
 

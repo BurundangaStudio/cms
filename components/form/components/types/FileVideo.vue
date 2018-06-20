@@ -18,24 +18,24 @@
 
 <script>
 
-export default {
-    name: "video-field",
-    props: {
-        index: Number,
-        order: Number
-    },
-    methods: {
-        getValue() {
+    export default {
+        name: "video-field",
+        props: {
+            index: Number,
+            order: Number
+        },
+        methods: {
+            getValue() {
 
-            const value = {};
-            value.order = this.order;
-            value.type = "video";
-            value.server = "youtube/vimeo";
-            value.id = "2392i321";
-            return value;
+                const value = {};
+                value.order = this.order;
+                value.type = "video";
+                value.server = "youtube/vimeo";
+                value.id = "2392i321";
+                return value;
+            }
         }
     }
-}
 
 </script>
 

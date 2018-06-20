@@ -15,75 +15,70 @@
 
 <script>
 
-import Rules from "~/config/form/rules";
-import { PassRules } from "~/config/form/rules";
-import ErrorHandler from "./mixins/ErrorHandler";
+    import Rules from "~/config/form/rules";
+    import { PassRules } from "~/config/form/rules";
+    import ErrorHandler from "./mixins/ErrorHandler";
+    import LifecycleHooks from './mixins/LifecycleHooks';
 
-export default {
-    name: "pass-field",
-    mixins: [ ErrorHandler ],
-    props: {
-        name: String,
-        field: Object
-    },
-    data() {
-        return {
-            pass: "",
-            cpass: "",
-            rules: {}
-        }
-    },
-    created() {
-        this.setInitValue();
-    },
-    mounted() {
-        this.init();
-    },
-    methods: {
-        setInitValue() {
-
-            this.pass = this.field.value;
-            this.cpass = this.field.value;
+    export default {
+        name: "pass-field",
+        mixins: [ ErrorHandler, LifecycleHooks ],
+        props: {
+            name: String,
+            field: Object
         },
-        init() {
-
-            this.setRules();
-            this.errorFrames.push(this.$refs.pass);
-            this.errorFrames.push(this.$refs.cpass);
-        },
-        setRules() {
-
-            this.rules = _.defaults(this.field.rules, PassRules, Rules);
-        },
-        show(state) {
-            this.$refs.pass.type = state === true ? "text" : "password";
-            this.$refs.cpass.type = state === true ? "text" : "password";
-        },
-        getValue() {
-
-            return this.pass;
-        },
-        valid() {
-
-            if (this.rules.required && this.pass.length === 0) {
-                this.error = {
-                    name: this.name,
-                    type: [ "required field" ]
-                }
-                this.dispatchError();
-                return false;
-            } else if (this.pass !== this.cpass) {
-                this.error = {
-                    name: this.name,
-                    type: [ "passes didn't match" ]
-                }
-                this.dispatchError();
-                return false;
+        data() {
+            return {
+                pass: "",
+                cpass: "",
+                rules: {}
             }
-            return true;
+        },
+        methods: {
+            setInitValue() {
+
+                this.pass = this.field.value;
+                this.cpass = this.field.value;
+            },
+            init() {
+
+                this.setRules();
+                this.errorFrames.push(this.$refs.pass);
+                this.errorFrames.push(this.$refs.cpass);
+            },
+            setRules() {
+
+                this.rules = _.defaults(this.field.rules, PassRules, Rules);
+            },
+            show(state) {
+                this.$refs.pass.type = state === true ? "text" : "password";
+                this.$refs.cpass.type = state === true ? "text" : "password";
+            },
+            getValue() {
+
+                return this.pass;
+            },
+            valid() {
+
+                if (this.rules.required && this.pass.length === 0) {
+                    this.error = {
+                        name: this.name,
+                        type: [ "required field" ]
+                    }
+                    this.dispatchError();
+                    return false;
+                } else if (this.pass !== this.cpass) {
+                    this.error = {
+                        name: this.name,
+                        type: [ "passes didn't match" ]
+                    }
+                    this.dispatchError();
+                    return false;
+                }
+                return true;
+            }
         }
     }
-}
 
 </script>
 

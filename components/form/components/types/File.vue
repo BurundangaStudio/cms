@@ -35,101 +35,101 @@
 
 <script>
 
-import _ from "lodash";
-import Resumable from "resumablejs";
+    import _ from "lodash";
+    import Resumable from "resumablejs";
 
-export default {
-    name: "file-field",
-    props: {
-        index: Number,
-        order: Number,
-        loading: Boolean,
-        preview: String,
-        file: Object,
-        backEnabled: Boolean,
-        limit: Number
-    },
-    data() {
-        return {
-            withBack: false,
-            r: undefined,
-            error: {},
-            backFile: undefined
-        }
-    },
-    watch: {
-        withBack() {
-            if (this.withBack) this.$nextTick(this.initSecondFile);
-            else this.backFile = undefined;
-        }
-    },
-    methods: {
-        initSecondFile() {
-
-            this.box = this.$el.querySelector(".second-file");
-            this.button = this.$el.querySelector(".second-file button");
-
-            this.r = new Resumable({ maxFiles: 1 });
-            this.r.assignDrop(this.box);
-            this.r.assignBrowse(this.button);
-            this.r.on("fileAdded", this.readAddedFile);
+    export default {
+        name: "file-field",
+        props: {
+            index: Number,
+            order: Number,
+            loading: Boolean,
+            preview: String,
+            file: Object,
+            backEnabled: Boolean,
+            limit: Number
         },
-        readAddedFile(file) {
-
-            this.box.classList.remove("error");
-
-            this.isValid(file)
-            ? this.load(file)
-            : this.dispatchError();
-        },
-        isValid(file) {
-
-            this.error.name = file.fileName;
-            this.error.type = [];
-
-            if (!this.$parent.rules.format.includes(this.$parent.getFileExtensionOf(file.fileName))) this.error.type.push("Wrong format.");
-            if (this.$parent.rules.maxSize < (file.size * 0.001)) this.error.type.push("Max size exceeded - " + file.size * 0.001);
-
-            const valid = this.error.type == 0;
-            if (!valid) file.cancel();
-            return valid;
-        },
-        dispatchError() {
-
-            this.$store.dispatch("pushError", this.error);
-        },
-        load(file) {
-
-            let image = {};
-
-            image.file = file;
-            image.loading = true;
-            this.backFile = image;
-
-            const fileReader = new FileReader();
-            fileReader.readAsDataURL(image.file.file);
-            fileReader.onload = file => {
-                image.data_url = file.target.result;
-                image.preview = file.target.result;
-                image.loading = false;
+        data() {
+            return {
+                withBack: false,
+                r: undefined,
+                error: {},
+                backFile: undefined
             }
         },
-        getValue() {
-
-            const value = {};
-            value.order = this.order;
-            value.type = this.backFile ? "after/before" : "default"
-            if (value.type == "default") {
-                value.file = { name: this.file.file.fileName, data_url: this.file.data_url };
-            } else {
-                value.files = [];
-                value.files.push({ name: this.file.file.fileName, data_url: this.file.data_url } );
-                value.files.push({ name: this.backFile.file.fileName, data_url: this.backFile.data_url });
+        watch: {
+            withBack() {
+                if (this.withBack) this.$nextTick(this.initSecondFile);
+                else this.backFile = undefined;
             }
-            return value;
+        },
+        methods: {
+            initSecondFile() {
+
+                this.box = this.$el.querySelector(".second-file");
+                this.button = this.$el.querySelector(".second-file button");
+
+                this.r = new Resumable({ maxFiles: 1 });
+                this.r.assignDrop(this.box);
+                this.r.assignBrowse(this.button);
+                this.r.on("fileAdded", this.readAddedFile);
+            },
+            readAddedFile(file) {
+
+                this.box.classList.remove("error");
+
+                this.isValid(file)
+                ? this.load(file)
+                : this.dispatchError();
+            },
+            isValid(file) {
+
+                this.error.name = file.fileName;
+                this.error.type = [];
+
+                if (!this.$parent.rules.format.includes(this.$parent.getFileExtensionOf(file.fileName))) this.error.type.push("Wrong format.");
+                if (this.$parent.rules.maxSize < (file.size * 0.001)) this.error.type.push("Max size exceeded - " + file.size * 0.001);
+
+                const valid = this.error.type == 0;
+                if (!valid) file.cancel();
+                return valid;
+            },
+            dispatchError() {
+
+                this.$store.dispatch("pushError", this.error);
+            },
+            load(file) {
+
+                let image = {};
+
+                image.file = file;
+                image.loading = true;
+                this.backFile = image;
+
+                const fileReader = new FileReader();
+                fileReader.readAsDataURL(image.file.file);
+                fileReader.onload = file => {
+                    image.data_url = file.target.result;
+                    image.preview = file.target.result;
+                    image.loading = false;
+                }
+            },
+            getValue() {
+
+                const value = {};
+                value.order = this.order;
+                value.type = this.backFile ? "after/before" : "default"
+                if (value.type == "default") {
+                    value.file = { name: this.file.file.fileName, data_url: this.file.data_url };
+                } else {
+                    value.files = [];
+                    value.files.push({ name: this.file.file.fileName, data_url: this.file.data_url } );
+                    value.files.push({ name: this.backFile.file.fileName, data_url: this.backFile.data_url });
+                }
+                return value;
+            }
         }
     }
-}
 
 </script>
 

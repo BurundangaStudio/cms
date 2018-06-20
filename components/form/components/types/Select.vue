@@ -19,10 +19,11 @@
 <script>
 
     import ErrorHandler from "./mixins/ErrorHandler";
+    import LifecycleHooks from './mixins/LifecycleHooks';
 
     export default {
         name: "select-field",
-        mixins: [ ErrorHandler ],
+        mixins: [ ErrorHandler, LifecycleHooks ],
         props: {
             name: String,
             field: Object
@@ -31,12 +32,6 @@
             return {
                 select: 0
             }
-        },
-        created() {
-            this.setInitValue();
-        },   
-        mounted() {
-            this.init();
         },
         methods: {
             setInitValue() {

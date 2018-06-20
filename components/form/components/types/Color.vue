@@ -19,10 +19,11 @@
 
     import { TweenMax } from "gsap";
     import ErrorHandler from "./mixins/ErrorHandler";
+    import LifecycleHooks from "./mixins/LifecycleHooks";
 
     export default {
         name: "color-field",
-        mixins: [ ErrorHandler ],
+        mixins: [ LifecycleHooks, ErrorHandler ],
         props: {
             name: String,
             field: Object
@@ -40,12 +41,6 @@
                 this.validColor = this.color.length !== 0 && this.color.length > 2 && this.color.length < 7;
                 TweenMax.to(this.$refs.show, 1, { background: "#" + (this.validColor ? this.color : "fff") });
             }
-        },
-        created() {
-            this.setInitValue();
-        },
-        mounted() {
-            this.init();
         },
         methods: {
             setInitValue() {
