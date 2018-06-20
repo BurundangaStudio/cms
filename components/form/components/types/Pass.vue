@@ -17,9 +17,11 @@
 
 import Rules from "~/config/form/rules";
 import { PassRules } from "~/config/form/rules";
+import ErrorHandler from "./mixins/ErrorHandler";
 
 export default {
     name: "pass-field",
+    mixins: [ ErrorHandler ],
     props: {
         name: String,
         field: Object
@@ -28,11 +30,7 @@ export default {
         return {
             pass: "",
             cpass: "",
-            rules: {},
-            error: {
-                name: "",
-                type: []
-            }
+            rules: {}
         }
     },
     created() {
@@ -50,15 +48,12 @@ export default {
         init() {
 
             this.setRules();
+            this.errorFrames.push(this.$refs.pass);
+            this.errorFrames.push(this.$refs.cpass);
         },
         setRules() {
 
             this.rules = _.defaults(this.field.rules, PassRules, Rules);
-        },
-        clean() {
-
-            this.$refs.pass.classList.remove("error");
-            this.$refs.cpass.classList.remove("error");
         },
         see() {
             this.$refs.pass.type = "text";
@@ -90,12 +85,6 @@ export default {
                 return false;
             }
             return true;
-        },
-        dispatchError() {
-
-            this.$refs.pass.classList.add("error");
-            this.$refs.cpass.classList.add("error");
-            this.$store.dispatch("pushError", this.error);
         }
     }
 }
