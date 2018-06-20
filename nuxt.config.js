@@ -56,7 +56,7 @@ module.exports = {
     serverMiddleware: ["~/serverMiddleware/auth-cookie.js"],
 
     build: {
-        vendor: ["lodash", "isomorphic-fetch"],
+        vendor: ["lodash", "isomorphic-fetch", "gsap"],
         extend(config, { isDev, isClient }) {
             if (isDev && isClient) {
                 config.module.rules.push({
