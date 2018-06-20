@@ -30,6 +30,7 @@
                     this.$refs.field.forEach(field => {
                         this.data[field.name] = {
                             type: field.field.type,
+                            lang: field.field.lang === true,
                             value : field.getValue()
                         }
                     })

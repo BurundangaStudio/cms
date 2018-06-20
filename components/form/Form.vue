@@ -49,11 +49,12 @@ export default {
                 if (!field.valid()) errors = true;
                 else data.push({
                     key: field.name,
+                    lang: field.field.rules.lang === true,
                     type: field.type,
                     value: field.getValue()
                 });
             });
-            
+
             if (errors) return false;
             else return data;
         },

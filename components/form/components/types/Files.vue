@@ -120,6 +120,7 @@
                 const fileReader = new FileReader();
                 fileReader.readAsDataURL(image.file.file);
                 fileReader.onload = file => {
+                    this.files[index].new = true;
                     this.files[index].data_url = file.target.result;
                     this.files[index].preview = file.target.result;
                     this.files[index].loading = false;

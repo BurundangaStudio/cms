@@ -40,6 +40,7 @@
 
     import ErrorHandler from "~/mixins/ErrorHandler";
     import LifecycleHooks from "~/mixins/LifecycleHooks";
+import { isPrimitive } from 'util';
 
     export default {
         name: "file-field",
@@ -108,6 +109,7 @@
                 const fileReader = new FileReader();
                 fileReader.readAsDataURL(image.file.file);
                 fileReader.onload = file => {
+                    image.new = true;
                     image.data_url = file.target.result;
                     image.preview = file.target.result;
                     image.loading = false;
@@ -117,13 +119,11 @@
 
                 const value = {};
                 value.order = this.order;
-                value.type = this.backFile ? "after/before" : "default"
-                if (value.type == "default") {
-                    value.file = { name: this.file.file.fileName, data_url: this.file.data_url };
-                } else {
-                    value.files = [];
-                    value.files.push({ name: this.file.file.fileName, data_url: this.file.data_url } );
-                    value.files.push({ name: this.backFile.file.fileName, data_url: this.backFile.data_url });
+                value.type = this.backFile ? "after/before" : "default";
+                value.files = [];
+                value.files.push({ name: this.file.file.fileName, data_url: this.file.data_url, new: this.file.new });
+                if (this.backFile) {
+                    value.files.push({ name: this.backFile.file.fileName, data_url: this.backFile.data_url, new: this.backFile.new });
                 }
                 return value;
             }
