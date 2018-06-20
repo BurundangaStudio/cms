@@ -9,7 +9,7 @@
     <div class="form">
         <div class="fields">
             <div v-for="(field, key) in fields" :key="key">
-                <field v-if="field.type !== ARRAY" ref="field" :name="key" :type="field.type" :field="field" :copy="copy" />
+                <field v-if="field.type !== 'array'" ref="field" :name="key" :type="field.type" :field="field" :copy="copy" />
                 <fields-array v-else ref="field" :name="key" v-on:new-field="activeLang" :type="field.type" :field="field" :copy="copy" />
             </div>
         </div>
@@ -32,13 +32,6 @@ export default {
         copy: Object,
         fields: Object
     },
-    data() {
-        return {
-            data: [],
-            error: false,
-            ARRAY: "array"
-        }
-    },
     watch: {
         editLang() { this.activeLang(); }
     },
@@ -48,21 +41,21 @@ export default {
     methods: {
         getValue() {
 
-            this.data = [];
-            this.errors = false;
+            let data = [];
+            let errors = false;
             this.$store.dispatch("cleanErrors");
 
             this.$refs.field.forEach(field =>  {
-                if (!field.valid()) this.errors = true;
-                else this.data.push({
+                if (!field.valid()) errors = true;
+                else data.push({
                     key: field.name,
                     type: field.type,
                     value: field.getValue()
                 });
             });
             
-            if (this.errors) return false;
-            else return this.data;
+            if (errors) return false;
+            else return data;
         },
         activeLang() {
             this.$el.querySelectorAll(".lang").forEach(el => { el.classList.remove("visible") });
