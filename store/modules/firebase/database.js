@@ -7,7 +7,6 @@
 
 import _ from "lodash";
 import firebase from "~/plugins/firebase";
-import database from "firebase/database";
 import Config from "~/config/index"
 
 export default {
@@ -45,7 +44,11 @@ export default {
                 });
         },
 
-        async updateItem({ commit, state }, data) {
+        readData({ dispatch, commit }, data) {
+            console.log(data);
+        },
+
+        async updateItem({ state }, data) {
 
             delete data.data.id;
 

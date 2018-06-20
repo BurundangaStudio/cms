@@ -35,9 +35,12 @@
 
     import FormComponent from "~/components/form/Form";
 
+    import LifecycleHooks from "~/mixins/LifecycleHooks";
+
     export default {
         name: "item",
         layout: "logged",
+        mixins: [ LifecycleHooks ],
         async asyncData ({ params, store, error }) {
 
             const NEW = "new";
@@ -122,19 +125,18 @@
                 scrollLimit: 0
             };
         },
-        mounted() {
-            this.init();
-        },
         methods: {
             init() {
 
                 this.setListeners();
             },
-            async save() {
+            
+            save() {
 
                 let data = this.$refs.form.getValue();
-                console.log(data);
+                if (data) this.$store.dispatch("readData", { create: this.create, data });
             },
+
             onScrollHandler() {
                 if (this.$el.getBoundingClientRect().top < 0) {
                     this.$el.classList.add("scrolling");
@@ -153,9 +155,6 @@
             destroyListeners() {
                 window.removeEventListener("scroll", this.onScrollHandler);
             }
-        },
-        beforeDestroy() {
-            this.destroyListeners();
         },
         components: {
             FormComponent
