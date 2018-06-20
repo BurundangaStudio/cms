@@ -7,7 +7,8 @@
 
 import _ from "lodash";
 import firebase from "~/plugins/firebase";
-import Config from "~/config/index"
+import Parser from "~/plugins/parser";
+import Config from "~/config/index";
 
 export default {
     state: {
@@ -44,8 +45,15 @@ export default {
                 });
         },
 
-        readData({ dispatch, commit }, data) {
-            console.log(data);
+        parseData({ dispatch, commit }, upload) {
+
+            let id = upload.context.create ? Date.now() : upload.context.id;
+            upload.context.id = id;
+            let storageData = Parser.getStorageDataFromWithContext(upload.data, upload.context);
+            let copyData = {};
+            let webData = {};
+            
+            console.log(storageData);
         },
 
         async updateItem({ state }, data) {

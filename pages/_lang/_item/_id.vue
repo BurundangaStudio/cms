@@ -134,7 +134,12 @@
             save() {
 
                 let data = this.$refs.form.getValue();
-                if (data) this.$store.dispatch("readData", { create: this.create, data });
+                let context = {
+                    id: this.id,
+                    type: this.type,
+                    create: this.create
+                }
+                if (data) this.$store.dispatch("parseData", { context, data });
             },
 
             onScrollHandler() {
