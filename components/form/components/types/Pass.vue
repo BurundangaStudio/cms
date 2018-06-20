@@ -17,8 +17,8 @@
 
     import Rules from "~/config/form/rules";
     import { PassRules } from "~/config/form/rules";
-    import ErrorHandler from "./mixins/ErrorHandler";
-    import LifecycleHooks from './mixins/LifecycleHooks';
+    import ErrorHandler from "~/mixins/ErrorHandler";
+    import LifecycleHooks from '~/mixins/LifecycleHooks';
 
     export default {
         name: "pass-field",

@@ -27,10 +27,14 @@
 <script>
 
     import Item from "./types/Item";
-import { create } from 'domain';
+    import { create } from 'domain';
+
+    import ErrorHandler from "~/mixins//ErrorHandler";
+    import LifecycleHooks from "~/mixins//LifecycleHooks";
 
     export default {
         name: "Array",
+        mixins: [ LifecycleHooks, ErrorHandler ],
         props: {
             name: String,
             type: String,
@@ -44,14 +48,15 @@ import { create } from 'domain';
                 children: []
             }
         },
-        created() {
-            this.setData();
-        },
         methods: {
-            setData() {
+            setInitValue() {
 
                 this.itemKey = 0;
                 this.children = [ ...this.ordered(this.field.value) ];
+            },
+            init() {
+
+                this.errorFrames.push(this.$refs.grid);
             },
             ordered(data) {
                 const ORDERED = [];
@@ -127,11 +132,6 @@ import { create } from 'domain';
             deleteItem(index) {
 
                 this.children.splice(index, 1);
-            },
-            dispatchError() {
-
-                this.$refs.grid.classList.add("error");
-                this.$store.dispatch("pushError", this.error);
             }
         },
         components: {

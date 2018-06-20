@@ -18,8 +18,11 @@
 
 <script>
 
+    import LifecycleHooks from "~/mixins/LifecycleHooks";
+
     export default {
         name: "video-field",
+        mixins: [ LifecycleHooks ],
         props: {
             index: Number,
             order: Number

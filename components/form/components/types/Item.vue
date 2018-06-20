@@ -10,8 +10,11 @@
 
     import Field from "../Field";
 
+    import LifecycleHooks from "~/mixins/LifecycleHooks";
+
     export default {
         name: "item",
+        mixins: [ LifecycleHooks ],
         props: {
             item: Object,
             copy: Object,

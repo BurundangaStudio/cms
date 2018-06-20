@@ -1,5 +1,5 @@
 <!--
-import LifecycleHooks from './mixins/LifecycleHooks';
+import LifecycleHooks from '~/mixins/LifecycleHooks';
     components/form/components/Wyswyg.vue
 
     Coded by Christian MacMillan (_@burundanga.studio)
@@ -14,7 +14,7 @@ import LifecycleHooks from './mixins/LifecycleHooks';
 
 <script>
 
-    import LifecycleHooks from "./mixins/LifecycleHooks";
+    import LifecycleHooks from "~/mixins/LifecycleHooks";
 
     export default {
         name: "wyswyg-field",

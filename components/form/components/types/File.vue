@@ -38,8 +38,12 @@
     import _ from "lodash";
     import Resumable from "resumablejs";
 
+    import ErrorHandler from "~/mixins/ErrorHandler";
+    import LifecycleHooks from "~/mixins/LifecycleHooks";
+
     export default {
         name: "file-field",
+        mixins: [ LifecycleHooks, ErrorHandler ],
         props: {
             index: Number,
             order: Number,
@@ -53,7 +57,6 @@
             return {
                 withBack: false,
                 r: undefined,
-                error: {},
                 backFile: undefined
             }
         },
@@ -93,10 +96,6 @@
                 const valid = this.error.type == 0;
                 if (!valid) file.cancel();
                 return valid;
-            },
-            dispatchError() {
-
-                this.$store.dispatch("pushError", this.error);
             },
             load(file) {
 

@@ -14,8 +14,11 @@
 
 <script>
 
+    import LifecycleHooks from "~/mixins/LifecycleHooks";
+
     export default {
         name: "boolean-field",
+        mixins: [ LifecycleHooks ],
         data() {
             return {
                 bool: false
