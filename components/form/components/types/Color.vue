@@ -17,71 +17,70 @@
 
 <script>
 
-import { TweenMax } from "gsap";
+    import { TweenMax } from "gsap";
+    import ErrorHandler from "./mixins/ErrorHandler";
 
-export default {
-    name: "color-field",
-    props: {
-        name: String,
-        field: Object
-    },
-    data() {
-        return {
-            color: "",
-            validColor: false,
-            whiteColor: false,
-            error: false
-        }
-    },
-    watch: {
-        color() {
-            this.whiteColor = this.color.match(/^(fff|ffff|fffff|ffffff)$/);
-            this.validColor = this.color.length !== 0 && this.color.length > 2 && this.color.length < 7;
-            TweenMax.to(this.$refs.show, 1, { background: "#" + (this.validColor ? this.color : "fff") });
-        }
-    },
-    created() {
-        this.setData();
-    },
-    methods: {
-        setData() {
-
-            this.color = this.field.value ? this.field.value.replace("#", "") : "fff";
+    export default {
+        name: "color-field",
+        mixins: [ ErrorHandler ],
+        props: {
+            name: String,
+            field: Object
         },
-        clean() {
-
-            this.$refs.input.classList.remove("error");
-        },
-        getValue() {
-            return this.color;
-        },
-        valid() {
-
-            if (!(this.color.length !== 0 && this.color.length > 2 && this.color.length < 7)) {
-                this.error = {
-                    name: this.name,
-                    type: [ "bad structure" ]
-                }
-                this.dispatchError();
-                return false;
-            } else if (this.color.length === 0 && this.field.required) {
-                this.error = {
-                    name: this.name,
-                    type: [ "required field" ]
-                }
-                this.dispatchError();
-                return false;
+        data() {
+            return {
+                color: "",
+                validColor: false,
+                whiteColor: false
             }
-
-            return true;
         },
-        dispatchError() {
+        watch: {
+            color() {
+                this.whiteColor = this.color.match(/^(fff|ffff|fffff|ffffff)$/);
+                this.validColor = this.color.length !== 0 && this.color.length > 2 && this.color.length < 7;
+                TweenMax.to(this.$refs.show, 1, { background: "#" + (this.validColor ? this.color : "fff") });
+            }
+        },
+        created() {
+            this.setInitValue();
+        },
+        mounted() {
+            this.init();
+        },
+        methods: {
+            setInitValue() {
 
-            this.$refs.input.classList.add("error");
-            this.$store.dispatch("pushError", this.error);
+                this.color = this.field.value ? this.field.value.replace("#", "") : "fff";
+            },
+            init() {
+
+                this.errorFrames.push(this.$refs.input);
+            },
+            getValue() {
+                return this.color;
+            },
+            valid() {
+
+                if (!(this.color.length !== 0 && this.color.length > 2 && this.color.length < 7)) {
+                    this.error = {
+                        name: this.name,
+                        type: [ "bad structure" ]
+                    }
+                    this.dispatchError();
+                    return false;
+                } else if (this.color.length === 0 && this.field.required) {
+                    this.error = {
+                        name: this.name,
+                        type: [ "required field" ]
+                    }
+                    this.dispatchError();
+                    return false;
+                }
+
+                return true;
+            }
         }
     }
-}
 
 </script>
 

@@ -13,8 +13,11 @@
 
 <script>
 
+    import ErrorHandler from "./mixins/ErrorHandler";
+
     export default {
         name: "text-field",
+        mixins: [ ErrorHandler ],
         props: {
             name: String,
             value: String,
@@ -22,24 +25,23 @@
         },
         data() {
             return {
-                text: "",
-                error: {
-                    name: "",
-                    type: []
-                }
+                text: ""
             }
         },
         created() {
             this.setInitValue();
         },
+        mounted() {
+            this.init();
+        },
         methods: {
+            init() {
+
+                this.errorFrames.push(this.$refs.input);
+            },
             setInitValue() {
 
                 this.text = this.value ? this.value : this.field.value;
-            },
-            clean() {
-
-                this.$refs.input.classList.remove("error");
             },
             getValue() {
 
@@ -56,11 +58,6 @@
                     return false;
                 }
                 return true;
-            },
-            dispatchError() {
-
-                this.$refs.input.classList.add("error");
-                this.$store.dispatch("pushError", this.error);
             }
         }
     }
