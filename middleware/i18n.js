@@ -12,7 +12,7 @@ export default function({ isHMR, app, store, route, params, redirect }) {
 
     const locale = params.lang || defaultLocale;
 
-    store.commit("SET_LANG", locale);
+    store.dispatch("lang/setLang", locale);
 
     app.i18n.locale = store.state.lang.locale;
 

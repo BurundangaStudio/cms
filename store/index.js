@@ -5,37 +5,16 @@
 // Coded by Christian MacMillan (_@burundanga.studio)
 // April 2018 | http://burundanga.studio
 
-import Vuex from "vuex";
+export const actions = {
 
-import authModule from "./modules/firebase/auth";
-import databaseModule from "./modules/firebase/database"
-import storageModule from "./modules/firebase/storage";
-import errorsModule from "./modules/errors";
-import langModule from "./modules/lang";
+    async nuxtServerInit({ dispatch }, { req }) {
 
-const Store = () => {
-    return new Vuex.Store({
-        modules: {
-            auth: authModule,
-            database: databaseModule,
-            storage: storageModule,
-            errors: errorsModule,
-            lang: langModule
-        },
-        actions: {
+        await dispatch("firebase/auth/setUser", req.user);
+    },
 
-            nuxtServerInit({ dispatch }, { req }) {
+    init({ dispatch }) {
 
-                dispatch("setUser", req.user);
-            },
-
-            init({ dispatch }) {
-
-                dispatch("authState");
-                dispatch("initDatabase");
-            }
-        }
-    });
-};
-
-export default Store;
+        dispatch("firebase/database/init");
+        dispatch("firebase/auth/onStateChanged");
+    }
+}

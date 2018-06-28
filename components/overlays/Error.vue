@@ -7,28 +7,31 @@
 
 <template>
     <div class="overlay error">
-        <div class="error" v-for="(error, i) in errors" :key="i">
+        <!-- <div class="error" v-for="(error, i) in errors" :key="i">
             <p>{{ error.name }}</p>
             <p v-for="(t, i) in error.type" :key="i">
                 {{ t }}
             </p>
         </div>
-        <button v-if="errors.length != 0" @click="clean" v-text="$t('clean')"></button>
+        <button v-if="errors.length != 0" @click="clean" v-text="$t('clean')"></button> -->
     </div>
 </template>
 
 <script>
 
 export default {
-    computed: {
-        errors() {
-            return this.$store.state.errors.errors
-        }
+    // computed: {
+    //     errors() {
+    //         return this.$store.state.errors.errors
+    //     }
+    // },
+    mounted() {
+        // console.log(this.$store)
     },
     methods: {
         clean() {
 
-            this.$store.dispatch("cleanErrors");
+            this.$store.dispatch("errors/clean");
         }
     }
 }

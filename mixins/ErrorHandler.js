@@ -22,7 +22,7 @@ export default {
             this.errorFrames.forEach(frame => {
                 frame.classList.add("error")
             });
-            this.$store.dispatch("pushError", this.error);
+            this.$store.dispatch("errors/push", this.error);
         }
     }
 };

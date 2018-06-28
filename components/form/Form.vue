@@ -18,22 +18,24 @@
 
 <script>
 
+import { mapState } from "vuex";
+
 import Field from "~/components/form/components/Field";
 import FieldsArray from "~/components/form/components/Array";
 
 export default {
     name: "formm",
     computed: {
-        editLang() {
-            return this.$store.state.lang.editLang;
-        }
+        ...mapState({
+            formLang: state => state.lang.formLang
+        })
     },
     props: {
         lang: Object,
         fields: Object
     },
     watch: {
-        editLang() { this.activeLang(); }
+        formLang() { this.activeLang(); }
     },
     mounted() {
         this.activeLang();
@@ -43,7 +45,7 @@ export default {
 
             let data = [];
             let errors = false;
-            this.$store.dispatch("cleanErrors");
+            this.$store.dispatch("errors/clean");
 
             this.$refs.field.forEach(field =>  {
                 if (!field.valid()) errors = true;
@@ -60,7 +62,7 @@ export default {
         },
         activeLang() {
             this.$el.querySelectorAll(".lang").forEach(el => { el.classList.remove("visible") });
-            this.$el.querySelectorAll(".lang-" + this.editLang).forEach(el => { el.classList.add("visible") });
+            this.$el.querySelectorAll(".lang-" + this.formLang).forEach(el => { el.classList.add("visible") });
         }
     },
     components: {

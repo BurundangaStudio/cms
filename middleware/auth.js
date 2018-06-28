@@ -8,7 +8,8 @@
 
 export default function ({ store, redirect }) {
 
-    if (!store.state.auth.logged) {
-        return redirect("/");
-    }
+    // console.log()
+    // if (!store.state.modules.firebase.auth.logged) {
+    //     // return redirect("/");
+    // }
 }

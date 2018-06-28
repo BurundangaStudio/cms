@@ -26,16 +26,16 @@
 
 <script>
 
+    import { mapState } from "vuex";
+
     import Config from "~/config/index"
 
     export default {
         computed: {
-            lang() {
-                return this.$store.state.lang.locale
-            },
-            menu() {
-                return this.$store.state.database.menu
-            }
+            ...mapState({
+                formLang: state => state.lang.formLang,
+                menu: state => state.firebase.database.menu
+            })
         },
         methods: {
 
@@ -45,7 +45,7 @@
 
             async logout() {
 
-                await this.$store.dispatch('logout');
+                await this.$store.dispatch('auth/logout');
                 this.$router.push("/" + this.lang);
             }
         }
@@ -56,7 +56,7 @@
 
     header {
 
-        background: $light_grey; 
+        background: $light_grey;
         padding: 20px;
 
         display: grid;

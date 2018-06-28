@@ -13,7 +13,7 @@
                 <h1 v-text="create ? 'New' : 'Edit ' + id"/>
             </div>
             <div class="langs">
-                <button v-for="(lang, key) in lang" :key="key" v-text="key" :class="{ active : key === $store.state.lang.editLang }" @click="$store.dispatch('setEditLang', key)" />
+                <button v-for="(l, key) in lang" :key="key" v-text="key" :class="{ active : key === $store.state.lang.formLang }" @click="$store.dispatch('lang/setFormLang', key)" />
             </div>
             <div class="save-button">
                 <button class="button" v-html="$t('button:save')" @click="save" />
@@ -112,8 +112,8 @@
                 fields[KEY] = f;
             });
 
-            let editLang = store.state.lang.editLang ? store.state.lang.editLang : Config.webLangs[0];
-            store.dispatch("setEditLang", editLang);
+            let formLang = store.state.lang.formLang ? store.state.lang.formLang : Config.webLangs[0];
+            store.dispatch("lang/setFormLang", formLang);
 
             return {
                 id: ID,
@@ -139,7 +139,7 @@
                     type: this.type,
                     create: this.create
                 }
-                if (data) this.$store.dispatch("parseData", { context, data });
+                if (data) this.$store.dispatch("firebase/database/parseData", { context, data });
             },
 
             onScrollHandler() {
