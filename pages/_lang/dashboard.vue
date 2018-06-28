@@ -13,9 +13,14 @@
 
 <script>
 
-export default {
-    name: "dashboard",
-    layout: "logged"
-}
+    export default {
+        name: "dashboard",
+        layout: "logged",
+        head () {
+            return {
+                title: "Burundanga Studio CMS | Dashboard"
+            }
+        }
+    }
 
 </script>

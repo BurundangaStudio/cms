@@ -50,15 +50,15 @@ export default {
             let id = upload.context.create ? Date.now() : upload.context.id;
             upload.context.id = id;
 
-            Parser.getDataFrom(upload);
+            let data = Parser.getDataFrom(upload);
 
-            // let storageData = Parser.getStorageDataFromWithContext(upload.data, upload.context);
-            // let langData = {};
-            // let webData = {};
+            let webData = { ...data.webData };
+            let langData = { ...data.langData };
+            let storageData = { ...data.storageData };
 
-            // let uploadData = Parser.getUploadData();
-
-            // console.log(storageData);
+            console.log(webData);
+            console.log(langData);
+            console.log(storageData);
         },
 
         async updateItem({ state }, data) {

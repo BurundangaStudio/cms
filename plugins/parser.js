@@ -30,16 +30,17 @@ export default {
         this.prepareStorageData();
         this.prepareLangData();
         this.prepareWebData();
-        console.log("WEB DATA: ", this.webData);
-        console.log("LANG DATA:", this.langData);
-        console.log("STORAGE DATA: ", this.storageData);
 
-        return {};
+        return {
+            webData: this.webData,
+            langData: this.langData,
+            storageData: this.storageData
+        };
     },
 
     prepareStorageData() {
 
-        let path = "images/" + this.context.type + "/" + this.context.id + "/";
+        let path = `images/${this.context.type}/${this.context.id}/`;
 
         this.webData.forEach(field => {
             if (field.type === FILES_TYPE) {
@@ -57,7 +58,9 @@ export default {
     },
 
     addFilesOfTo(value, path) {
+
         value = value.length === undefined ? value : { std: value };
+
         for (let val in value) {
             value[val].forEach(asset => {
                 if (asset.type === TYPE_VIDEO) return;
@@ -78,6 +81,7 @@ export default {
     fileExists(file) {
 
         let exists = false;
+
         this.storageData.forEach(item => {
             if (item.file === file) {
                 exists = item.path;
@@ -91,8 +95,10 @@ export default {
         this.webData.forEach(field => {
             if (field.type === ARRAY_TYPE) {
                 field.value.forEach(item => {
+                    let order = 0;
                     for (let child in item) {
-                        this.readLangOf(item[child], field.key + ":" + child);
+                        this.readLangOf(item[child], `${field.key}:${order}:${child}`);
+                        order++;
                     }
                 })
             } else this.readLangOf(field);
@@ -102,7 +108,7 @@ export default {
     readLangOf(field, child = false) {
 
         if (field.lang) {
-            let key = "lang:" + this.context.type + ":" + this.context.id + ":" + (child ? child : field.key);
+            let key = `_lang:${this.context.type}:${this.context.id}:${(child ? child : field.key)}`;
             for (let lang in field.value) {
                 if (!this.langData[lang]) this.langData[lang] = {};
                 this.langData[lang][key] = field.value[lang];
@@ -112,14 +118,20 @@ export default {
     },
 
     prepareWebData() {
+
         let data = {};
 
         this.webData.forEach(field => {
             if (field.type === ARRAY_TYPE) {
                 data[field.key] = [];
+                field.value.forEach(children => {
+                    for (let child in children) {
+                        children[child] = children[child].value;
+                    }
+                    data[field.key].push(children);
+                })
             } else data[field.key] = field.value;
         });
-
         this.webData = data;
     }
 }

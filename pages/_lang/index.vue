@@ -25,8 +25,10 @@
 
     export default {
         name: "login",
-        head: {
-            title: "Burundanga Studio | Login"
+        head () {
+            return {
+                title: "Burundanga Studio CMS | Login"
+            }
         },
         transition: {
             enter(el, done) {
@@ -52,7 +54,7 @@
 
                 const email = this.emailInput.value;
                 const password = this.passwordInput.value;
-
+                console.log(this.$store);
                 await this.$store.dispatch("login", { email, password });
                 this.$router.push("/" + this.lang + "/" + config.entryPoint);
             }

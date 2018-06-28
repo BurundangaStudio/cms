@@ -10,7 +10,7 @@
     <div class="item">
         <div class="header" ref="header">
             <div class="title">
-                <h1 v-text="create ? 'New' : 'Edit ' + id"/>
+                <h1 v-text="create ? 'New' : `Edit ${ id }`"/>
             </div>
             <div class="langs">
                 <button v-for="(l, key) in lang" :key="key" v-text="key" :class="{ active : key === $store.state.lang.editLang }" @click="$store.dispatch('setEditLang', key)" />
@@ -40,6 +40,11 @@
     export default {
         name: "item",
         layout: "logged",
+        head () {
+            return {
+                title: `Album ${this.id}`
+            }
+        },
         mixins: [ LifecycleHooks ],
         async asyncData ({ params, store, error }) {
 
@@ -54,12 +59,12 @@
             const TYPE = params.item;
 
             let endPoints = [
-                { key: CONFIG, url: Config.fetchUrl + "admin/" + TYPE + "/_config.json", required: true },
-                { key: "item", url: Config.fetchUrl + "web/" + TYPE + "/" + ID + ".json", required: !NEW_ITEM }
+                { key: CONFIG, url: `${Config.fetchUrl}admin/${TYPE}/_config.json`, required: true },
+                { key: "item", url: `${Config.fetchUrl}web/${TYPE}/${ID}.json`, required: !NEW_ITEM }
             ];
 
             Config.webLangs.forEach(lang => {
-                endPoints.push({ key: "lang", subKey: lang, url: Config.fetchUrl + "lang/" + lang + ".json" })
+                endPoints.push({ key: "lang", subKey: lang, url: `${Config.fetchUrl}lang/${lang}.json` })
             });
 
             let data = {};
@@ -71,7 +76,7 @@
                 if (endPoint.required && !response) return error({ statusCode: 404 });
 
                 if (endPoint.key === CONFIG)
-                    endPoints.push({ key: "fields", url: Config.fetchUrl + "admin/" + TYPE + "/" + (response.modular ? DEF : ID) + ".json" });
+                    endPoints.push({ key: "fields", url: `${Config.fetchUrl}admin/${TYPE}/${response.modular ? DEF : ID}.json` });
 
                 if (endPoint.subKey) {
                     if (!data[endPoint.key]) data[endPoint.key] = {}
