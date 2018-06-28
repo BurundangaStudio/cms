@@ -13,7 +13,7 @@
                 <h1 v-text="create ? 'New' : 'Edit ' + id"/>
             </div>
             <div class="langs">
-                <button v-for="(lang, key) in lang" :key="key" v-text="key" :class="{ active : key === $store.state.lang.editLang }" @click="$store.dispatch('setEditLang', key)" />
+                <button v-for="(l, key) in lang" :key="key" v-text="key" :class="{ active : key === $store.state.lang.editLang }" @click="$store.dispatch('setEditLang', key)" />
             </div>
             <div class="save-button">
                 <button class="button" v-html="$t('button:save')" @click="save" />
