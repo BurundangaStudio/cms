@@ -94,11 +94,11 @@ export default {
 
         this.webData.forEach(field => {
             if (field.type === ARRAY_TYPE) {
+                let order = 0;
                 field.value.forEach(item => {
-                    let order = 0;
+                    order++;
                     for (let child in item) {
                         this.readLangOf(item[child], `${field.key}:${order}:${child}`);
-                        order++;
                     }
                 })
             } else this.readLangOf(field);
