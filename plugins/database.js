@@ -22,7 +22,7 @@ const _FILES = fs.readdirSync("config/database");
 
 const _ADMIN = "admin/";
 const _WEB = "web/";
-const _COPY = "copy/";
+const _LANG = "lang/";
 let _UPDATE = false;
 
 let ref = "";
@@ -82,6 +82,16 @@ function setRef() {
     }).catch(error);
 }
 
+function setLangs() {
+    _DB.ref(_LANG).once("value").then(snap => {
+        if (snap.val()) {
+            console.log(snap.val());
+        } else {
+            _DB.ref(_LANG).set(langsInit).then(end).catch(error);
+        }
+    }).catch(error);
+}
+
 function adminRef(ref) {
     return ref.includes("_config") || ref.includes("_default");
 }
@@ -92,12 +102,7 @@ function next() {
         i++;
         setRef();
     } else {
-        _DB.ref(_ADMIN + "_config").set({ dataset: true }).then(() => {
-            if (!_UPDATE) {
-                console.log("Copy created succesfully!")
-                _DB.ref(_COPY).set(langsInit).then(end).catch(error);
-            } else end();
-        }).catch(error);
+        _DB.ref(_ADMIN + "_config").set({ dataset: true }).then(setLangs).catch(error);
     }
 }
 

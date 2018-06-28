@@ -63,7 +63,8 @@
             "type": "files",
             "rules": {
                 "format": ["png", "jpg", "gif"],
-                "maxSize": 4000
+                "maxSize": 4000,
+                "lang": true
             }
         },
         "files": {
@@ -76,7 +77,10 @@
             }
         },
         "visible": {
-            "type": "boolean"
+            "type": "boolean",
+            "rules": {
+                "lang": true
+            }
         }
     }
 }

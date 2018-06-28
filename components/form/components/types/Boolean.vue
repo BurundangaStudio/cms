@@ -7,8 +7,8 @@
 
 <template>
     <div class="boolean">
-        <input type="checkbox" id="check1" v-model="bool">
-        <label for="check1"></label>
+        <input type="checkbox" :id="'bool-' + name + '-' + k" v-model="bool">
+        <label :for="'bool-' + name + '-' + k"></label>
     </div>
 </template>
 
@@ -19,6 +19,11 @@
     export default {
         name: "boolean-field",
         mixins: [ LifecycleHooks ],
+        props: {
+            name: String,
+            field: Object,
+            k: String
+        },
         data() {
             return {
                 bool: false

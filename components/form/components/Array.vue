@@ -17,7 +17,7 @@
                 :index="index"
                 :order="index + 1"
                 :item="item"
-                :copy="copy"
+                :lang="lang"
                 v-on:delete-item="deleteItem" />
         </div>
         <button @click="addItem" :aria-label="$t('button:add:item')" v-text="$t('button:add:item')"/>
@@ -39,7 +39,7 @@
             name: String,
             type: String,
             field: Object,
-            copy: Object
+            lang: Object
         },
         data() {
             return {

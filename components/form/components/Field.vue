@@ -11,9 +11,9 @@
         <component v-if="!field.rules.lang" ref="field" :is="field.type + '-field'" :name="name" :field="field" />
         <div v-else class="langs">
             <div class="indicators">
-                <p v-for="(lang, key) in copy" :key="key" class="lang" :class="'lang-' + key" v-text="key" @click="$store.dispatch('setEditLang', key)" />
+                <p v-for="(lang, key) in lang" :key="key" class="lang" :class="'lang-' + key" v-text="key" @click="$store.dispatch('setEditLang', key)" />
             </div>
-            <component v-for="(lang, key) in copy" :key="key" class="lang" :class="'lang-' + key" ref="field" :data-lang="key" :is="field.type + '-field'" :name="name" :field="field" :value="copy[key][field.value]"/>
+            <component v-for="(lang, key) in lang" :key="key" :k="key" class="lang" :class="'lang-' + key" ref="field" :data-lang="key" :is="field.type + '-field'" :name="name" :field="field" :value="lang[key][field.value]"/>
         </div>
     </div>
 </template>
@@ -29,7 +29,7 @@
             type: String,
             field: Object,
             order: Number,
-            copy: Object
+            lang: Object
         },
         methods: {
             valid() {

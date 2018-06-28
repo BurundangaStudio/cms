@@ -13,13 +13,13 @@
                 <h1 v-text="create ? 'New' : 'Edit ' + id"/>
             </div>
             <div class="langs">
-                <button v-for="(lang, key) in copy" :key="key" v-text="key" :class="{ active : key === $store.state.lang.editLang }" @click="$store.dispatch('setEditLang', key)" />
+                <button v-for="(lang, key) in lang" :key="key" v-text="key" :class="{ active : key === $store.state.lang.editLang }" @click="$store.dispatch('setEditLang', key)" />
             </div>
             <div class="save-button">
                 <button class="button" v-html="$t('button:save')" @click="save" />
             </div>
         </div>
-        <form-component ref="form" :copy="copy" :fields="fields" />
+        <form-component ref="form" :lang="lang" :fields="fields" />
     </div>
 
 </template>
@@ -59,7 +59,7 @@
             ];
 
             Config.webLangs.forEach(lang => {
-                endPoints.push({ key: "copy", subKey: lang, url: Config.fetchUrl + "copy/" + lang + ".json" })
+                endPoints.push({ key: "lang", subKey: lang, url: Config.fetchUrl + "lang/" + lang + ".json" })
             });
 
             let data = {};
@@ -119,7 +119,7 @@
                 id: ID,
                 type: TYPE,
                 create: NEW_ITEM,
-                copy: data.copy,
+                lang: data.lang,
                 fields,
                 scrollPoint: 0,
                 scrollLimit: 0
@@ -130,7 +130,7 @@
 
                 this.setListeners();
             },
-            
+
             save() {
 
                 let data = this.$refs.form.getValue();

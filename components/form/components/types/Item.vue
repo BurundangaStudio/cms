@@ -1,7 +1,7 @@
 <template>
     <div class="item">
         {{ order }}
-        <field v-for="(field, key) in item.fields" ref="field" :key="key" :name="key" :field="field" :copy="copy" />
+        <field v-for="(field, key) in item.fields" ref="field" :key="key" :name="key" :field="field" :lang="lang" />
         <button @click="$emit('delete-item', index)" v-text="$t('button:delete')"/>
     </div>
 </template>
@@ -17,7 +17,7 @@
         mixins: [ LifecycleHooks ],
         props: {
             item: Object,
-            copy: Object,
+            lang: Object,
             index: Number,
             order: Number
         },

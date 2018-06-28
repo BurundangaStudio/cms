@@ -9,8 +9,8 @@
     <div class="form">
         <div class="fields">
             <div v-for="(field, key) in fields" :key="key">
-                <field v-if="field.type !== 'array'" ref="field" :name="key" :type="field.type" :field="field" :copy="copy" />
-                <fields-array v-else ref="field" :name="key" v-on:new-field="activeLang" :type="field.type" :field="field" :copy="copy" />
+                <field v-if="field.type !== 'array'" ref="field" :name="key" :type="field.type" :field="field" :lang="lang" />
+                <fields-array v-else ref="field" :name="key" v-on:new-field="activeLang" :type="field.type" :field="field" :lang="lang" />
             </div>
         </div>
     </div>
@@ -29,7 +29,7 @@ export default {
         }
     },
     props: {
-        copy: Object,
+        lang: Object,
         fields: Object
     },
     watch: {

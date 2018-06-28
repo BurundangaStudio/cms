@@ -11,11 +11,14 @@ import Config from "~/config/index";
 
 Vue.use(VueI18n);
 
-export default ({ app, store }) => {
+export default ({
+    app,
+    store
+}) => {
 
     let messages = {};
 
-   Config.adminLangs.forEach(lang => {
+    Config.adminLangs.forEach(lang => {
         messages[lang] = require('~/copy/' + lang + '.json');
     });
 
@@ -33,4 +36,3 @@ export default ({ app, store }) => {
         return `/${app.i18n.locale}/${link}`
     }
 }
-

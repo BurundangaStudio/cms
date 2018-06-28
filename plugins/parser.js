@@ -15,7 +15,7 @@ export default {
     context: {},
 
     webData: {},
-    copyData: {},
+    langData: {},
     storageData: [],
 
     getDataFrom(upload) {
@@ -25,15 +25,14 @@ export default {
         this.webData = upload.data;
 
         this.storageData = [];
-        this.copyData = {};
+        this.langData = {};
 
         this.prepareStorageData();
-        this.prepareCopyData();
+        this.prepareLangData();
         this.prepareWebData();
-
-        console.log(this.webData);
-        console.log(this.copyData);
-        console.log(this.storageData);
+        console.log("WEB DATA: ", this.webData);
+        console.log("LANG DATA:", this.langData);
+        console.log("STORAGE DATA: ", this.storageData);
 
         return {};
     },
@@ -58,20 +57,22 @@ export default {
     },
 
     addFilesOfTo(value, path) {
-
-        value.forEach(asset => {
-            if (asset.type === TYPE_VIDEO) return;
-            asset.files.forEach((file, index) => {
-                let existingFile = this.fileExists(file.data_url);
-                if (!existingFile) {
-                    this.storageData.push({
-                        path: path + file.name,
-                        file: file.data_url
-                    })
-                }
-                asset.files[index] = existingFile ? existingFile : path + file.name;
+        value = value.length === undefined ? value : { std: value };
+        for (let val in value) {
+            value[val].forEach(asset => {
+                if (asset.type === TYPE_VIDEO) return;
+                asset.files.forEach((file, index) => {
+                    let existingFile = this.fileExists(file.data_url);
+                    if (!existingFile) {
+                        this.storageData.push({
+                            path: path + file.name,
+                            file: file.data_url
+                        })
+                    }
+                    asset.files[index] = existingFile ? existingFile : path + file.name;
+                })
             })
-        })
+        }
     },
 
     fileExists(file) {
@@ -85,26 +86,26 @@ export default {
         return exists;
     },
 
-    prepareCopyData() {
+    prepareLangData() {
 
         this.webData.forEach(field => {
             if (field.type === ARRAY_TYPE) {
                 field.value.forEach(item => {
                     for (let child in item) {
-                        this.readCopyOf(item[child], field.key + ":" + child);
+                        this.readLangOf(item[child], field.key + ":" + child);
                     }
                 })
-            } else this.readCopyOf(field);
+            } else this.readLangOf(field);
         });
     },
 
-    readCopyOf(field, child = false) {
+    readLangOf(field, child = false) {
 
         if (field.lang) {
-            let key = this.context.type + ":" + this.context.id + ":" + (child ? child : field.key);
+            let key = "lang:" + this.context.type + ":" + this.context.id + ":" + (child ? child : field.key);
             for (let lang in field.value) {
-                if (!this.copyData[lang]) this.copyData[lang] = {};
-                this.copyData[lang][key] = field.value[lang];
+                if (!this.langData[lang]) this.langData[lang] = {};
+                this.langData[lang][key] = field.value[lang];
             }
             field.value = key;
         }
@@ -116,7 +117,6 @@ export default {
         this.webData.forEach(field => {
             if (field.type === ARRAY_TYPE) {
                 data[field.key] = [];
-                // console.log(field);
             } else data[field.key] = field.value;
         });
 
