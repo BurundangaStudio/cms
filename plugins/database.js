@@ -84,11 +84,13 @@ function setRef() {
 
 function setLangs() {
     _DB.ref(_LANG).once("value").then(snap => {
-        if (snap.val()) {
-            console.log(snap.val());
-        } else {
-            _DB.ref(_LANG).set(langsInit).then(end).catch(error);
+        const _langs = snap.val();
+        if (_langs) {
+            for (let _l in _langs) {
+                if (langsInit[_l]) langsInit[_l] = _.defaults(_.cloneDeep(_langs[_l]), _.cloneDeep(langsInit[_l]));;
+            }
         }
+        _DB.ref(_LANG).set(langsInit).then(end).catch(error);
     }).catch(error);
 }
 
