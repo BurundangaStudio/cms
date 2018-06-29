@@ -23,10 +23,9 @@ export default {
         SET_REF(state, ref) {
             state.ref = ref;
         },
-        SET_UPLOAD_DATA(state, data) {
-            state.path = data.path;
-            state.files = data.files;
-            state.totalFiles = data.files.length
+        SET_UPLOAD_DATA(state, files) {
+            state.files = files;
+            state.totalFiles = Object.keys(files).length
             state.filesUploaded = 0;
             state.uploading = true;
         },
@@ -40,20 +39,22 @@ export default {
     },
     actions: {
 
-        async uploadStorage({ dispatch, commit, state }, data) {
+        async updateStorageData({ dispatch, commit, state }, files) {
 
             if (_.isUndefined(state.ref))
                 await dispatch("setRef");
 
-            commit("SET_UPLOAD_DATA", data);
+            commit("SET_UPLOAD_DATA", files);
             dispatch("uploadFile");
         },
 
         uploadFile({ commit, dispatch, state }) {
 
             const file = state.files[state.filesUploaded].file;
-            const path = `images/${state.path}/${file.name}`;
-            const uploadTask = state.ref.child(path).putString(file.data_url, "data_url");
+            const path = state.files[state.filesUploaded].path;
+
+            const uploadTask = state.ref.child(path).putString(file, "data_url");
+
             uploadTask.on("state_changed", snapshot => {
 
                 var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -69,6 +70,8 @@ export default {
                 if (state.filesUploaded != state.totalFiles - 1) {
                     commit("INCREMENT_FILES_UPLOADED");
                     dispatch("uploadFile");
+                } else {
+                    commit("SET_UPLOADED");
                 }
             });
         },

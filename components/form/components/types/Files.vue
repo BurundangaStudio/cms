@@ -7,7 +7,7 @@
 
 <template>
     <div class="files">
-        <div class="box">
+        <div class="box" @click="print">
             <p v-if="files.length == 0" class="text" v-text="$t('form:drag:drop:placeholder')"></p>
             <ul class="list" v-sortable="{ onEnd: reorder }">
                 <li class="file" v-for="(file, index) in files" :key="file.key">
@@ -59,6 +59,7 @@
         mixins: [ LifecycleHooks, ErrorHandler ],
         props: {
             field: Object,
+            value: Array,
             name: String
         },
         data() {
@@ -69,6 +70,13 @@
             }
         },
         methods: {
+            setInitValue() {
+
+                // console.log(this.value)
+            },
+            print() {
+                // console.log(this.files);
+            },
             init() {
 
                 this.TYPE_VIDEO = "video";

@@ -58,6 +58,7 @@ export default {
 
             dispatch("updateWebData", { context: upload.context, data: webData });
             dispatch("updateLangData", langData);
+            dispatch("updateStorageData", storageData);
         },
 
         async updateWebData({ state }, upload) {

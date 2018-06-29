@@ -12,14 +12,13 @@
             <img v-if="!loading" :src="file.preview" />
             {{ file.file.fileName }}
             {{ (file.file.size * 0.001).toFixed(0) }}KB
-            {{ file.size }}
+            {{ file.file.fileName.split(".")[1].toUpperCase() }}
         </span>
         <span class="second-file" v-if="withBack">
             <span v-if="backFile">
                 <img v-if="!backFile.loading" :src="backFile.preview" />
                 {{ backFile.file.fileName }}
                 {{ (backFile.file.size * 0.001).toFixed(0) }}KB
-                {{ backFile.size }}
             </span>
             <span v-else>
                 <p class="text" v-text="$t('form:drag:drop:placeholder')"></p>

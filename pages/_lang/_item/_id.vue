@@ -10,7 +10,7 @@
     <div class="item">
         <div class="header" ref="header">
             <div class="title">
-                <h1 v-text="create ? 'New' : `Edit ${ id }`"/>
+                <h1 v-text="create ? 'New' : 'Edit'"/>
             </div>
             <div class="langs">
                 <button v-for="(l, key) in lang" :key="key" v-text="key" :class="{ active : key === $store.state.lang.editLang }" @click="$store.dispatch('setEditLang', key)" />
@@ -42,7 +42,7 @@
         layout: "logged",
         head () {
             return {
-                title: `Album ${this.id}`
+                title: "Album"
             }
         },
         mixins: [ LifecycleHooks ],
@@ -86,7 +86,6 @@
 
             let array = [];
             for (let field in data.fields) {
-                // console.log(data.fields[field]);
                 let obj = data.fields[field];
                 if (obj.type === ARRAY) {
                     let children = [];
@@ -134,7 +133,7 @@
         methods: {
             init() {
 
-                // this.setListeners();
+                this.setListeners();
             },
 
             save() {
