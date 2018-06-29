@@ -18,15 +18,17 @@
 
 <script>
 
+import { mapState } from "vuex";
+
 import Field from "~/components/form/components/Field";
 import FieldsArray from "~/components/form/components/Array";
 
 export default {
     name: "formm",
     computed: {
-        editLang() {
-            return this.$store.state.lang.editLang;
-        }
+        ...mapState({
+            editLang: state => state.lang.editLang
+        })
     },
     props: {
         lang: Object,

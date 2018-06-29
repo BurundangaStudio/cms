@@ -19,19 +19,24 @@
 
 <script>
 
-export default {
-    computed: {
-        errors() {
-            return this.$store.state.errors.errors
-        }
-    },
-    methods: {
-        clean() {
+    import { mapState } from "vuex";
 
-            this.$store.dispatch("cleanErrors");
+    export default {
+        computed: {
+            ...mapState({
+                errors: state => state.errors.errors
+            })
+        },
+        mounted() {
+            console.log(this.$store.state.errors);
+        },
+        methods: {
+            clean() {
+
+                this.$store.dispatch("cleanErrors");
+            }
         }
     }
-}
 
 </script>
 

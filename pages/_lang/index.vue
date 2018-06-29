@@ -20,8 +20,10 @@
 
 <script>
 
-    import config from "~/config/index"
+    import { mapState } from "vuex";
     import { TweenMax } from "gsap";
+
+    import config from "~/config/index"
 
     export default {
         name: "login",
@@ -36,9 +38,9 @@
             }
         },
         computed: {
-            lang() {
-                return this.$store.state.lang.locale
-            }
+            ...mapState({
+                lang: state => state.lang.locale
+            })
         },
         mounted() {
             this.init();

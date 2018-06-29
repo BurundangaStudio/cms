@@ -15,6 +15,8 @@
 
 <script>
 
+    import { mapState } from "vuex";
+
     export default {
         name: "item-component",
         props: {
@@ -23,9 +25,9 @@
             type: String
         },
         computed: {
-            lang() {
-                return this.$store.state.lang.locale
-            }
+            ...mapState({
+                lang: state => state.lang.locale
+            })
         },
         methods: {
             getLinkOf() {

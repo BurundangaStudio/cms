@@ -26,16 +26,16 @@
 
 <script>
 
-    import Config from "~/config/index"
+    import { mapState } from "vuex";
+
+    import Config from "~/config/index";
 
     export default {
         computed: {
-            lang() {
-                return this.$store.state.lang.locale
-            },
-            menu() {
-                return this.$store.state.database.menu
-            }
+            ...mapState({
+                lang: state => state.lang.locale,
+                menu: state => state.database.menu
+            })
         },
         methods: {
 
