@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    
+
     import ErrorHandler from "~/mixins/ErrorHandler";
     import LifecycleHooks from "~/mixins/LifecycleHooks";
 
@@ -31,7 +31,7 @@
         },
         methods: {
             setInitValue() {
-                
+
                 this.text = this.value ? this.value : this.field.value;
             },
             init() {
