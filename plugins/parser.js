@@ -24,8 +24,6 @@ export default {
 
         this.webData = upload.data;
 
-        console.log(this.webData);
-
         this.storageData = [];
         this.langData = {};
 
