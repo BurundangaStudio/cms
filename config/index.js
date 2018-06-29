@@ -13,3 +13,6 @@ module.exports =  {
     adminLangs: [ "en", "es" ],
     webLangs: [ "en", "jp", "es" ]
 }
+
+
+// https://burundanga-admin.firebaseio.com/web/albums.json?orderBy=%22link%22&equalTo=%22test%22&print=pretty

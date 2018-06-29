@@ -56,22 +56,26 @@ export default {
             let langData = { ...data.langData };
             let storageData = { ...data.storageData };
 
-            console.log(webData);
-            console.log(langData);
-            console.log(storageData);
+            dispatch("updateWebData", { context: upload.context, data: webData });
+            dispatch("updateLangData", langData);
         },
 
-        async updateItem({ state }, data) {
-
-            delete data.data.id;
-
+        async updateWebData({ state }, upload) {
             state.db
-                .ref(`web/${data.type}/${data.id}`).set(data.data)
+                .ref(`web/${upload.context.type}/${upload.context.id}`).set(upload.data)
                 .then(res => {
-                    if (data.create) this.$router.push({ name: "lang-item-id", params: { item: data.type, id: data.id }});
+                    if (upload.context.create)
+                        this.$router.push({ name: "lang-item-id", params: { item: upload.context.type, id: upload.context.id }});
                 }).catch(error => {
                     console.log(error)
                 });
+        },
+
+        async updateLangData({ state }, data) {
+
+            for (let lang in data) {
+                state.db.ref(`lang/${lang}`).update(data[lang]).catch(error => { console.log(error) });
+            }
         },
 
         setDatabase({ commit }) {

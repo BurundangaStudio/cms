@@ -110,7 +110,7 @@ export default {
     readLangOf(field, child = false) {
 
         if (field.lang) {
-            let key = `_lang:${this.context.type}:${this.webData.link}:${(child ? child : field.key)}`;
+            let key = `_lang:${this.context.type}:${this.context.id}:${(child ? child : field.key)}`;
             for (let lang in field.value) {
                 if (!this.langData[lang]) this.langData[lang] = {};
                 this.langData[lang][key] = field.value[lang] ? field.value[lang] : "";
