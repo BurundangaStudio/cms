@@ -35,10 +35,10 @@ process.argv.forEach((val, index) => {
 });
 
 _FILES.forEach(_file => {
-    const _json = require("../config/database/" + _file);
+    const _json = require(`../config/database/${_file}`);
     const _collection = _file.replace(".json", "");
     for (var _doc in _json) {
-        const ref = _collection + "/" + _doc;
+        const ref = `${_collection}/${_doc}`;
         const json =
             adminRef(ref)
                 ? _.cloneDeep(_json[_doc])

@@ -142,7 +142,7 @@
                 this.error.type = [];
 
                 if (!this.rules.format.includes(this.getFileExtensionOf(file.fileName))) this.error.type.push("Wrong format.");
-                if (this.rules.maxSize < (file.size * 0.001)) this.error.type.push("Max size exceeded - " + file.size * 0.001);
+                if (this.rules.maxSize < (file.size * 0.001)) this.error.type.push(`Max size exceeded - ${file.size * 0.001}`);
 
                 const valid = this.error.type == 0;
                 if (!valid) file.cancel();

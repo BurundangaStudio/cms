@@ -40,13 +40,13 @@
         methods: {
 
             getNameOf(link) {
-                return link == Config.entryPoint ? "lang-" + link : "lang-list-id";
+                return link == Config.entryPoint ? `lang-${link}`  : "lang-list-id";
             },
 
             async logout() {
 
                 await this.$store.dispatch('logout');
-                this.$router.push("/" + this.lang);
+                this.$router.push(`/${this.lang}`);
             }
         }
     }
@@ -56,7 +56,7 @@
 
     header {
 
-        background: $light_grey; 
+        background: $light_grey;
         padding: 20px;
 
         display: grid;

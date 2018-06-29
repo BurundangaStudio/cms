@@ -39,7 +39,7 @@
             color() {
                 this.whiteColor = this.color.match(/^(fff|ffff|fffff|ffffff)$/);
                 this.validColor = this.color.length !== 0 && this.color.length > 2 && this.color.length < 7;
-                TweenMax.to(this.$refs.show, 1, { background: "#" + (this.validColor ? this.color : "fff") });
+                TweenMax.to(this.$refs.show, 1, { background: `#${(this.validColor ? this.color : "fff")}` });
             }
         },
         methods: {

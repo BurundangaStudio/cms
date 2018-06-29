@@ -25,7 +25,7 @@ export default function({ isHMR, app, store, route, params, redirect }) {
 
         redir += defaultLocale;
         routeParts.forEach(part => {
-            redir += "/" + part;
+            redir += `/${part}`;
         });
 
         return redirect(redir);

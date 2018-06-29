@@ -92,7 +92,7 @@ import { isPrimitive } from 'util';
                 this.error.type = [];
 
                 if (!this.$parent.rules.format.includes(this.$parent.getFileExtensionOf(file.fileName))) this.error.type.push("Wrong format.");
-                if (this.$parent.rules.maxSize < (file.size * 0.001)) this.error.type.push("Max size exceeded - " + file.size * 0.001);
+                if (this.$parent.rules.maxSize < (file.size * 0.001)) this.error.type.push(`Max size exceeded -  ${file.size * 0.001}`);
 
                 const valid = this.error.type == 0;
                 if (!valid) file.cancel();

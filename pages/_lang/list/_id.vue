@@ -25,8 +25,8 @@ export default {
     layout: "logged",
     async asyncData ({ params, error }) {
         const id = params.id;
-        const webResponse = await fetch(Config.fetchUrl + "web/" + id + ".json");
-        const adminResponse = await fetch(Config.fetchUrl + "admin/" + id + ".json");
+        const webResponse = await fetch(`${Config.fetchUrl}web/${id}.json`);
+        const adminResponse = await fetch(`${Config.fetchUrl}admin/${id}.json`);
         const items = await webResponse.json();
         const config = await adminResponse.json();
         if (!config) return error({ statusCode: 404 });

@@ -66,7 +66,7 @@ export default {
             delete data.data.id;
 
             state.db
-                .ref("web/" + data.type + "/" + data.id).set(data.data)
+                .ref(`web/${data.type}/${data.id}`).set(data.data)
                 .then(res => {
                     if (data.create) this.$router.push({ name: "lang-item-id", params: { item: data.type, id: data.id }});
                 }).catch(error => {

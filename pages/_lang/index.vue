@@ -56,7 +56,7 @@
                 const password = this.passwordInput.value;
                 console.log(this.$store);
                 await this.$store.dispatch("login", { email, password });
-                this.$router.push("/" + this.lang + "/" + config.entryPoint);
+                this.$router.push(`/${this.lang}/${config.entryPoint}`);
             }
         }
     }

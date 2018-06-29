@@ -52,19 +52,19 @@ export default {
         uploadFile({ commit, dispatch, state }) {
 
             const file = state.files[state.filesUploaded].file;
-            const path = "images/" + state.path + "/" + file.name;
+            const path = `images/${state.path}/${file.name}`;
             const uploadTask = state.ref.child(path).putString(file.data_url, "data_url");
             uploadTask.on("state_changed", snapshot => {
 
                 var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log("Upload " + (state.filesUploaded + 1) + "/" + state.totalFiles + " is " + progress + "% done");
+                console.log(`Upload ${(state.filesUploaded + 1)}/${state.totalFiles} is ${progress} % done`);
             }, error => {
 
-                console.log("ERROR: " + error.code);
+                console.log(`ERROR: ${error.code}`);
             }, () => {
 
                 var downloadURL = uploadTask.snapshot.downloadURL;
-                console.log("COMPLETED WITH URL: " + downloadURL);
+                console.log(`COMPLETED WITH URL: ${downloadURL}`);
 
                 if (state.filesUploaded != state.totalFiles - 1) {
                     commit("INCREMENT_FILES_UPLOADED");
