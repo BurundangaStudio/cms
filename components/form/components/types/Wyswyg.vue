@@ -42,7 +42,7 @@ import LifecycleHooks from '~/mixins/LifecycleHooks';
                     }
                 };
                 this.quill = new Quill(this.$el.querySelector(".editor"), options);
-                this.quill.container.firstChild.innerHTML = this.value ? this.value : this.field.value;
+                this.quill.container.firstChild.innerHTML = this.value !== undefined ? this.value : this.field.value;
             },
             getValue() {
 

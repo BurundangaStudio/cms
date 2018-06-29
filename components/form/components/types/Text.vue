@@ -32,7 +32,7 @@
         methods: {
             setInitValue() {
 
-                this.text = this.value ? this.value : this.field.value;
+                this.text = this.value !== undefined ? this.value : this.field.value;
             },
             init() {
 
