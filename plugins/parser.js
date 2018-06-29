@@ -6,6 +6,8 @@
 // Juny 2018 | http://burundanga.studio
 //
 
+import uniqid from "uniqid";
+
 const ARRAY_TYPE = "array";
 const FILES_TYPE = "files";
 const TYPE_VIDEO = "video";
@@ -65,14 +67,15 @@ export default {
             value[val].forEach(asset => {
                 if (asset.type === TYPE_VIDEO) return;
                 asset.files.forEach((file, index) => {
+                    let name = path + `_file:${uniqid()}`;
                     let existingFile = this.fileExists(file.data_url);
                     if (!existingFile) {
                         this.storageData.push({
-                            path: path + file.name,
+                            path: name,
                             file: file.data_url
                         })
                     }
-                    asset.files[index] = existingFile ? existingFile : path + file.name;
+                    asset.files[index] = existingFile ? existingFile : name;
                 })
             })
         }
