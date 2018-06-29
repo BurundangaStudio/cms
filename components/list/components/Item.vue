@@ -8,7 +8,7 @@
 <template>
     <li>
         <section name="grid">
-            {{ name }} <nuxt-link :to="{ name: 'lang-item-id', params: { lang, item: type, id: name }}" v-html="$t('button:edit')" />
+            {{ item.link }} <nuxt-link :to="{ name: 'lang-item-id', params: { lang, item: type, id: name }}" v-html="$t('button:edit')" />
         </section>
     </li>
 </template>

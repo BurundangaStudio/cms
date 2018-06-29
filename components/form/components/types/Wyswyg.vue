@@ -20,6 +20,7 @@ import LifecycleHooks from '~/mixins/LifecycleHooks';
         name: "wyswyg-field",
         mixins: [ LifecycleHooks ],
         props: {
+            value: String,
             field: Object
         },
         data() {
@@ -41,7 +42,7 @@ import LifecycleHooks from '~/mixins/LifecycleHooks';
                     }
                 };
                 this.quill = new Quill(this.$el.querySelector(".editor"), options);
-                this.quill.clipboard.dangerouslyPasteHTML(0, this.field.value);
+                this.quill.container.firstChild.innerHTML = this.value ? this.value : this.field.value;
             },
             getValue() {
 

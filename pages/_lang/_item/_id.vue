@@ -86,16 +86,17 @@
 
             let array = [];
             for (let field in data.fields) {
+                // console.log(data.fields[field]);
                 let obj = data.fields[field];
                 if (obj.type === ARRAY) {
                     let children = [];
                     if (data.item && data.item[field]) {
                         data.item[field].forEach(value => {
-                            let credit = _.cloneDeep(obj.children);
-                            credit.forEach(field => {
-                                credit[field].value = value[field];
-                            });
-                            children.push(credit);
+                            let child = _.cloneDeep(obj.children);
+                            for (let field in child) {
+                                child[field].value = value[field];
+                            }
+                            children.push(child);
                         })
                     }
 
@@ -133,7 +134,7 @@
         methods: {
             init() {
 
-                this.setListeners();
+                // this.setListeners();
             },
 
             save() {

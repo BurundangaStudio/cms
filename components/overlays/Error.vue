@@ -27,12 +27,8 @@
                 errors: state => state.errors.errors
             })
         },
-        mounted() {
-            console.log(this.$store.state.errors);
-        },
         methods: {
             clean() {
-
                 this.$store.dispatch("cleanErrors");
             }
         }

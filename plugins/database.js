@@ -87,7 +87,7 @@ function setLangs() {
         const _langs = snap.val();
         if (_langs) {
             for (let _l in _langs) {
-                if (langsInit[_l]) langsInit[_l] = _.defaults(_.cloneDeep(_langs[_l]), _.cloneDeep(langsInit[_l]));;
+                if (langsInit[_l]) langsInit[_l] = _.defaults(_.cloneDeep(_langs[_l]));;
             }
         }
         _DB.ref(_LANG).set(langsInit).then(end).catch(error);

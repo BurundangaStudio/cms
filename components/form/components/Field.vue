@@ -13,7 +13,7 @@
             <div class="indicators">
                 <p v-for="(l, key) in lang" :key="key" class="lang" :class="'lang-' + key" v-text="key" @click="$store.dispatch('setEditLang', key)" />
             </div>
-            <component v-for="(l, key) in lang" :key="key" :k="key" class="lang" :class="'lang-' + key" ref="field" :data-lang="key" :is="field.type + '-field'" :name="name" :field="field" :value="lang[key][field.value]"/>
+            <component v-for="(l, key) in lang" :key="key" :k="key" class="lang" :class="'lang-' + key" ref="field" :data-lang="key" :is="field.type + '-field'" :name="name" :field="field" :value="lang[key][field.value]" />
         </div>
     </div>
 </template>
