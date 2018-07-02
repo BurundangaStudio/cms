@@ -9,16 +9,15 @@
     <section :class="{ withBack }">
         <span>
             <span v-if="limit !== 1">{{ order }}</span>
-            <img v-if="!loading" :src="file.preview" />
-            {{ file.file.fileName }}
-            {{ (file.file.size * 0.001).toFixed(0) }}KB
-            {{ file.file.fileName.split(".")[1].toUpperCase() }}
+            <img v-if="!loading" :src="file.data_url" />
+            {{ file.size }}KB
+            {{ file.type }}
         </span>
         <span class="second-file" v-if="withBack">
             <span v-if="backFile">
-                <img v-if="!backFile.loading" :src="backFile.preview" />
-                {{ backFile.file.fileName }}
-                {{ (backFile.file.size * 0.001).toFixed(0) }}KB
+                <img v-if="!backFile.loading" :src="backFile.data_url" />
+                {{ backFile.size }}KB
+                {{ backFile.type }}
             </span>
             <span v-else>
                 <p class="text" v-text="$t('form:drag:drop:placeholder')"></p>
@@ -26,7 +25,7 @@
             </span>
         </span>
         <span class="buttons">
-            <button v-if="backEnabled" @click="withBack = !withBack" v-text="$t(withBack ? 'button:remove:back' : 'button:add:back')" />
+            <button v-if="backEnabled && file.new" @click="withBack = !withBack" v-text="$t(withBack ? 'button:remove:back' : 'button:add:back')" />
             <button @click="$emit('delete-file', index)" v-text="$t('button:delete')"/>
         </span>
     </section>
@@ -39,7 +38,6 @@
 
     import ErrorHandler from "~/mixins/ErrorHandler";
     import LifecycleHooks from "~/mixins/LifecycleHooks";
-import { isPrimitive } from 'util';
 
     export default {
         name: "file-field",
@@ -67,11 +65,19 @@ import { isPrimitive } from 'util';
             }
         },
         methods: {
+            setInitValue() {
+
+                if (this.file.back) {
+                    this.withBack = true;
+                    this.backFile = this.file;
+                }
+            },
             initSecondFile() {
 
                 this.box = this.$el.querySelector(".second-file");
                 this.button = this.$el.querySelector(".second-file button");
 
+                if (this.backFile) return
                 this.r = new Resumable({ maxFiles: 1 });
                 this.r.assignDrop(this.box);
                 this.r.assignBrowse(this.button);
@@ -102,6 +108,8 @@ import { isPrimitive } from 'util';
                 let image = {};
 
                 image.file = file;
+                image.size = (file.size * 0.001).toFixed(0);
+                image.type = file.fileName.split(".")[1].toUpperCase();
                 image.loading = true;
                 this.backFile = image;
 
@@ -110,8 +118,8 @@ import { isPrimitive } from 'util';
                 fileReader.onload = file => {
                     image.new = true;
                     image.data_url = file.target.result;
-                    image.preview = file.target.result;
                     image.loading = false;
+                    delete image.file;
                 }
             },
             getValue() {
@@ -120,9 +128,9 @@ import { isPrimitive } from 'util';
                 value.order = this.order;
                 value.type = this.backFile ? "after/before" : "default";
                 value.files = [];
-                value.files.push({ name: this.file.file.fileName, data_url: this.file.data_url, new: this.file.new });
+                value.files.push({ data_url: this.file.data_url, size: this.file.size, type: this.file.type, new: this.file.new });
                 if (this.backFile) {
-                    value.files.push({ name: this.backFile.file.fileName, data_url: this.backFile.data_url, new: this.backFile.new });
+                    value.files.push({ data_url: this.backFile.data_url, size: this.backFile.size, type: this.backFile.type, new: this.backFile.new });
                 }
                 return value;
             }

@@ -66,23 +66,35 @@
             return {
                 r: {},
                 files: [],
-                rules: {}
+                rules: {},
+                TYPE_VIDEO: "video",
+                TYPE_IMAGE: "image",
+                filesKey: 0
             }
         },
         methods: {
             setInitValue() {
-
-                // console.log(this.value)
+                let initValue = [];
+                if (this.value || this.field.value) {
+                    if (this.value) initValue = this.value;
+                    else if (this.field.value && Array.isArray(this.field.value)) initValue = this.field.value;
+                }
+                initValue.forEach(field => {
+                    this.files.push({
+                        new: false,
+                        // data_url: field.files[0],
+                        loading: false,
+                        size: 0,
+                        type: 0,
+                        back: field.files.length > 1 ? { new: false, data_url: null, loading: false, size: 0, type: 0 } : null
+                    })
+                })
             },
             print() {
-                // console.log(this.files);
+
+                console.log(this.files);
             },
             init() {
-
-                this.TYPE_VIDEO = "video";
-                this.TYPE_IMAGE = "image";
-
-                this.filesKey = 0;
 
                 this.setRules();
 
@@ -120,6 +132,8 @@
 
                 image.key = this.filesKey++;
                 image.file = file;
+                image.size = (file.size * 0.001).toFixed(0);
+                image.type = file.fileName.split(".")[1].toUpperCase();
                 image.loading = true;
                 this.files.push(image);
 
@@ -130,8 +144,8 @@
                 fileReader.onload = file => {
                     this.files[index].new = true;
                     this.files[index].data_url = file.target.result;
-                    this.files[index].preview = file.target.result;
                     this.files[index].loading = false;
+                    delete this.files[index].file;
                 }
             },
             reorder({ oldIndex, newIndex }) {
@@ -141,7 +155,7 @@
             },
             deleteFile(key) {
 
-                if (this.files[key].type != this.TYPE_VIDEO) this.files[key].file.cancel();
+                if (this.files[key].type != this.TYPE_VIDEO && this.files[key].new) this.files[key].file.cancel();
                 this.files.splice(key, 1);
             },
             isValid(file) {
